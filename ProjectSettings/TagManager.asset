@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Background
+  - Tilemap
+  - DeathZone
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -40,4 +44,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background_2
+    uniqueID: 816041689
+    locked: 0
+  - name: Background_1
+    uniqueID: 3541278225
+    locked: 0
+  - name: Background_0
+    uniqueID: 2230216319
+    locked: 0
+  - name: Tile
+    uniqueID: 3029416289
+    locked: 0
+  - name: Enemy
+    uniqueID: 882081833
     locked: 0
