@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 61099864}
   - component: {fileID: 61099865}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190381712}
   - component: {fileID: 190381713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209473076}
   - component: {fileID: 209473077}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_2
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211758505}
   - component: {fileID: 211758506}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 219540959}
   - component: {fileID: 219540958}
   - component: {fileID: 219540960}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FireMap
   m_TagString: Tilemap
   m_Icon: {fileID: 0}
@@ -5882,7 +5882,7 @@ GameObject:
   m_Component:
   - component: {fileID: 241561254}
   - component: {fileID: 241561255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -5966,7 +5966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 242352571}
   - component: {fileID: 242352572}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6050,7 +6050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 289257262}
   - component: {fileID: 289257263}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6134,7 +6134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300785581}
   - component: {fileID: 300785582}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6218,7 +6218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 354182666}
   - component: {fileID: 354182667}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6408,7 +6408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435648812}
   - component: {fileID: 435648813}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6492,7 +6492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 470571717}
   - component: {fileID: 470571718}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6576,7 +6576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478158775}
   - component: {fileID: 478158776}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6660,7 +6660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496327964}
   - component: {fileID: 496327965}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -6850,7 +6850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 570808089}
   - component: {fileID: 570808090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7237,7 +7237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 755077172}
   - component: {fileID: 755077173}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7311,6 +7311,238 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &790337324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 790337325}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &790337325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790337324}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 805276222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &805276216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 805276222}
+  - component: {fileID: 805276221}
+  - component: {fileID: 805276220}
+  - component: {fileID: 805276219}
+  - component: {fileID: 805276218}
+  - component: {fileID: 805276217}
+  m_Layer: 0
+  m_Name: Player1
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &805276217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ad0eaf5d810b04cbc80370cfb1c52b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 6
+  jumpForce: 8
+  GroundCheck: {fileID: 790337325}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!61 &805276218
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.13312143, y: -0.39417738}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.88, y: 1.28}
+    newSize: {x: 2.88, y: 1.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6476605, y: 0.49164522}
+  m_EdgeRadius: 0
+--- !u!50 &805276219
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 4
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!95 &805276220
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b2ff0d2a5e35e2647b8894f89a0fc28c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!212 &805276221
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -2064750977
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 3859f4ff30101e14f95dc1a1fec2908d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.88, y: 1.28}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &805276222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805276216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -82.88, y: -5.52, z: 0}
+  m_LocalScale: {x: 7.6047673, y: 9.56011, z: 0.96464}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 790337325}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889806061
 GameObject:
   m_ObjectHideFlags: 0
@@ -7321,7 +7553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 889806062}
   - component: {fileID: 889806063}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7405,7 +7637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1049641501}
   - component: {fileID: 1049641502}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7540,7 +7772,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8.865276
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7565,7 +7797,7 @@ Transform:
   m_GameObject: {fileID: 1115967749}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.2, y: 16.1, z: -10}
+  m_LocalPosition: {x: -79.5, y: -2.8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7581,7 +7813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1137920108}
   - component: {fileID: 1137920109}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7665,7 +7897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1149934047}
   - component: {fileID: 1149934048}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7855,7 +8087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1277724495}
   - component: {fileID: 1277724496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -7939,7 +8171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1332269636}
   - component: {fileID: 1332269637}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8023,7 +8255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1338386458}
   - component: {fileID: 1338386459}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8107,7 +8339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1346985171}
   - component: {fileID: 1346985172}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8208,7 +8440,7 @@ Transform:
   m_GameObject: {fileID: 1456330384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 718.6667, y: -221.99998, z: 0}
+  m_LocalPosition: {x: 366, y: -251, z: 0}
   m_LocalScale: {x: -16.666668, y: 16.666666, z: 16.666666}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8297,7 +8529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1477522666}
   - component: {fileID: 1477522667}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8381,7 +8613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1496477385}
   - component: {fileID: 1496477386}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8465,7 +8697,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593677995}
   - component: {fileID: 1593677996}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8549,7 +8781,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1595018829}
   - component: {fileID: 1595018830}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8633,7 +8865,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1633789463}
   - component: {fileID: 1633789464}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8717,7 +8949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634957525}
   - component: {fileID: 1634957526}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8801,7 +9033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1657810532}
   - component: {fileID: 1657810533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Cloud
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8885,7 +9117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1863910837}
   - component: {fileID: 1863910838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -8969,7 +9201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876931847}
   - component: {fileID: 1876931848}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9053,7 +9285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1899889995}
   - component: {fileID: 1899889996}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9137,7 +9369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1912111289}
   - component: {fileID: 1912111290}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9221,7 +9453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1912879430}
   - component: {fileID: 1912879431}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_1
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9350,7 +9582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2026711771}
   - component: {fileID: 2026711772}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9434,7 +9666,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2037256805}
   - component: {fileID: 2037256806}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crystal
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9518,7 +9750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2078433453}
   - component: {fileID: 2078433454}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background_Rosin
   m_TagString: Background
   m_Icon: {fileID: 0}
@@ -9602,7 +9834,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2113728365}
   - component: {fileID: 2113728366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DeathZone
   m_TagString: DeathZone
   m_Icon: {fileID: 0}
@@ -9683,3 +9915,4 @@ SceneRoots:
   - {fileID: 1115967752}
   - {fileID: 1926285676}
   - {fileID: 638146811}
+  - {fileID: 805276222}
