@@ -11,6 +11,7 @@ public class AuronPlayerController : MonoBehaviour
     public float jumpForce = 7f;
     private bool isGrounded = true;
     private bool isAttacking = false;
+    private bool isDefending = false; // Add defend state
 
     void Start()
     {
@@ -27,11 +28,18 @@ public class AuronPlayerController : MonoBehaviour
 
         bool isMoving = movement.sqrMagnitude > 0f;
         animator.SetBool("IsMoving", isMoving);
+
+        // Attack
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             isAttacking = true;
             animator.SetBool("IsAttacking", true);
         }
+
+        // Defend (hold right mouse button)
+        isDefending = Input.GetMouseButton(1);
+        animator.SetBool("IsDefending", isDefending);
+
 
         if (isMoving)
         {
