@@ -70,6 +70,27 @@ public class Player1 : MonoBehaviour
             // Reset timer
             timeSinceAttack = 0.0f;
         }
+        if (Input.GetMouseButtonDown(1) && !isRolling)
+        {
+
+            animator.SetTrigger("Defend");
+        }
+        if (Input.GetKeyDown("e") && !isRolling)
+        {
+            // Set the new attack trigger
+            animator.SetTrigger("Attack4");
+            moveSpeed = 1f;
+        }
+        else
+            moveSpeed = 6f;
+        if (Input.GetKeyDown("q") && !isRolling)
+        {
+            // Set the new attack trigger
+            animator.SetTrigger("Attack5");
+            moveSpeed = 1f;
+        }
+        else
+            moveSpeed = 6f;
 
 
         // Flip sprite
