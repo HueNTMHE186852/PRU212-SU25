@@ -8,6 +8,9 @@ public class EnemyRun : MonoBehaviour
     public float detectionRange = 10f;
     public float attackCooldown = 0.1f;
     public float attackDuration = 1f;
+    public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
+    private Vector3 startPosition;
+    public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
 
     private float lastAttackTime = -10f;
     private bool isAttacking = false;
@@ -28,6 +31,8 @@ public class EnemyRun : MonoBehaviour
     void Start()
     {
         // Tìm player
+        startPosition = transform.position;
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null)
         {
@@ -72,7 +77,7 @@ public class EnemyRun : MonoBehaviour
         UpdateDistances();
 
         // Kiểm tra có nên chase không
-        bool shouldChase = forceChase || (cachedVerticalDistance <= verticalTolerance && cachedHorizontalDistance <= detectionRange);
+        bool shouldChase = (cachedVerticalDistance <= verticalTolerance) && (cachedHorizontalDistance <= detectionRange);
 
         if (shouldChase)
         {
@@ -170,11 +175,15 @@ public class EnemyRun : MonoBehaviour
         transform.position += movement;
 
         // Flip sprite theo hướng di chuyển
-        spriteRenderer.flipX = direction.x < 0;
+        bool flip = direction.x < 0;
+        spriteRenderer.flipX = flip;
 
-        // DEBUG MOVEMENT
+        // Lật collider con theo sprite
+        UpdateColliderFlip(flip);
+
         Debug.Log($"🏃 Moving towards player. Current distance: {cachedHorizontalDistance:F2}");
     }
+
 
     void FacePlayer()
     {
@@ -186,27 +195,30 @@ public class EnemyRun : MonoBehaviour
         float dir = movingRight ? 1f : -1f;
         transform.Translate(Vector2.right * dir * speed * Time.deltaTime);
         spriteRenderer.flipX = !movingRight;
+
+        float distanceFromStart = transform.position.x - startPosition.x;
+        float buffer = 0.5f; // Tăng giới hạn thêm một tí
+
+        if (movingRight && distanceFromStart >= patrolDistance + buffer)
+        {
+            movingRight = false;
+        }
+        else if (!movingRight && distanceFromStart <= -patrolDistance - buffer)
+        {
+            movingRight = true;
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    void UpdateColliderFlip(bool flipX)
     {
-        if (collision.CompareTag("ZonePatrol"))
-        {
-            movingRight = !movingRight;
-        }
+        if (colliderHolder == null) return;
 
-        // THÊM COLLISION DETECTION VỚI PLAYER
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log($"💥 COLLIDED WITH PLAYER! Distance: {cachedHorizontalDistance:F2}");
-            // Force attack nếu chạm trực tiếp
-            if (!isAttacking && Time.time >= lastAttackTime + attackCooldown)
-            {
-                Debug.Log("🔥 FORCE ATTACK ON COLLISION!");
-                StartAttack();
-            }
-        }
+        Vector3 localScale = colliderHolder.localScale;
+        localScale.x = flipX ? -Mathf.Abs(localScale.x) : Mathf.Abs(localScale.x);
+        colliderHolder.localScale = localScale;
     }
+
 
     // Debug đơn giản hơn
     void OnGUI()
