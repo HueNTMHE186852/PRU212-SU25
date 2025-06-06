@@ -16,7 +16,7 @@ public class Player1 : MonoBehaviour
     public int currentAttack = 0;
     public bool isAttack;
 
-    public int maxJumps = 2;         // Max number of jumps (double jump = 2)
+    public int maxJumps = 1;         // Max number of jumps (double jump = 2)
     private int jumpCount = 0;
 
     private Rigidbody2D rb;
