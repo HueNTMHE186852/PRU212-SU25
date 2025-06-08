@@ -6,6 +6,11 @@ public class AuronPlayerController : MonoBehaviour
 {
     private Animator animator;
     public float moveSpeed = 3f;
+    public GameObject arrowPrefab; // Prefab mũi tên
+    public Transform firePoint;    // Vị trí xuất phát mũi tên
+    public float arrowForce = 10f; // Lực bắn mũi tên
+    public float fireRate = 0.5f;  // Thời gian giữa các lần bắn
+
     private Rigidbody2D rb;
 
     public float jumpForce = 7f;
@@ -13,10 +18,13 @@ public class AuronPlayerController : MonoBehaviour
     private bool isAttacking = false;
     private bool isDefending = false; // Add defend state
 
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     void Update()
@@ -29,25 +37,36 @@ public class AuronPlayerController : MonoBehaviour
         bool isMoving = movement.sqrMagnitude > 0f;
         animator.SetBool("IsMoving", isMoving);
 
-        // Attack
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+
+        // Đòn đánh tay (ví dụ phím X)
+        if (Input.GetKeyDown(KeyCode.X))
         {
             isAttacking = true;
             animator.SetBool("IsAttacking", true);
         }
+        else if (Input.GetKeyUp(KeyCode.X))
+        {
+            isAttacking = false;
+            animator.SetBool("IsAttacking", false);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("SetTrigger BowShoot");
+            animator.SetTrigger("BowShoot");
+
+        }
+
 
         // Defend (hold right mouse button)
         isDefending = Input.GetMouseButton(1);
         animator.SetBool("IsDefending", isDefending);
 
-
         if (isMoving)
         {
-            // ✅ Di chuyển
             movement = movement.normalized;
             transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
 
-            // ✅ Lật nhân vật theo hướng (trái/phải)
             if (horizontal != 0)
             {
                 Vector3 scale = transform.localScale;
@@ -61,6 +80,8 @@ public class AuronPlayerController : MonoBehaviour
             isGrounded = false;
             animator.SetBool("IsJumping", true);
         }
+ 
+
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -82,4 +103,37 @@ public class AuronPlayerController : MonoBehaviour
         isAttacking = false;
         animator.SetBool("IsAttacking", false);
     }
+    public void FireArrow()
+    {
+        Debug.Log("✅ FireArrow() được gọi!");
+
+        // Xác định hướng dựa vào hướng nhân vật
+        float direction = transform.localScale.x > 0 ? 1f : -1f;
+        Vector2 shootDir = new Vector2(direction, 0f);
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D arrowRb = arrow.GetComponent<Rigidbody2D>();
+        arrowRb.velocity = shootDir * arrowForce;
+
+        // Xoay mũi tên cho đúng hướng
+        float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Lật sprite nếu bắn sang trái (nếu cần)
+        if (direction < 0)
+            arrow.transform.localScale = new Vector3(-1f, 1f, 1f);
+        else
+            arrow.transform.localScale = new Vector3(1f, 1f, 1f);
+
+        Debug.Log("🚀 Arrow bắn ra hướng: " + shootDir);
+        Destroy(arrow, 2f);
+    }
+
+
+    public void TestEvent()
+    {
+        Debug.Log("✅ TestEvent() được gọi!");
+    }
+
+
 }
