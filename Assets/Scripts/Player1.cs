@@ -16,7 +16,7 @@ public class Player1 : MonoBehaviour
     public int currentAttack = 0;
     public bool isAttack;
 
-    public int maxJumps = 2;         // Max number of jumps (double jump = 2)
+    public int maxJumps = 1;         // Max number of jumps (double jump = 2)
     private int jumpCount = 0;
 
     private Rigidbody2D rb;
@@ -96,21 +96,17 @@ public class Player1 : MonoBehaviour
         if (Input.GetKeyDown("e") && !isRolling)
         {
             animator.SetTrigger("Attack4");
-            moveSpeed = 1f;
         }
         else
         {
-            moveSpeed = 6f;
         }
 
         if (Input.GetKeyDown("q") && !isRolling)
         {
             animator.SetTrigger("Attack5");
-            moveSpeed = 1f;
         }
         else
         {
-            moveSpeed = 6f;
         }
 
         // Flip sprite
