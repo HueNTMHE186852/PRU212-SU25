@@ -2,7 +2,7 @@
 
 public class EnemyRun : MonoBehaviour
 {
-    public EnemyHealthBar healthbar;
+    //public EnemyHealthBar healthbar;
     public float speed = 2f;
     public float verticalTolerance = 5f;
     public float attackRange = 2.5f;
@@ -33,7 +33,7 @@ public class EnemyRun : MonoBehaviour
     private void OnMouseDown()
     {
         currentHeatlh -= 10;
-        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
     void Start()
     {
@@ -66,7 +66,7 @@ public class EnemyRun : MonoBehaviour
             animator.Play("Run", 0, 0f);
         }
         currentHeatlh = maxHealth;
-        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
 
     void Update()

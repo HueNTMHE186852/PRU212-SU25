@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Player1 : MonoBehaviour
 {
-    public float moveSpeed = 6f;
+    public float moveSpeed = 15f;
     public float jumpForce = 8f;
     public float rollForce = 8f;
     public Transform GroundCheck;
@@ -96,21 +96,11 @@ public class Player1 : MonoBehaviour
         if (Input.GetKeyDown("e") && !isRolling)
         {
             animator.SetTrigger("Attack4");
-            moveSpeed = 1f;
-        }
-        else
-        {
-            moveSpeed = 6f;
         }
 
         if (Input.GetKeyDown("q") && !isRolling)
         {
             animator.SetTrigger("Attack5");
-            moveSpeed = 1f;
-        }
-        else
-        {
-            moveSpeed = 6f;
         }
 
         // Flip sprite
