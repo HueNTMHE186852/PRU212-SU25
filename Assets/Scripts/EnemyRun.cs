@@ -2,6 +2,7 @@
 
 public class EnemyRun : MonoBehaviour
 {
+    public EnemyHealthBar healthbar;
     public float speed = 2f;
     public float verticalTolerance = 5f;
     public float attackRange = 2.5f;
@@ -11,7 +12,8 @@ public class EnemyRun : MonoBehaviour
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
     private Vector3 startPosition;
     public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
-
+    public float currentHeatlh;
+    public float maxHealth = 50;
     private float lastAttackTime = -10f;
     private bool isAttacking = false;
     private Transform player;
@@ -28,8 +30,14 @@ public class EnemyRun : MonoBehaviour
     private float cachedVerticalDistance;
     private bool canAttackNow = false;
 
+    private void OnMouseDown()
+    {
+        currentHeatlh -= 10;
+        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+    }
     void Start()
     {
+        
         // Tìm player
         startPosition = transform.position;
 
@@ -57,6 +65,8 @@ public class EnemyRun : MonoBehaviour
         {
             animator.Play("Run", 0, 0f);
         }
+        currentHeatlh = maxHealth;
+        healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
 
     void Update()

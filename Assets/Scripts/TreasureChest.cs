@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TreasureChest : MonoBehaviour
 {
-    public Sprite closedSprite;  
-    public Sprite openFullSprite; 
+    public Sprite closedSprite;
+    public Sprite openFullSprite;
     public Sprite openEmptySprite;
 
     private SpriteRenderer spriteRenderer;
@@ -15,7 +15,7 @@ public class TreasureChest : MonoBehaviour
         spriteRenderer.sprite = closedSprite;
     }
 
-    void OnMouseDown() 
+    void OnMouseDown()
     {
         if (!isOpened)
         {
@@ -29,5 +29,12 @@ public class TreasureChest : MonoBehaviour
     void SetToEmpty()
     {
         spriteRenderer.sprite = openEmptySprite;
+
+        Invoke("HideChest", 1f);
+    }
+
+    void HideChest()
+    {
+        gameObject.SetActive(false);
     }
 }

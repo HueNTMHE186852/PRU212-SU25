@@ -127,6 +127,7 @@ public class HeroKnight : MonoBehaviour {
             // Reset timer
             m_timeSinceAttack = 0.0f;
         }
+       
         // Block
         else if (Input.GetMouseButtonDown(1) && !m_rolling)
         {
@@ -144,11 +145,11 @@ public class HeroKnight : MonoBehaviour {
             m_animator.SetTrigger("Roll");
             m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
         }
+
         if (Input.GetKeyDown(KeyCode.F) && !isAttacking && !m_rolling)
         {
             StartCoroutine(PerformCombo());
         }
-
         //Jump
         else if (Input.GetKeyDown("space") && m_grounded && !m_rolling)
         {
