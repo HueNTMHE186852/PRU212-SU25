@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -11,19 +12,26 @@ public class Player1 : MonoBehaviour
     public Transform GroundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-    public bool isRolling;
-    public float timeSinceAttack = 0.0f;
-    public int currentAttack = 0;
-    public bool isAttack;
 
-    public int maxJumps = 2;         // Max number of jumps (double jump = 2)
+    public int maxJumps = 2;
+    public float attackCooldown = 0.3f;
+    public float eSkillSlowFactor = 0.3f;
+    public float eSkillDuration = 0.6f;
+
+    private int currentAttack = 0;
     private int jumpCount = 0;
+    private float timeSinceAttack = 0.0f;
+    private float eSkillTimer = 0f;
+
+    private bool isGrounded;
+    private bool isRolling;
+    private bool isAttacking;
+    private bool isUsingESkill;
 
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Vector2 movement;
-    private bool isGrounded;
 
     void Start()
     {
@@ -37,70 +45,84 @@ public class Player1 : MonoBehaviour
     {
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
-
         timeSinceAttack += Time.deltaTime;
 
         // Ground check
         isGrounded = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, groundLayer);
         if (isGrounded)
         {
-            jumpCount = 0; // Reset jumps when grounded
+            jumpCount = 0;
         }
 
-        // Jump input with double jump
-        // Jump input (double jump)
+        // Jump input
         if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount++;
         }
 
-        // Jump animation control
-        bool isJumping = !isGrounded && rb.velocity.y > 0.1f;   // going up
-        bool isFalling = !isGrounded && rb.velocity.y < -0.1f;  // going down
-
+        // Jump animation
+        bool isJumping = !isGrounded && rb.velocity.y > 0.1f;
+        bool isFalling = !isGrounded && rb.velocity.y < -0.1f;
         animator.SetBool("isJumping", isJumping);
         animator.SetBool("isFalling", isFalling);
 
-
-        if (Input.GetKeyDown("left shift"))
+        // Rolling
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isRolling = true;
-            animator.SetBool("isRolling", isRolling);
+            animator.SetBool("isRolling", true);
             rb.velocity = new Vector2(movement.x * rollForce, rb.velocity.y);
         }
         else
         {
             isRolling = false;
+            animator.SetBool("isRolling", false);
         }
 
-        if (Input.GetMouseButtonDown(0) && timeSinceAttack > 0.3f && !isRolling)
+        // Attack combo (Left Click)
+        if (Input.GetMouseButtonDown(0) && timeSinceAttack > attackCooldown && !isRolling && !isAttacking)
         {
             currentAttack++;
-            if (currentAttack > 3)
-                currentAttack = 1;
-
-            // Reset attack combo if too slow
-            if (timeSinceAttack > 1.0f)
+            if (currentAttack > 3 || timeSinceAttack > 1.0f)
                 currentAttack = 1;
 
             animator.SetTrigger("Attack" + currentAttack);
             timeSinceAttack = 0.0f;
+            StartCoroutine(ResetAttackLock(0.4f));
         }
 
-        if (Input.GetMouseButtonDown(1) && !isRolling)
+        // Defend (Right Click)
+        if (Input.GetMouseButtonDown(1) && !isRolling && !isAttacking)
         {
             animator.SetTrigger("Defend");
+            StartCoroutine(ResetAttackLock(0.4f));
         }
 
-        if (Input.GetKeyDown("e") && !isRolling)
+        // Skill E (slow move)
+        if (Input.GetKeyDown(KeyCode.E) && !isRolling && !isAttacking)
         {
             animator.SetTrigger("Attack4");
+            isUsingESkill = true;
+            eSkillTimer = eSkillDuration;
+            StartCoroutine(ResetAttackLock(0.5f));
         }
 
-        if (Input.GetKeyDown("q") && !isRolling)
+        // Skill Q
+        if (Input.GetKeyDown(KeyCode.Q) && !isRolling && !isAttacking)
         {
             animator.SetTrigger("Attack5");
+            StartCoroutine(ResetAttackLock(0.5f));
+        }
+
+        // Update E skill timer
+        if (isUsingESkill)
+        {
+            eSkillTimer -= Time.deltaTime;
+            if (eSkillTimer <= 0f)
+            {
+                isUsingESkill = false;
+            }
         }
 
         // Flip sprite
@@ -112,18 +134,15 @@ public class Player1 : MonoBehaviour
         // Animator parameters
         animator.SetBool("isMoving", movement.x != 0);
         animator.SetBool("isGrounded", isGrounded);
-        animator.SetBool("isRolling", isRolling);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
     }
 
     void FixedUpdate()
     {
-        if (isRolling)
-        {
-            // Do not override velocity during rolling; preserve initial roll impulse
-            return;
-        }
-        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        if (isRolling) return;
+
+        float speed = isUsingESkill ? moveSpeed * eSkillSlowFactor : moveSpeed;
+        rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
 
     void OnDrawGizmosSelected()
@@ -133,5 +152,12 @@ public class Player1 : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(GroundCheck.position, groundCheckRadius);
         }
+    }
+
+    private IEnumerator ResetAttackLock(float duration)
+    {
+        isAttacking = true;
+        yield return new WaitForSeconds(duration);
+        isAttacking = false;
     }
 }
