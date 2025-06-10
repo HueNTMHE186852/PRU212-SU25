@@ -9,9 +9,12 @@ public class Player1 : MonoBehaviour
     public float moveSpeed = 15f;
     public float jumpForce = 8f;
     public float rollForce = 8f;
+    public int maxHealth = 100;
+    public int currentHealth;
     public Transform GroundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
+    public Player1Healthbar healthBar;
 
     public int maxJumps = 2;
     public float attackCooldown = 0.3f;
@@ -39,6 +42,21 @@ public class Player1 : MonoBehaviour
         rb.freezeRotation = true;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.gameObject.SetActive(false);
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+
+            // Call Die Function
+        }
     }
 
     void Update()

@@ -235,11 +235,11 @@ public class EnemyRun : MonoBehaviour
     {
         if (player == null) return;
 
-        GUI.Label(new Rect(10, 10, 300, 20), $"Distance: {cachedHorizontalDistance:F2}");
-        GUI.Label(new Rect(10, 30, 300, 20), $"Can Attack: {canAttackNow}");
-        GUI.Label(new Rect(10, 50, 300, 20), $"Is Attacking: {isAttacking}");
-        GUI.Label(new Rect(10, 70, 300, 20), $"Cooldown: {(lastAttackTime + attackCooldown - Time.time):F1}s");
-        GUI.Label(new Rect(10, 90, 300, 20), $"Time: {Time.time:F1}s");
+        //GUI.Label(new Rect(10, 10, 300, 20), $"Distance: {cachedHorizontalDistance:F2}");
+        //GUI.Label(new Rect(10, 30, 300, 20), $"Can Attack: {canAttackNow}");
+        //GUI.Label(new Rect(10, 50, 300, 20), $"Is Attacking: {isAttacking}");
+        //GUI.Label(new Rect(10, 70, 300, 20), $"Cooldown: {(lastAttackTime + attackCooldown - Time.time):F1}s");
+        //GUI.Label(new Rect(10, 90, 300, 20), $"Time: {Time.time:F1}s");
     }
 
     void OnDrawGizmosSelected()
