@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -7,14 +8,15 @@ public class BossAI : MonoBehaviour
     public float attackRange = 2.5f;
     public float speed = 3f;
 
-	public GameObject laserPrefab;
-	public Transform laserSpawnPoint;
-	public float laserLifetime = 0.5f;
+    public GameObject laserPrefab;
+    public Transform laserSpawnPoint;
+    public float laserLifetime = 0.5f;
 
 
-	[HideInInspector] public Transform player;
+    [HideInInspector] public Transform player;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isFlipped = true;
+    [HideInInspector] public bool isKnockback = false;
 
     private Animator animator;
     private bool isAttacking = false;
@@ -150,29 +152,36 @@ public class BossAI : MonoBehaviour
         idleTimer = Random.Range(0.5f, 1f);
     }
 
-	public void ShootLaser()
-	{
-		if (laserPrefab != null && laserSpawnPoint != null)
-		{
-			GameObject laser = Instantiate(laserPrefab, laserSpawnPoint.position, Quaternion.identity);
+    public void ShootLaser()
+    {
+        if (laserPrefab != null && laserSpawnPoint != null)
+        {
+            GameObject laser = Instantiate(laserPrefab, laserSpawnPoint.position, Quaternion.identity);
 
-			Vector3 scale = laser.transform.localScale;
-			scale.x = Mathf.Abs(scale.x);
-			laser.transform.localScale = scale;
+            Vector3 scale = laser.transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            laser.transform.localScale = scale;
 
-			if (!isFlipped)
-			{
-				laser.transform.rotation = Quaternion.Euler(0, 180f, 0);
-			}
+            if (!isFlipped)
+            {
+                laser.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            }
 
-			Vector3 offset = new Vector3(1f, 0, 0);
-			if (!isFlipped)
-				offset.x *= -1;
+            Vector3 offset = new Vector3(1f, 0, 0);
+            if (!isFlipped)
+                offset.x *= -1;
 
-			laser.transform.position += offset;
+            laser.transform.position += offset;
 
-			Destroy(laser, laserLifetime);
-		}
-	}
+            Destroy(laser, laserLifetime);
+        }
+    }
+    public void ApplyKnockback(Vector2 force)
+    {
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(force.x, rb.velocity.y);
+        }
+    }
 
 }
