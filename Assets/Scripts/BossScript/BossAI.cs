@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -7,13 +7,15 @@ public class BossAI : MonoBehaviour
     public float detectionRange = 16f;
     public float attackRange = 2.5f;
     public float speed = 3f;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
+	public GameObject laserPrefab;
+	public Transform laserSpawnPoint;
+	public float laserLifetime = 0.5f;
+	private bool hasHealthBarAppeared = false;
 
-    public GameObject laserPrefab;
-    public Transform laserSpawnPoint;
-    public float laserLifetime = 0.5f;
-
-
-    [HideInInspector] public Transform player;
+	[HideInInspector] public Transform player;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isFlipped = true;
     [HideInInspector] public bool isKnockback = false;
@@ -34,7 +36,11 @@ public class BossAI : MonoBehaviour
             player = playerObj.transform;
 
         idleTimer = Random.Range(0.5f, 1f);
-    }
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
+		healthBar.gameObject.SetActive(false);
+	}
 
     void Update()
     {
@@ -42,8 +48,13 @@ public class BossAI : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, player.position);
         bool inAttackRange = distance <= attackRange;
+		if (!hasHealthBarAppeared && distance <= detectionRange)
+		{
+			hasHealthBarAppeared = true;
+			healthBar.gameObject.SetActive(true);
+		}
 
-        if (!animator.GetBool("isCharging") && !isShooting)
+		if (!animator.GetBool("isCharging") && !isShooting)
         {
             LookAtPlayer();
         }
@@ -83,6 +94,18 @@ public class BossAI : MonoBehaviour
             animator.SetBool("isShooting", true);
         }
     }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+		currentHealth = Mathf.Max(currentHealth, 0);
+		healthBar.SetHealth(currentHealth);
+		if (currentHealth <= 0)
+		{
+			healthBar.gameObject.SetActive(false);
+			// Call Die Function
+		}
+	}
 
     void FixedUpdate()
     {
