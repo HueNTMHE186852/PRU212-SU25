@@ -47,7 +47,7 @@ public class Player1 : MonoBehaviour
         healthBar.gameObject.SetActive(false);
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);

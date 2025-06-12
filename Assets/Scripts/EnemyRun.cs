@@ -3,13 +3,15 @@
 public class EnemyRun : MonoBehaviour
 {
     //public EnemyHealthBar healthbar;
-    public float speed = 2f;
-    public float verticalTolerance = 5f;
-    public float attackRange = 2.5f;
-    public float detectionRange = 10f;
+    public float speed = 3.5f;
+    public float verticalTolerance = 20f;
+    public float attackRange = 10f;
+    public float detectionRange = 25f;
     public float attackCooldown = 0.1f;
     public float attackDuration = 1f;
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
+    public Transform attackCollider;  // Kéo thả AttackCollider từ Inspector
+
     private Vector3 startPosition;
     public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
     public float currentHeatlh;
@@ -30,14 +32,24 @@ public class EnemyRun : MonoBehaviour
     private float cachedVerticalDistance;
     private bool canAttackNow = false;
 
+    // Lưu offset gốc của BoxCollider
+    private Vector2 originalColliderOffset;
+    private Vector2 originalAttackColliderOffset;
+    private BoxCollider2D boxCollider;
+    private BoxCollider2D attackBoxCollider;
+
+    // Thêm biến cho PolygonCollider2D
+    private PolygonCollider2D attackPolygonCollider;
+    private Vector2[] originalPolygonPoints;
+
     private void OnMouseDown()
     {
         currentHeatlh -= 10;
         //healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
+
     void Start()
     {
-        
         // Tìm player
         startPosition = transform.position;
 
@@ -60,11 +72,62 @@ public class EnemyRun : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        // Lưu offset gốc của BoxCollider
+        if (colliderHolder != null)
+        {
+            boxCollider = colliderHolder.GetComponent<BoxCollider2D>();
+            if (boxCollider != null)
+            {
+                originalColliderOffset = boxCollider.offset;
+                Debug.Log($"💾 Saved original BoxCollider offset: {originalColliderOffset}");
+            }
+            else
+            {
+                Debug.LogError("❌ ColliderHolder không có BoxCollider2D component!");
+            }
+        }
+        else
+        {
+            Debug.LogError("❌ ColliderHolder chưa được gán trong Inspector!");
+        }
+
+        // Kiểm tra và lưu thông tin cho AttackCollider
+        if (attackCollider != null)
+        {
+            // Kiểm tra xem là BoxCollider2D hay PolygonCollider2D
+            attackBoxCollider = attackCollider.GetComponent<BoxCollider2D>();
+            attackPolygonCollider = attackCollider.GetComponent<PolygonCollider2D>();
+
+            if (attackBoxCollider != null)
+            {
+                originalAttackColliderOffset = attackBoxCollider.offset;
+            }
+            else if (attackPolygonCollider != null)
+            {
+                // Lưu các điểm gốc của PolygonCollider
+                originalPolygonPoints = new Vector2[attackPolygonCollider.points.Length];
+                for (int i = 0; i < attackPolygonCollider.points.Length; i++)
+                {
+                    originalPolygonPoints[i] = attackPolygonCollider.points[i];
+                }
+              
+            }
+            else
+            {
+                Debug.LogError("❌ AttackCollider không có BoxCollider2D hoặc PolygonCollider2D component!");
+            }
+        }
+        else
+        {
+            Debug.LogError("❌ AttackCollider chưa được gán trong Inspector!");
+        }
+
         // Khởi tạo animation
         if (animator != null)
         {
             animator.Play("Run", 0, 0f);
         }
+
         currentHeatlh = maxHealth;
         //healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
@@ -103,6 +166,17 @@ public class EnemyRun : MonoBehaviour
             }
             Patrol();
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Time.timeScale = 0.2f; // Làm chậm 5 lần
+            Debug.Log("Slow motion ON");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Time.timeScale = 1f; // Trở lại bình thường
+            Debug.Log("Slow motion OFF");
+        }
     }
 
     void UpdateDistances()
@@ -120,11 +194,7 @@ public class EnemyRun : MonoBehaviour
 
         canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
 
-        // DEBUG CHI TIẾT
-        if (inHorizontalRange)
-        {
-            Debug.Log($"🎯 IN ATTACK RANGE! H:{cachedHorizontalDistance:F2} V:{cachedVerticalDistance:F2} CD:{cooldownReady} => CanAttack:{canAttackNow}");
-        }
+        
     }
 
     void HandleChase()
@@ -132,7 +202,7 @@ public class EnemyRun : MonoBehaviour
         // KIỂM TRA ATTACK TRƯỚC KHI DI CHUYỂN
         if (canAttackNow)
         {
-            Debug.Log($"🚀 ATTACK NOW! Distance: {cachedHorizontalDistance:F3}");
+          
             StartAttack();
             return;
         }
@@ -141,7 +211,6 @@ public class EnemyRun : MonoBehaviour
         if (cachedHorizontalDistance <= attackRange)
         {
             float remainingCooldown = (lastAttackTime + attackCooldown) - Time.time;
-            Debug.Log($"⏸️ WAITING FOR COOLDOWN: {remainingCooldown:F2}s");
             FacePlayer();
             // KHÔNG RETURN - vẫn cho di chuyển gần hơn nếu cần
         }
@@ -162,7 +231,6 @@ public class EnemyRun : MonoBehaviour
         }
 
         FacePlayer();
-        Debug.Log($"⚔️ ATTACK STARTED at distance {cachedHorizontalDistance:F2}!");
     }
 
     void EndAttack()
@@ -175,7 +243,6 @@ public class EnemyRun : MonoBehaviour
             animator.Play("Run");
         }
 
-        Debug.Log("✅ Attack ended, back to Run");
     }
 
     void MoveTowardsPlayer()
@@ -188,23 +255,29 @@ public class EnemyRun : MonoBehaviour
         bool flip = direction.x < 0;
         spriteRenderer.flipX = flip;
 
-        // Lật collider con theo sprite
         UpdateColliderFlip(flip);
 
-        Debug.Log($"🏃 Moving towards player. Current distance: {cachedHorizontalDistance:F2}");
     }
-
 
     void FacePlayer()
     {
-        spriteRenderer.flipX = player.position.x < transform.position.x;
+        bool flip = player.position.x < transform.position.x;
+        spriteRenderer.flipX = flip;
+
+        // Cập nhật attack collider khi quay mặt
+        UpdateColliderFlip(flip);
     }
 
     void Patrol()
     {
         float dir = movingRight ? 1f : -1f;
         transform.Translate(Vector2.right * dir * speed * Time.deltaTime);
-        spriteRenderer.flipX = !movingRight;
+
+        bool flip = !movingRight;
+        spriteRenderer.flipX = flip;
+
+        // Cập nhật collider khi patrol
+        UpdateColliderFlip(flip);
 
         float distanceFromStart = transform.position.x - startPosition.x;
         float buffer = 0.5f; // Tăng giới hạn thêm một tí
@@ -219,16 +292,53 @@ public class EnemyRun : MonoBehaviour
         }
     }
 
-
-    void UpdateColliderFlip(bool flipX)
+    // Hàm để lật BoxCollider của colliderHolder và attackCollider theo sprite
+    void UpdateColliderFlip(bool isFlipped)
     {
-        if (colliderHolder == null) return;
+        // Lật colliderHolder (BoxCollider2D)
+        if (boxCollider != null)
+        {
+            Vector2 newOffset = originalColliderOffset;
 
-        Vector3 localScale = colliderHolder.localScale;
-        localScale.x = flipX ? -Mathf.Abs(localScale.x) : Mathf.Abs(localScale.x);
-        colliderHolder.localScale = localScale;
+            if (isFlipped)
+            {
+                newOffset.x = originalColliderOffset.x * -1f;
+            }
+
+            boxCollider.offset = newOffset;
+        }
+
+        // Xử lý AttackCollider tùy theo loại
+        if (attackCollider != null)
+        {
+            if (attackBoxCollider != null)
+            {
+                // Nếu là BoxCollider2D - dùng localScale như cũ
+                Vector3 newScale = attackCollider.localScale;
+                newScale.x = Mathf.Abs(newScale.x) * (isFlipped ? -1f : 1f);
+                attackCollider.localScale = newScale;
+
+            }
+            else if (attackPolygonCollider != null && originalPolygonPoints != null)
+            {
+                // Nếu là PolygonCollider2D - lật các điểm theo trục X
+                Vector2[] flippedPoints = new Vector2[originalPolygonPoints.Length];
+
+                for (int i = 0; i < originalPolygonPoints.Length; i++)
+                {
+                    flippedPoints[i] = originalPolygonPoints[i];
+
+                    if (isFlipped)
+                    {
+                        // Lật điểm theo trục X (đảo dấu x)
+                        flippedPoints[i].x = -originalPolygonPoints[i].x;
+                    }
+                }
+
+                attackPolygonCollider.points = flippedPoints;
+            }
+        }
     }
-
 
     // Debug đơn giản hơn
     void OnGUI()
@@ -259,4 +369,8 @@ public class EnemyRun : MonoBehaviour
             Gizmos.DrawLine(transform.position, player.position);
         }
     }
+
+
+
+
 }
