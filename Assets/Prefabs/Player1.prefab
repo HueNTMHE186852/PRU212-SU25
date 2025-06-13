@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1342906338333669503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8904727700999808970}
+  - component: {fileID: 2487816931999236654}
+  - component: {fileID: 937854434920421480}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8904727700999808970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342906338333669503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.735, y: -0.007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8950537346499803018}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2487816931999236654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342906338333669503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d29a2f17e16ff49b4e278aca876d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+--- !u!61 &937854434920421480
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342906338333669503}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.485631, y: -0.18072705}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.58914423, y: 0.8717419}
+  m_EdgeRadius: 0
 --- !u!1 &2386185330053295020
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,13 +216,14 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -67.7, y: 107.7, z: 0}
-  m_LocalScale: {x: 22.473455, y: 26.525927, z: 0.96464}
+  m_LocalScale: {x: 18.288898, y: 18.679558, z: 0.96464}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9094707870986336457}
   - {fileID: 4470477808677339218}
   - {fileID: 5841882689063271290}
   - {fileID: 220151284737215517}
+  - {fileID: 8904727700999808970}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &295025434328861607
@@ -219,7 +311,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
@@ -249,16 +341,26 @@ MonoBehaviour:
   moveSpeed: 20
   jumpForce: 18
   rollForce: 15
+  maxHealth: 100
+  currentHealth: 100
+  maxMP: 100
+  currentMP: 100
   GroundCheck: {fileID: 4470477808677339218}
+  attackHitbox: {fileID: 0}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  isRolling: 0
-  timeSinceAttack: 0
-  currentAttack: 0
-  isAttack: 0
+  healthBar: {fileID: 0}
+  MPBar: {fileID: 0}
+  eSkillMPCost: 20
+  qSkillMPCost: 30
+  mpRegenRate: 5
   maxJumps: 2
+  attackCooldown: 0.3
+  eSkillSlowFactor: 0.3
+  eSkillDuration: 0.6
+  damage: 10
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -303,21 +405,21 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.17999999, y: -0.58}
-      - {x: 0.11358214, y: -0.37433907}
-      - {x: 0.17999999, y: -0.29}
-      - {x: 0.17999999, y: -0.26999998}
-      - {x: 0.089999996, y: -0.19}
+    - - {x: 0.029731289, y: -0.4045802}
+      - {x: 0.08468422, y: -0.43375584}
+      - {x: 0.052849438, y: -0.3069762}
+      - {x: 0.047069486, y: -0.27848807}
+      - {x: 0.058212407, y: -0.21263468}
       - {x: 0.049999997, y: -0.17}
       - {x: -0.020237923, y: -0.18192808}
-      - {x: -0.078063555, y: -0.25259602}
-      - {x: -0.09991259, y: -0.27124512}
-      - {x: -0.100774474, y: -0.38159147}
-      - {x: -0.08395986, y: -0.42987105}
-      - {x: -0.08387244, y: -0.44990996}
-      - {x: -0.107419096, y: -0.53407896}
-      - {x: -0.117899746, y: -0.6343957}
-      - {x: 0.17999999, y: -0.6350195}
+      - {x: -0.031827014, y: -0.25259602}
+      - {x: -0.021888465, y: -0.27124512}
+      - {x: -0.037199304, y: -0.375933}
+      - {x: 0.0056235567, y: -0.44401845}
+      - {x: 0.028829359, y: -0.44425067}
+      - {x: -0.032284632, y: -0.53973746}
+      - {x: -0.057214245, y: -0.6343957}
+      - {x: 0.11064507, y: -0.6350195}
   m_UseDelaunayMesh: 0
 --- !u!61 &4297655256286840751
 BoxCollider2D:
@@ -351,7 +453,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015324786, y: -0.42412293}
+  m_Offset: {x: 0.008100338, y: -0.42412293}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -362,7 +464,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.23396268, y: 0.41444302}
+  m_Size: {x: 0.21951379, y: 0.41444302}
   m_EdgeRadius: 0
 --- !u!1 &5835615933464233961
 GameObject:
@@ -432,7 +534,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
