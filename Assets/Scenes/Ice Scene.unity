@@ -80284,11 +80284,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -58
+      value: -57.5
       objectReference: {fileID: 0}
     - target: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -88
+      value: -92.1
       objectReference: {fileID: 0}
     - target: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
       propertyPath: m_LocalPosition.z
@@ -80356,7 +80356,7 @@ PrefabInstance:
       objectReference: {fileID: 7511585153905116974, guid: c1f67ca9f3677fe4fa1083b4f6f88a2c, type: 3}
     - target: {fileID: 9164127162841577666, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
       propertyPath: detectionRange
-      value: 40
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -80717,13 +80717,17 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1277635942}
+    - target: {fileID: 7081564891563122426, guid: 8df68961903f2f447a4f634627241239, type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -63.000015
+      value: 79.5
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 182
+      value: -83.2
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.z

@@ -27,7 +27,9 @@ public class BossAI : MonoBehaviour
     private float idleTimer;
     private bool decidedAction = false;
 
-    void Start()
+	[HideInInspector] public bool hasCollidedWithPlayer = false;
+
+	void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -42,60 +44,73 @@ public class BossAI : MonoBehaviour
 		healthBar.gameObject.SetActive(false);
 	}
 
-    void Update()
-    {
-        if (player == null) return;
+	void Update()
+	{
+		if (player == null) return;
 
-        float distance = Vector2.Distance(transform.position, player.position);
-        bool inAttackRange = distance <= attackRange;
-		if (!hasHealthBarAppeared && distance <= detectionRange)
+		// Gọi kiểm tra khoảng cách
+		bool inDetectionRange = InDetectionRange();
+		bool inAttackRange = InAttackRange();
+
+		// Hiện thanh máu nếu trong vùng phát hiện
+		if (!hasHealthBarAppeared && inDetectionRange)
 		{
 			hasHealthBarAppeared = true;
 			healthBar.gameObject.SetActive(true);
 		}
 
+		// Nếu chưa phát hiện, boss đứng yên
+		if (!inDetectionRange) return;
+
 		if (!animator.GetBool("isCharging") && !isShooting)
-        {
-            LookAtPlayer();
-        }
+		{
+			LookAtPlayer();
+		}
 
-        if (!decidedAction)
-        {
-            idleTimer -= Time.deltaTime;
-            if (idleTimer <= 0)
-            {
-                decidedAction = true;
-                int rand = Random.Range(0, 2);
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			TakeDamage(10);
+		}
 
-                if (rand == 0)
-                {
-                    animator.SetBool("isRunning", true);
-                    animator.SetBool("isCharging", false);
-                }
-                else
-                {
-                    animator.SetBool("isCharging", true);
-                    animator.SetBool("isRunning", false);
-                    isChargingFinished = false;
-                }
-            }
-        }
+		// Hành vi AI
+		if (!decidedAction)
+		{
+			idleTimer -= Time.deltaTime;
+			if (idleTimer <= 0)
+			{
+				decidedAction = true;
+				int rand = Random.Range(0, 2);
 
-        if (animator.GetBool("isRunning") && inAttackRange && !isAttacking)
-        {
-            isAttacking = true;
-            animator.SetTrigger("meleeAttack");
-            animator.SetBool("isRunning", false);
-        }
+				if (rand == 0)
+				{
+					animator.SetBool("isRunning", true);
+					animator.SetBool("isCharging", false);
+				}
+				else
+				{
+					animator.SetBool("isCharging", true);
+					animator.SetBool("isRunning", false);
+					isChargingFinished = false;
+				}
+			}
+		}
 
-        if (animator.GetBool("isCharging") && inAttackRange && isChargingFinished && !isShooting)
-        {
-            isShooting = true;
-            animator.SetBool("isShooting", true);
-        }
-    }
+		if (animator.GetBool("isRunning") && inAttackRange && !isAttacking)
+		{
+			isAttacking = true;
+			animator.SetTrigger("meleeAttack");
+			animator.SetBool("isRunning", false);
+		}
 
-    void TakeDamage(int damage)
+		if (animator.GetBool("isCharging") && inAttackRange && isChargingFinished && !isShooting)
+		{
+			isShooting = true;
+			animator.SetBool("isShooting", true);
+		}
+	}
+
+
+	void TakeDamage(int damage)
     {
         currentHealth -= damage;
 		currentHealth = Mathf.Max(currentHealth, 0);
@@ -103,28 +118,27 @@ public class BossAI : MonoBehaviour
 		if (currentHealth <= 0)
 		{
 			healthBar.gameObject.SetActive(false);
-			// Call Die Function
+			Die();
 		}
 	}
 
-    void FixedUpdate()
-    {
-        if (player == null) return;
+	void FixedUpdate()
+	{
+		if (player == null) return;
 
-        float distanceX = Mathf.Abs(transform.position.x - player.position.x);
-        float distanceY = Mathf.Abs(transform.position.y - player.position.y);
-        bool inDetectionRange = distanceX <= detectionRange;
-        bool inAttackRange = distanceX <= attackRange && distanceY < 1f;
+		bool inDetectionRange = InDetectionRange();
+		bool inAttackRange = InAttackRange();
 
-        if (animator.GetBool("isRunning") && inDetectionRange && !inAttackRange)
-        {
-            Vector2 target = new Vector2(player.position.x, rb.position.y);
-            Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-            rb.MovePosition(newPos);
-        }
-    }
+		if (animator.GetBool("isRunning") && inDetectionRange && !inAttackRange)
+		{
+			Vector2 target = new Vector2(player.position.x, rb.position.y);
+			Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+			rb.MovePosition(newPos);
+		}
+	}
 
-    public void LookAtPlayer()
+
+	public void LookAtPlayer()
     {
         if (player == null) return;
 
@@ -207,4 +221,42 @@ public class BossAI : MonoBehaviour
         }
     }
 
+	void Die()
+	{
+		animator.SetTrigger("die");
+		rb.velocity = Vector2.zero; 
+		this.enabled = false;
+		Destroy(gameObject, 2.5f);
+	}
+
+private bool InDetectionRange()
+{
+	Vector2 bossPos = new Vector2(transform.position.x, transform.position.y);
+	Vector2 playerPos = new Vector2(player.position.x, player.position.y);
+	return Vector2.Distance(bossPos, playerPos) <= detectionRange;
+}
+
+	private bool InAttackRange()
+	{
+		float dx = Mathf.Abs(transform.position.x - player.position.x);
+		float dy = Mathf.Abs(transform.position.y - player.position.y);
+		return dx <= attackRange && dy < 1f;
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Player"))
+		{
+			hasCollidedWithPlayer = true;
+			animator.SetTrigger("meleeAttack");
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Player"))
+		{
+			hasCollidedWithPlayer = false;	
+		}
+	}
 }
