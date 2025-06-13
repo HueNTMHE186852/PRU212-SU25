@@ -9,16 +9,17 @@ public class Player1Healthbar : MonoBehaviour
 
     [SerializeField] private Gradient gradient;
     public Image fill;
-    public void SetMaxHealth(int health)
+    public void SetMaxHealth()
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.maxValue = 1f;
+        slider.value = 1f;
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void SetHealth(int health)
+    public void SetHealth(float health)
     {
         slider.value = health;
+        Debug.Log(slider.value);
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

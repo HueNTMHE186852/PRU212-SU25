@@ -51,33 +51,26 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.gameObject.SetActive(false);
-        currentHealth = maxHealth;
+        healthBar.SetMaxHealth();
+        healthBar.gameObject.SetActive(true);
 
-        MPBar.SetMaxMP(maxMP);
-        MPBar.gameObject.SetActive(false); 
-        currentMP = maxMP;
+        MPBar.SetMaxMP();
+        MPBar.gameObject.SetActive(true); 
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0);
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth((float)currentHealth/maxHealth);
         if (currentHealth <= 0)
         {
-
-            // Call Die Function
+            animator.SetBool("IsDead", true);
+            Time.timeScale = 0f;
         }
     }
 
     void Update()
     {
-        if(currentHealth == 0)
-        {
-            animator.SetBool("IsDead", true);
-        }
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
         timeSinceAttack += Time.deltaTime;
