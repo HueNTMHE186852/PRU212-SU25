@@ -76,7 +76,7 @@ public class Player1 : MonoBehaviour
     {
         if(currentHealth == 0)
         {
-            animator.SetBool("isDead", true);
+            animator.SetBool("IsDead", true);
         }
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
