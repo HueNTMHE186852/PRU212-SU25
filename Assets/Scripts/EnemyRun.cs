@@ -43,12 +43,6 @@ public class EnemyRun : MonoBehaviour
     private PolygonCollider2D attackPolygonCollider;
     private Vector2[] originalPolygonPoints;
 
-    private void OnMouseDown()
-    {
-        currentHeatlh -= 10;
-        healthbar.updateHeathBar(currentHeatlh, maxHealth);
-    }
-
     void Start()
     {
         // Tìm player
