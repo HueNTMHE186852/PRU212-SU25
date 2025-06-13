@@ -14,6 +14,7 @@ public class Player1 : MonoBehaviour
     public int maxMP = 100;
     public int currentMP;
     public Transform GroundCheck;
+    public Transform attackHitbox;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
@@ -44,6 +45,8 @@ public class Player1 : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 movement;
 
+    public int damage = 10;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -51,33 +54,29 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.gameObject.SetActive(false);
-        currentHealth = maxHealth;
+        healthBar.SetMaxHealth();
+        healthBar.gameObject.SetActive(true);
 
-        MPBar.SetMaxMP(maxMP);
-        MPBar.gameObject.SetActive(false); 
-        currentMP = maxMP;
+        MPBar.SetMaxMP();
+        MPBar.gameObject.SetActive(true);
+
+        Debug.Log("PlayerAttackCollider active on: " + gameObject.name);
+
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0);
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth((float)currentHealth/maxHealth);
         if (currentHealth <= 0)
         {
-
-            // Call Die Function
+            animator.SetBool("IsDead", true);
+            Time.timeScale = 0f;
         }
     }
 
     void Update()
     {
-        if(currentHealth == 0)
-        {
-            animator.SetBool("IsDead", true);
-        }
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
         timeSinceAttack += Time.deltaTime;
@@ -174,17 +173,30 @@ public class Player1 : MonoBehaviour
         }
 
         // Flip sprite
-        if (movement.x < 0)
+        bool wasFlipped = spriteRenderer.flipX;
+        if (movement.x < 0 && !wasFlipped)
+        {
             spriteRenderer.flipX = true;
-        else if (movement.x > 0)
+            FlipHitbox(true);
+        }
+        else if (movement.x > 0 && wasFlipped)
+        {
             spriteRenderer.flipX = false;
+            FlipHitbox(false);
+        }
+
 
         // Animator parameters
         animator.SetBool("isMoving", movement.x != 0);
         animator.SetBool("isGrounded", isGrounded);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
     }
-
+    void FlipHitbox(bool facingLeft)
+    {
+        Vector3 pos = attackHitbox.localPosition;
+        pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
+        attackHitbox.localPosition = pos;
+    }
     void FixedUpdate()
     {
         if (isRolling) return;

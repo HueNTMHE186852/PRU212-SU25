@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class Player1MPBar : MonoBehaviour
 {
     public Slider slider;
-
-    [SerializeField] private Gradient gradient;
     public Image fill;
-    public void SetMaxMP(int MP)
+    [SerializeField] private Gradient gradient;
+    public void SetMaxMP()
     {
-        slider.maxValue = MP;
-        slider.value = MP;
+        slider.maxValue = 1f; 
+        slider.value = 1f;   
         fill.color = gradient.Evaluate(1f);
     }
 
