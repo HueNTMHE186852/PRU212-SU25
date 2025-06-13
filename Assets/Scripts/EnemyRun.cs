@@ -2,18 +2,19 @@
 
 public class EnemyRun : MonoBehaviour
 {
-    //public EnemyHealthBar healthbar;
+    public EnemyHealthBar healthbar;
+    public int damage = 10;
     public float speed = 3.5f;
     public float verticalTolerance = 20f;
     public float attackRange = 10f;
     public float detectionRange = 25f;
     public float attackCooldown = 0.1f;
     public float attackDuration = 1f;
-    public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
-    public Transform attackCollider;  // Kéo thả AttackCollider từ Inspector
+    public Transform colliderHolder;  
+    public Transform attackCollider;  
 
     private Vector3 startPosition;
-    public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
+    public float patrolDistance = 5f;
     public float currentHeatlh;
     public float maxHealth = 50;
     private float lastAttackTime = -10f;
@@ -45,7 +46,7 @@ public class EnemyRun : MonoBehaviour
     private void OnMouseDown()
     {
         currentHeatlh -= 10;
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        healthbar.updateHeathBar(currentHeatlh, maxHealth);
     }
 
     void Start()
@@ -352,6 +353,18 @@ public class EnemyRun : MonoBehaviour
         //GUI.Label(new Rect(10, 90, 300, 20), $"Time: {Time.time:F1}s");
     }
 
+    public void TakeDamage(int amount)
+    {
+        currentHeatlh -= amount;
+        Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
+
+        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+
+        if (currentHeatlh <= 0)
+        {
+            //Die();
+        }
+    }
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)
