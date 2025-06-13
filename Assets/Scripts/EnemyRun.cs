@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using TreeEditor;
+using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
 {
-    //public EnemyHealthBar healthbar;
+    public EnemyHealthBar healthbar;
+    public int damage = 10;
     public float speed = 3.5f;
     public float verticalTolerance = 20f;
     public float attackRange = 10f;
@@ -11,9 +13,10 @@ public class EnemyRun : MonoBehaviour
     public float attackDuration = 1f;
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
     public Transform attackCollider;  // Kéo thả AttackCollider từ Inspector
+    public GameObject floatingText;
     private bool isDead = false;
     private Vector3 startPosition;
-    public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
+    public float patrolDistance = 5f;
     public float currentHeatlh;
     public float maxHealth = 50;
     private float lastAttackTime = -10f;
@@ -44,8 +47,8 @@ public class EnemyRun : MonoBehaviour
 
     private void OnMouseDown()
     {
-        currentHeatlh -= 10;
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        TakeDamage(10);
+        Debug.Log("Enemy nhận 10 dame");
     }
 
     void Start()
@@ -386,6 +389,33 @@ public class EnemyRun : MonoBehaviour
         //GUI.Label(new Rect(10, 90, 300, 20), $"Time: {Time.time:F1}s");
     }
 
+    public void TakeDamage(int amount)
+    {
+        ShowDame(amount.ToString());
+        currentHeatlh -= amount;
+        Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
+
+        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+      
+        if (currentHeatlh <= 0)
+        {
+            Die();
+        }
+    }
+    void ShowDame(string text)
+    {
+        if (floatingText)
+        {
+            GameObject prefab = Instantiate(floatingText, transform.position, Quaternion.identity);
+
+            // Ép lại vị trí z để không bị ẩn
+            Vector3 fixedPos = prefab.transform.position;
+            fixedPos.z = -1; // hoặc 0
+            prefab.transform.position = fixedPos;
+
+            prefab.GetComponentInChildren<TextMesh>().text = text;
+        }
+    }
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)
