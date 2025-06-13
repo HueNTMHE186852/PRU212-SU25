@@ -396,7 +396,7 @@ public class EnemyRun : MonoBehaviour
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
 
         //healthbar.updateHeathBar(currentHeatlh, maxHealth);
-      
+
         if (currentHeatlh <= 0)
         {
             Die();
