@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class PlayerAttackCollider : MonoBehaviour
 {
-    public int damage = 10; // S? damage gây ra
+    public int damage = 10;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("Enemy"))
-        {
-            Debug.Log("?? Player b? trúng ?òn t? AttackZone!");
+        Debug.Log("?? ?ã va ch?m v?i: " + other.name);
 
-            EnemyRun enemy = collision.GetComponent<EnemyRun>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-            }
+        // L?y script EnemyRun t? cha c?a collider va ch?m
+        EnemyRun enemy = other.GetComponentInParent<EnemyRun>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+            Debug.Log("? Gây damage cho enemy: " + enemy.name);
         }
     }
 }

@@ -15,7 +15,6 @@ public class Player1 : MonoBehaviour
     public int currentMP;
     public Transform GroundCheck;
     public Transform attackHitbox;
-    public GameObject attackCollider;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
@@ -59,7 +58,10 @@ public class Player1 : MonoBehaviour
         healthBar.gameObject.SetActive(true);
 
         MPBar.SetMaxMP();
-        MPBar.gameObject.SetActive(true); 
+        MPBar.gameObject.SetActive(true);
+
+        Debug.Log("PlayerAttackCollider active on: " + gameObject.name);
+
     }
 
     public void TakeDamage(int damage)
@@ -122,8 +124,6 @@ public class Player1 : MonoBehaviour
             animator.SetTrigger("Attack" + currentAttack);
             timeSinceAttack = 0.0f;
             StartCoroutine(ResetAttackLock(0.4f));
-
-            Attack();
         }
 
         // Defend (Right Click)
@@ -142,8 +142,6 @@ public class Player1 : MonoBehaviour
             currentMP -= eSkillMPCost;
             MPBar.SetMP((float)currentMP / maxMP);
             StartCoroutine(ResetAttackLock(0.5f));
-
-            Attack();
         }
 
         // Skill Q
@@ -153,8 +151,6 @@ public class Player1 : MonoBehaviour
             currentMP -= qSkillMPCost;
             MPBar.SetMP((float)currentMP / maxMP);
             StartCoroutine(ResetAttackLock(0.5f));
-
-            Attack();
         }
 
 
@@ -195,38 +191,11 @@ public class Player1 : MonoBehaviour
         animator.SetBool("isGrounded", isGrounded);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
     }
-    void Attack()
-    {
-        EnableHitbox();                   
-        Invoke(nameof(DisableHitbox), 0.3f); 
-        StartCoroutine(ResetAttackLock(0.4f));
-    }
     void FlipHitbox(bool facingLeft)
     {
         Vector3 pos = attackHitbox.localPosition;
         pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
         attackHitbox.localPosition = pos;
-    }
-    public void EnableHitbox()
-    {
-        attackCollider.SetActive(true);
-    }
-    public void DisableHitbox()
-    {
-        attackCollider.SetActive(false);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            EnemyRun enemy = other.GetComponent<EnemyRun>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-                Debug.Log(damage);
-            }
-        }
     }
     void FixedUpdate()
     {
