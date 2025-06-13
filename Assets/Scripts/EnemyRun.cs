@@ -11,7 +11,7 @@ public class EnemyRun : MonoBehaviour
     public float attackDuration = 1f;
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
     public Transform attackCollider;  // Kéo thả AttackCollider từ Inspector
-
+    private bool isDead = false;
     private Vector3 startPosition;
     public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
     public float currentHeatlh;
@@ -135,6 +135,7 @@ public class EnemyRun : MonoBehaviour
     void Update()
     {
         if (player == null) return;
+        if (isDead) return;
 
         // Nếu đang attack, chỉ cần chờ hết thời gian
         if (isAttacking)
@@ -176,6 +177,10 @@ public class EnemyRun : MonoBehaviour
         {
             Time.timeScale = 1f; // Trở lại bình thường
             Debug.Log("Slow motion OFF");
+        }
+        if (currentHeatlh <= 0 && !isDead)
+        {
+            Die();
         }
     }
 
@@ -244,6 +249,35 @@ public class EnemyRun : MonoBehaviour
         }
 
     }
+
+    void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        isAttacking = false;
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Die");
+
+        // Ngăn rơi khỏi đất
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Static; // Hoặc FreezeAll
+        }
+
+        // Tùy chọn tắt collider tấn công
+        if (attackBoxCollider != null) attackBoxCollider.enabled = false;
+        if (attackPolygonCollider != null) attackPolygonCollider.enabled = false;
+
+        // Đừng tắt collider chính nếu đang chạm đất
+        // if (boxCollider != null) boxCollider.enabled = false;
+
+        // Delay hủy
+        Destroy(gameObject, 1f);
+    }
+
 
     void MoveTowardsPlayer()
     {
