@@ -18,7 +18,6 @@ public class Player1MPBar : MonoBehaviour
     public void SetMP(float MP)
     {
         slider.value = MP;
-        Debug.Log(slider.value);
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }
