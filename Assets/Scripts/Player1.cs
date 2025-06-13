@@ -53,6 +53,7 @@ public class Player1 : MonoBehaviour
 
         healthBar.SetMaxHealth(maxHealth);
         healthBar.gameObject.SetActive(false);
+        currentHealth = maxHealth;
 
         MPBar.SetMaxMP(maxMP);
         MPBar.gameObject.SetActive(false); 
@@ -73,6 +74,10 @@ public class Player1 : MonoBehaviour
 
     void Update()
     {
+        if(currentHealth == 0)
+        {
+            animator.SetBool("isDead", true);
+        }
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
         timeSinceAttack += Time.deltaTime;
