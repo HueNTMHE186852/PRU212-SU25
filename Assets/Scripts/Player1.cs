@@ -11,10 +11,18 @@ public class Player1 : MonoBehaviour
     public float rollForce = 8f;
     public int maxHealth = 100;
     public int currentHealth;
+    public int maxMP = 100;
+    public int currentMP;
     public Transform GroundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
+    public Player1MPBar MPBar;
+
+    public int eSkillMPCost = 20;
+    public int qSkillMPCost = 30;
+    public float mpRegenRate = 5f; 
+    private float mpRegenTimer = 0f;
 
     public int maxJumps = 2;
     public float attackCooldown = 0.3f;
@@ -45,6 +53,11 @@ public class Player1 : MonoBehaviour
 
         healthBar.SetMaxHealth(maxHealth);
         healthBar.gameObject.SetActive(false);
+        currentHealth = maxHealth;
+
+        MPBar.SetMaxMP(maxMP);
+        MPBar.gameObject.SetActive(false); 
+        currentMP = maxMP;
     }
 
     public void TakeDamage(int damage)
@@ -61,6 +74,10 @@ public class Player1 : MonoBehaviour
 
     void Update()
     {
+        if(currentHealth == 0)
+        {
+            animator.SetBool("isDead", true);
+        }
         // Input
         movement.x = Input.GetAxisRaw("Horizontal");
         timeSinceAttack += Time.deltaTime;
@@ -118,20 +135,25 @@ public class Player1 : MonoBehaviour
         }
 
         // Skill E (slow move)
-        if (Input.GetKeyDown(KeyCode.E) && !isRolling && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.E) && !isRolling && !isAttacking && currentMP >= eSkillMPCost)
         {
             animator.SetTrigger("Attack4");
             isUsingESkill = true;
             eSkillTimer = eSkillDuration;
+            currentMP -= eSkillMPCost;
+            MPBar.SetMP((float)currentMP / maxMP);
             StartCoroutine(ResetAttackLock(0.5f));
         }
 
         // Skill Q
-        if (Input.GetKeyDown(KeyCode.Q) && !isRolling && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.Q) && !isRolling && !isAttacking && currentMP >= qSkillMPCost)
         {
             animator.SetTrigger("Attack5");
+            currentMP -= qSkillMPCost;
+            MPBar.SetMP((float)currentMP / maxMP);
             StartCoroutine(ResetAttackLock(0.5f));
         }
+
 
         // Update E skill timer
         if (isUsingESkill)
@@ -141,6 +163,14 @@ public class Player1 : MonoBehaviour
             {
                 isUsingESkill = false;
             }
+        }
+
+        mpRegenTimer += Time.deltaTime;
+        if (mpRegenTimer >= 1f)
+        {
+            mpRegenTimer = 0f;
+            currentMP = Mathf.Min(currentMP + (int)mpRegenRate, maxMP);
+            MPBar.SetMP((float)currentMP / maxMP);
         }
 
         // Flip sprite
