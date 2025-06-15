@@ -6,9 +6,7 @@ public class PlayerAttackCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("?? ?ã va ch?m v?i: " + other.name);
 
-        // L?y script EnemyRun t? cha c?a collider va ch?m
         EnemyRun enemy = other.GetComponentInParent<EnemyRun>();
         if (enemy != null)
         {
