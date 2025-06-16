@@ -7,7 +7,6 @@ public class Player1MPBar : MonoBehaviour
 {
     public Slider slider;
     public Image fill;
-    [SerializeField] private Gradient gradient;
     public void SetMaxMP()
     {
         slider.maxValue = 1f; 
