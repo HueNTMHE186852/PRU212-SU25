@@ -225,8 +225,12 @@ public class Player1 : MonoBehaviour
     }
     void FlipHitbox(bool facingLeft)
     {
+        if (attackHitbox == null)
+        {
+            return;
+        }
         Vector3 pos = attackHitbox.localPosition;
-        pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
+        pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);  // Flip X
         attackHitbox.localPosition = pos;
     }
     void FixedUpdate()
@@ -251,5 +255,13 @@ public class Player1 : MonoBehaviour
         isAttacking = true;
         yield return new WaitForSeconds(duration);
         isAttacking = false;
+    }
+    void OnDrawGizmosSelecteds()
+    {
+        if (attackHitbox != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(attackHitbox.position, new Vector3(1, 1, 0));
+        }
     }
 }

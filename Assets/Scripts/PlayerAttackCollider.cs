@@ -6,14 +6,17 @@ public class PlayerAttackCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("?? ?ã va ch?m v?i: " + other.name);
+        Debug.Log(other.name);
 
-        // L?y script EnemyRun t? cha c?a collider va ch?m
         EnemyRun enemy = other.GetComponentInParent<EnemyRun>();
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Debug.Log("? Gây damage cho enemy: " + enemy.name);
+        }
+        BossAI boss = other.GetComponentInParent<BossAI>();
+        if (boss != null)
+        {
+            boss.TakeDamage(damage);
         }
     }
 }
