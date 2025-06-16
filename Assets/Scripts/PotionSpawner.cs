@@ -2,54 +2,50 @@ using UnityEngine;
 
 public class PotionSpawner : MonoBehaviour
 {
-    public GameObject healthPrefab;
-    public GameObject manaPrefab;
+    public GameObject healthPotionPrefab;
+    public GameObject manaPotionPrefab;
     public Transform player;
-    public Collider2D spawnArea;
 
-    public float minOffset = 5f;  
-    public float maxOffset = 25f; 
+    public float minDistance = 2.5f;
+    public float maxDistance = 4f;
 
-    public float spawnInterval = 5f;
+    private Player1 playerScript;
+    private float lastSpawnX = float.MinValue;
+    private GameObject currentPotion;
 
     void Start()
     {
+        playerScript = player.GetComponent<Player1>();
         SpawnPotion();
-
     }
 
     public void SpawnPotion()
     {
-        Bounds bounds = spawnArea.bounds;
+        if (player == null || playerScript == null) return;
 
-        float randomX = Random.Range(player.position.x + minOffset, player.position.x + maxOffset);
+        float dir = playerScript.transform.localScale.x < 0 ? -1f : 1f;
+        float offsetX = Random.Range(minDistance, maxDistance);
+        float spawnX = player.position.x + dir * offsetX;
 
-        randomX = Mathf.Clamp(randomX, bounds.min.x, bounds.max.x);
+        if (Mathf.Abs(spawnX - lastSpawnX) < 1f) return;
 
-        float rayStartY = bounds.max.y;
-        float rayEndY = bounds.min.y;
+        float groundY = player.position.y - 0.5f;
+        Vector2 spawnPos = new Vector2(spawnX, groundY);
 
-        RaycastHit2D hit = Physics2D.Raycast(
-            new Vector2(randomX, rayStartY),
-            Vector2.down,
-            rayStartY - rayEndY,
-            LayerMask.GetMask("Ground") 
-        );
+        GameObject prefab = Random.value < 0.5f ? healthPotionPrefab : manaPotionPrefab;
+        currentPotion = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        if (hit.collider != null)
+        var pickup = currentPotion.GetComponent<PotionPickup>();
+        if (pickup != null)
         {
-            Vector2 spawnPos = hit.point + Vector2.up * 0.5f;
-
-            GameObject prefab = Random.value < 0.5f ? healthPrefab : manaPrefab;
-
-            if (prefab == null)
-            {
-                Debug.LogError("Prefab bi thieu!");
-                return;
-            }
-
-            Instantiate(prefab, spawnPos, Quaternion.identity);
-
+            pickup.spawner = this;
         }
+
+        lastSpawnX = spawnX;
+    }
+
+    public void OnPotionCollected()
+    {
+        SpawnPotion();
     }
 }
