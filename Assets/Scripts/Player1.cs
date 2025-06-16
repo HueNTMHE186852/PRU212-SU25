@@ -15,7 +15,7 @@ public class Player1 : MonoBehaviour
     public int currentMP;
     private bool isDead = false;
     public Transform GroundCheck;
-    public Transform attackHitbox;
+    //public Transform attackHitbox;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
@@ -44,7 +44,10 @@ public class Player1 : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;
+
+    [HideInInspector]
+    public SpriteRenderer spriteRenderer;
+
     private Vector2 movement;
 
     
@@ -209,12 +212,12 @@ public class Player1 : MonoBehaviour
         if (movement.x < 0 && !wasFlipped)
         {
             spriteRenderer.flipX = true;
-            FlipHitbox(true);
+            //FlipHitbox(true);
         }
         else if (movement.x > 0 && wasFlipped)
         {
             spriteRenderer.flipX = false;
-            FlipHitbox(false);
+            //FlipHitbox(false);
         }
 
 
@@ -223,12 +226,12 @@ public class Player1 : MonoBehaviour
         animator.SetBool("isGrounded", isGrounded);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
     }
-    void FlipHitbox(bool facingLeft)
-    {
-        Vector3 pos = attackHitbox.localPosition;
-        pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
-        attackHitbox.localPosition = pos;
-    }
+    //void FlipHitbox(bool facingLeft)
+    //{
+    //    Vector3 pos = attackHitbox.localPosition;
+    //    pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
+    //    attackHitbox.localPosition = pos;
+    //}
     void FixedUpdate()
     {
         if (isRolling) return;
