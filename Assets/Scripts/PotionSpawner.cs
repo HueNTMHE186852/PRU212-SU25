@@ -1,47 +1,57 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PotionSpawner : MonoBehaviour
 {
     public GameObject healthPotionPrefab;
     public GameObject manaPotionPrefab;
+
+    [Header("Player Reference")]
     public Transform player;
 
-    public float minDistance = 2.5f;
-    public float maxDistance = 4f;
+    public float minSpacing = 6f;
+    public float maxSpacing = 10f;
 
-    private Player1 playerScript;
-    private float lastSpawnX = float.MinValue;
-    private GameObject currentPotion;
+    public float firstPotionOffsetX = 2f;
+
+    private float nextSpawnX = 0f;
 
     void Start()
     {
-        playerScript = player.GetComponent<Player1>();
-        SpawnPotion();
+        if (player != null)
+        {
+            nextSpawnX = player.position.x + firstPotionOffsetX;
+            SpawnPotion();
+        }
+        else
+        {
+            Debug.LogWarning("Player reference not set on PotionSpawner.");
+        }
     }
-
     public void SpawnPotion()
     {
-        if (player == null || playerScript == null) return;
+        if (healthPotionPrefab == null && manaPotionPrefab == null || player == null)
+        {
+            Debug.LogWarning("Missing references.");
+            return;
+        }
 
-        float dir = playerScript.transform.localScale.x < 0 ? -1f : 1f;
-        float offsetX = Random.Range(minDistance, maxDistance);
-        float spawnX = player.position.x + dir * offsetX;
+        // Xác định hướng nhìn của player
+        float dir = player.localScale.x < 0 ? -1f : 1f;
 
-        if (Mathf.Abs(spawnX - lastSpawnX) < 1f) return;
+        float offsetX = Random.Range(minSpacing, maxSpacing);
+        nextSpawnX = player.position.x + dir * offsetX;
 
-        float groundY = player.position.y - 0.5f;
-        Vector2 spawnPos = new Vector2(spawnX, groundY);
+        float spawnY = 0.2f;
+        Vector3 spawnPos = new Vector3(nextSpawnX, spawnY, 0f);
 
-        GameObject prefab = Random.value < 0.5f ? healthPotionPrefab : manaPotionPrefab;
-        currentPotion = Instantiate(prefab, spawnPos, Quaternion.identity);
+        GameObject prefab = (Random.value < 0.5f) ? healthPotionPrefab : manaPotionPrefab;
+        GameObject potion = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        var pickup = currentPotion.GetComponent<PotionPickup>();
+        var pickup = potion.GetComponent<PotionPickup>();
         if (pickup != null)
         {
             pickup.spawner = this;
         }
-
-        lastSpawnX = spawnX;
     }
 
     public void OnPotionCollected()
