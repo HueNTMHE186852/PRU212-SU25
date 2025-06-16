@@ -13,6 +13,7 @@ public class Player1 : MonoBehaviour
     public int currentHealth;
     public int maxMP = 100;
     public int currentMP;
+    private bool isDead = false;
     public Transform GroundCheck;
     //public Transform attackHitbox;
     public float groundCheckRadius = 0.2f;
@@ -24,6 +25,7 @@ public class Player1 : MonoBehaviour
     public int qSkillMPCost = 30;
     public float mpRegenRate = 5f; 
     private float mpRegenTimer = 0f;
+    public int damage = 10;
 
     public int maxJumps = 2;
     public float attackCooldown = 0.3f;
@@ -45,7 +47,7 @@ public class Player1 : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 movement;
 
-    public int damage = 10;
+    
 
     void Start()
     {
@@ -67,12 +69,42 @@ public class Player1 : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.SetHealth((float)currentHealth/maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth((float)currentHealth / maxHealth);
+        }
+        else
+        {
+            Debug.LogWarning("healthBar is not assigned in Player1.");
+        }
+
         if (currentHealth <= 0)
         {
-            animator.SetBool("IsDead", true);
-            Time.timeScale = 0f;
+            Die();
         }
+
+    }
+
+    public void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        // Stop attacking
+        isAttacking = false;
+        animator.SetTrigger("Die");
+
+        // Stop physics motion and freeze the player
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Static; // Freeze position
+        }
+
+        Destroy(gameObject, 1f);
     }
 
     void Update()
