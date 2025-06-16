@@ -7,17 +7,16 @@ public class Player1MPBar : MonoBehaviour
 {
     public Slider slider;
     public Image fill;
-    [SerializeField] private Gradient gradient;
     public void SetMaxMP()
     {
         slider.maxValue = 1f; 
-        slider.value = 1f;   
-        fill.color = gradient.Evaluate(1f);
+        slider.value = 1f;
+        fill.color = Color.blue;
     }
 
     public void SetMP(float MP)
     {
         slider.value = MP;
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        fill.color = Color.blue;
     }
 }
