@@ -16,6 +16,8 @@ public class Arrow : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Arrow va chạm với: " + collision.gameObject.name + " | Tag: " + collision.gameObject.tag + " | Layer: " + LayerMask.LayerToName(collision.gameObject.layer));
+
         if (hasHit) return;
 
         if (collision.gameObject.CompareTag("Enemy"))
@@ -25,7 +27,7 @@ public class Arrow : MonoBehaviour
             rb.isKinematic = true;
             animator.SetTrigger("StickToEnemy");
 
-            // Đặt mũi tên vào đúng điểm va chạm
+            //Đặt mũi tên vào đúng điểm va chạm
             if (collision.contacts.Length > 0)
             {
                 Vector2 hitPoint = collision.contacts[0].point;
