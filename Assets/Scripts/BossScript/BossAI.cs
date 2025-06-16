@@ -67,10 +67,6 @@ public class BossAI : MonoBehaviour
 			LookAtPlayer();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			TakeDamage(10);
-		}
 
 		// Hành vi AI
 		if (!decidedAction)
@@ -108,9 +104,7 @@ public class BossAI : MonoBehaviour
 			animator.SetBool("isShooting", true);
 		}
 	}
-
-
-	void TakeDamage(int damage)
+	public void TakeDamage(int damage)
     {
         currentHealth -= damage;
 		currentHealth = Mathf.Max(currentHealth, 0);
