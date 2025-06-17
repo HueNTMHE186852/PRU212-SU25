@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Death_0.controller
 --- !u!1107 &-1611023576544857569
 AnimatorStateMachine:
   serializedVersion: 6
@@ -22,6 +23,8 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 212566379458216168}
+=======
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Death_0.controller
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -31,6 +34,7 @@ AnimatorController:
   m_Name: Death_0
   serializedVersion: 5
   m_AnimatorParameters: []
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Death_0.controller
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -70,3 +74,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+=======
+  m_AnimatorLayers: []
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Death_0.controller

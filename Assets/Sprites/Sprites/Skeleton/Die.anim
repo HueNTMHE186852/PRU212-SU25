@@ -17,6 +17,7 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Die.anim
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
@@ -34,11 +35,16 @@ AnimationClip:
     script: {fileID: 0}
     flags: 2
   m_SampleRate: 12
+=======
+  m_PPtrCurves: []
+  m_SampleRate: 60
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Die.anim
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Die.anim
     genericBindings:
     - serializedVersion: 2
       path: 0
@@ -54,17 +60,29 @@ AnimationClip:
     - {fileID: 170237013, guid: 29ba92ebaa6f6964083271810310d1ca, type: 3}
     - {fileID: -1568068392, guid: 29ba92ebaa6f6964083271810310d1ca, type: 3}
     - {fileID: 866359646, guid: 29ba92ebaa6f6964083271810310d1ca, type: 3}
+=======
+    genericBindings: []
+    pptrCurveMapping: []
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Die.anim
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Die.anim
     m_StopTime: 0.33333334
+=======
+    m_StopTime: 1
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Die.anim
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
+<<<<<<< HEAD:Assets/Sprites/Sprites/Skeleton/Die.anim
     m_LoopTime: 0
+=======
+    m_LoopTime: 1
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac:Assets/Monsters Creatures Fantasy/Sprites/Skeleton/Die.anim
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0

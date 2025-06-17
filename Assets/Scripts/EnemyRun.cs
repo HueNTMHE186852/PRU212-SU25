@@ -4,11 +4,18 @@ using UnityEngine;
 public class EnemyRun : MonoBehaviour
 {
     public EnemyHealthBar healthbar;
+<<<<<<< HEAD
     public int damage = 10;
     public float speed = 3.5f;
     public float verticalTolerance = 20f;
     public float attackRange = 10f;
     public float detectionRange = 25f;
+=======
+    public float speed = 2f;
+    public float verticalTolerance = 5f;
+    public float attackRange = 2.5f;
+    public float detectionRange = 10f;
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac
     public float attackCooldown = 0.1f;
     public float attackDuration = 1f;
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
@@ -16,7 +23,11 @@ public class EnemyRun : MonoBehaviour
     public GameObject floatingText;
     private bool isDead = false;
     private Vector3 startPosition;
+<<<<<<< HEAD
     public float patrolDistance = 5f;
+=======
+    public float patrolDistance = 5f; // Enemy tuần tra trái-phải bao nhiêu đơn vị
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac
     public float currentHeatlh;
     public float maxHealth = 50;
     private float lastAttackTime = -10f;
@@ -35,6 +46,7 @@ public class EnemyRun : MonoBehaviour
     private float cachedVerticalDistance;
     private bool canAttackNow = false;
 
+<<<<<<< HEAD
     // Lưu offset gốc của BoxCollider
     private Vector2 originalColliderOffset;
     private Vector2 originalAttackColliderOffset;
@@ -55,8 +67,16 @@ public class EnemyRun : MonoBehaviour
         Debug.Log("Enemy nhận 10 dame");
     }
 
+=======
+    private void OnMouseDown()
+    {
+        currentHeatlh -= 10;
+        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+    }
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac
     void Start()
     {
+        
         // Tìm player
         startPosition = transform.position;
 
@@ -134,9 +154,14 @@ public class EnemyRun : MonoBehaviour
         {
             animator.Play("Run", 0, 0f);
         }
+<<<<<<< HEAD
 
         currentHeatlh = maxHealth;
         //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+=======
+        currentHeatlh = maxHealth;
+        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+>>>>>>> d69cfc32f9a4d84b6ef4688141fe322046a404ac
     }
 
     void Update()
