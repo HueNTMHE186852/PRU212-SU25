@@ -130,6 +130,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 856876077032991053, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
+      propertyPath: hpBowlPrefab
+      value: 
+      objectReference: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
+    - target: {fileID: 856876077032991053, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
+      propertyPath: manaBowlPrefab
+      value: 
+      objectReference: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
     - target: {fileID: 3665206556016828797, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5514174
@@ -77942,9 +77950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1249679a7ed643e4c84fc0c756840551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closedSprite: {fileID: 1377235477, guid: 2bac940ca4b943146ad46889d3575839, type: 3}
-  openFullSprite: {fileID: 2074793873, guid: 2bac940ca4b943146ad46889d3575839, type: 3}
-  openEmptySprite: {fileID: -1535664912, guid: 2bac940ca4b943146ad46889d3575839, type: 3}
 --- !u!212 &210134087
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79367,7 +79372,7 @@ Transform:
   m_LocalScale: {x: 0.054677982, y: 0.053534456, z: 1.0366561}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 299298148}
+  m_Father: {fileID: 9068485836966607574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &769522503
 MonoBehaviour:
@@ -79383,7 +79388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPotionPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
   manaPotionPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
-  player: {fileID: 299298148}
+  player: {fileID: 9068485836966607574}
   minSpacing: 6
   maxSpacing: 10
   firstPotionOffsetX: 2
@@ -80435,11 +80440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.2
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -87.5
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.z
@@ -80481,6 +80486,11 @@ PrefabInstance:
       addedObject: {fileID: 769522502}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8df68961903f2f447a4f634627241239, type: 3}
+--- !u!4 &9068485836966607574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
+  m_PrefabInstance: {fileID: 9068485836966607573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
