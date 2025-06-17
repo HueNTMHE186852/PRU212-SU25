@@ -45,6 +45,10 @@ public class EnemyRun : MonoBehaviour
     private PolygonCollider2D attackPolygonCollider;
     private Vector2[] originalPolygonPoints;
 
+    // Prefabs cho bowl máu và mana
+    [SerializeField] private GameObject hpBowlPrefab;
+    [SerializeField] private GameObject manaBowlPrefab;
+
     private void OnMouseDown()
     {
         TakeDamage(10);
@@ -276,6 +280,24 @@ public class EnemyRun : MonoBehaviour
 
         // Đừng tắt collider chính nếu đang chạm đất
         // if (boxCollider != null) boxCollider.enabled = false;
+
+        // Lọ hồi mana và máu spawn ra khi quái die
+        // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
+        // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
+        float dropChance = Random.Range(0f, 1f); // từ 0.0 đến 1.0
+
+        if (dropChance < 0.6f)
+        {
+            // 60% rơi bowl máu
+            Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
+        }
+        else if (dropChance < 0.9f)
+        {
+            // 30% rơi bowl mana
+            Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
+        }
+        // 10% còn lại: không rơi gì
+
 
         // Delay hủy
         Destroy(gameObject, 1f);
