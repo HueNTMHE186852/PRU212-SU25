@@ -202,6 +202,7 @@ public class BossAI : MonoBehaviour
 	}
 	public void TakeDamage(int damage)
     {
+		Debug.Log("nhan " + damage + "dame");
         currentHealth -= damage;
 		currentHealth = Mathf.Max(currentHealth, 0);
 		healthBar.SetHealth(currentHealth);

@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerAttackCollider : MonoBehaviour
+public class PlayerAttackTrigger : MonoBehaviour
 {
     public enum SkillType
     {
@@ -51,5 +53,4 @@ public class PlayerAttackCollider : MonoBehaviour
             Debug.Log($"🔥 Gây {damage} damage cho boss: {boss.name} bằng skill {skillType}");
         }
     }
-   
 }

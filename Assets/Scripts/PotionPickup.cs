@@ -8,9 +8,6 @@ public class PotionPickup : MonoBehaviour
     [Range(0f, 1f)]
     public float restorePercent = 0.2f;
 
-    [HideInInspector]
-    public PotionSpawner spawner;
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -29,11 +26,6 @@ public class PotionPickup : MonoBehaviour
                     int restoreAmount = Mathf.RoundToInt(player.maxMP * restorePercent);
                     player.currentMP = Mathf.Min(player.maxMP, player.currentMP + restoreAmount);
                     player.MPBar.SetMP((float)player.currentMP / player.maxMP);
-                }
-
-                if (spawner != null)
-                {
-                    spawner.OnPotionCollected();
                 }
 
                 Destroy(gameObject);
