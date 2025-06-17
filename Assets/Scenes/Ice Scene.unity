@@ -80704,6 +80704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Golem_Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 1738564104846132553, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -57.5
