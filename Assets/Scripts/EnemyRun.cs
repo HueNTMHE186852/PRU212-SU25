@@ -1,4 +1,5 @@
-﻿using TreeEditor;
+﻿using System.Collections;
+using TreeEditor;
 using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
@@ -420,16 +421,51 @@ public class EnemyRun : MonoBehaviour
     public void TakeDamage(int amount)
     {
         ShowDame(amount.ToString());
+
+        // Trigger hurt animation
+        animator.SetTrigger("Hurt");
+
+        // Interrupt current attacks
+        isAttacking = false;
+
+        // Apply damage
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
 
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        // Optional: disable movement temporarily
+       
 
+        // Check death
         if (currentHeatlh <= 0)
         {
             Die();
         }
+        else
+        {
+            StartCoroutine(PlayHurtAndRecover());
+        }
     }
+
+    IEnumerator PlayHurtAndRecover()
+    {
+        // Freeze movement
+        float originalSpeed = speed;
+        speed = 0;
+
+        // Wait for the current "Hurt" animation to finish
+        float hurtDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(hurtDuration); // or fixed value if animation length is dynamic
+
+        // Resume normal movement
+        speed = originalSpeed;
+
+        // Do NOT force play "Run" or "Idle" manually!
+        // Animator will handle state transitions automatically
+    }
+
+
+
+
     void ShowDame(string text)
     {
         if (floatingText)

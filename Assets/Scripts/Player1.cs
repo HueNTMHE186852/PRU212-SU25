@@ -88,6 +88,10 @@ public class Player1 : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            animator.SetTrigger("Hurt");
+        }
 
     }
 
