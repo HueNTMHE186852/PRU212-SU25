@@ -31,10 +31,13 @@ public class AuronPlayerController : MonoBehaviour
     public float mpRegenRate = 5f;
     private float mpRegenTimer = 0f;
     public int damage = 10;
+    private SpriteRenderer spriteRenderer;
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
+
         if (healthBar != null)
         {
             healthBar.SetMaxHealth();
@@ -83,19 +86,26 @@ public class AuronPlayerController : MonoBehaviour
                 MPBar.SetMP((float)currentMP / maxMP);
             Debug.Log("SetTrigger SkillAttack");
             animator.SetTrigger("IsAttacking2");
+           
         }
 
 
         // Defend (hold right mouse button)
         isDefending = Input.GetMouseButton(1);
         animator.SetBool("IsDefending", isDefending);
-
-        if (horizontal != 0)
+        bool wasFlipped = spriteRenderer.flipX;
+        if (movement.x < 0 && !wasFlipped)
         {
-            Vector3 scale = transform.localScale;
-            scale.x = horizontal > 0 ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            spriteRenderer.flipX = true;
+
         }
+        else if (movement.x > 0 && wasFlipped)
+        {
+            spriteRenderer.flipX = false;
+  
+        }
+
+
 
         // Di chuyển bằng Rigidbody2D (chuẩn vật lý)
         rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
@@ -175,10 +185,11 @@ public class AuronPlayerController : MonoBehaviour
     {
         Debug.Log("✅ FireArrow() được gọi!");
 
-        float direction = transform.localScale.x > 0 ? 1f : -1f;
+        float direction = spriteRenderer.flipX ? -1f : 1f;
         Vector2 shootDir = new Vector2(direction, 0f);
 
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        arrow.GetComponent<Arrow>().damage = damage;
         Rigidbody2D arrowRb = arrow.GetComponent<Rigidbody2D>();
         arrowRb.velocity = shootDir * arrowForce;
 
@@ -206,11 +217,50 @@ public class AuronPlayerController : MonoBehaviour
     }
     public void SpawnArrowFallEffect()
     {
-        if (arrowFallEffectPrefab != null && arrowFallSpawnPoint != null)
+        if (arrowFallEffectPrefab != null)
         {
-            GameObject effect = Instantiate(arrowFallEffectPrefab, arrowFallSpawnPoint.position, Quaternion.identity);
-            Destroy(effect, 1f);
+            Vector3 mouseScreenPos = Input.mousePosition;
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+            mouseWorldPos.z = 0f;
+
+            // RaycastAll từ trên xuống để tìm ground cao nhất
+            Vector2 rayOrigin = new Vector2(mouseWorldPos.x, transform.position.y + 10f);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, 30f, LayerMask.GetMask("Ground", "Tilemap"));
+
+            Vector3 spawnPos = mouseWorldPos;
+            if (hits.Length > 0)
+            {
+                // Lấy ground cao nhất (y lớn nhất)
+                float maxY = float.MinValue;
+                foreach (var h in hits)
+                {
+                    if (h.point.y > maxY)
+                    {
+                        maxY = h.point.y;
+                        spawnPos = h.point;
+                    }
+                }
+                spawnPos.z = 0f;
+                spawnPos.y += 0.05f; // Offset nhỏ để không bị chìm
+            }
+            else
+            {
+                // Nếu không trúng ground, mặc định spawn ở y của player
+                spawnPos.y = transform.position.y;
+            }
+
+            float dirToMouse = mouseWorldPos.x - transform.position.x;
+            bool isFacingRight = !spriteRenderer.flipX;
+
+            if ((isFacingRight && dirToMouse >= 0) || (!isFacingRight && dirToMouse <= 0))
+            {
+                GameObject effect = Instantiate(arrowFallEffectPrefab, spawnPos, Quaternion.identity);
+                effect.transform.localScale *= 1f;
+                Destroy(effect, 1f);
+            }
         }
     }
 
 }
+
+
