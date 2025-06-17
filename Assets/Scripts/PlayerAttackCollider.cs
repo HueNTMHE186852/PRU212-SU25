@@ -25,14 +25,6 @@ public class PlayerAttackCollider : MonoBehaviour
                 return 0;
         }
     }
-    public void SetSkillType(string skillName)
-    {
-        if (System.Enum.TryParse(skillName, out SkillType parsedSkill))
-        {
-            skillType = parsedSkill;
-            Debug.Log("Skill type set to: " + skillType);
-        }
-    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         int damage = GetDamageBySkill();
