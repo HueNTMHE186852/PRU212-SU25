@@ -45,8 +45,7 @@ public class Player1 : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
-    [HideInInspector]
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     private Vector2 movement;
 
