@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TreeEditor;
+using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
 {
@@ -10,15 +11,10 @@ public class EnemyRun : MonoBehaviour
     public float detectionRange = 25f;
     public float attackCooldown = 0.1f;
     public float attackDuration = 1f;
-<<<<<<< HEAD
     public Transform colliderHolder;  // Kéo thả ColliderHolder từ Inspector
     public Transform attackCollider;  // Kéo thả AttackCollider từ Inspector
+    public GameObject floatingText;
     private bool isDead = false;
-=======
-    public Transform colliderHolder;  
-    public Transform attackCollider;  
-
->>>>>>> f7b46e86ceef7ecbd564988dbdb067a7d7a22e8b
     private Vector3 startPosition;
     public float patrolDistance = 5f;
     public float currentHeatlh;
@@ -51,8 +47,8 @@ public class EnemyRun : MonoBehaviour
 
     private void OnMouseDown()
     {
-        currentHeatlh -= 10;
-        healthbar.updateHeathBar(currentHeatlh, maxHealth);
+        TakeDamage(10);
+        Debug.Log("Enemy nhận 10 dame");
     }
 
     void Start()
@@ -395,6 +391,7 @@ public class EnemyRun : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        ShowDame(amount.ToString());
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
 
@@ -402,9 +399,27 @@ public class EnemyRun : MonoBehaviour
 
         if (currentHeatlh <= 0)
         {
-            //Die();
+            Die();
         }
     }
+    void ShowDame(string text)
+    {
+        if (floatingText)
+        {
+            GameObject prefab = Instantiate(floatingText, transform.position, Quaternion.identity);
+
+            // Ép lại vị trí z để không bị ẩn
+            Vector3 fixedPos = prefab.transform.position;
+            fixedPos.z = -1; // hoặc 0
+            prefab.transform.position = fixedPos;
+
+            prefab.GetComponentInChildren<TextMesh>().text = text;
+
+            // 💥 Thêm dòng này để hủy sau 1 giây
+            Destroy(prefab, 0.8f);
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)

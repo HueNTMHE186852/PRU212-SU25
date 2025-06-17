@@ -329,14 +329,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2aa3d5303c7d74090afc4475824c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthbar: {fileID: 0}
+  damage: 10
   speed: 3.5
   verticalTolerance: 20
-  attackRange: 10
+  attackRange: 6.5
   detectionRange: 25
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 5742236384404788139}
   attackCollider: {fileID: 9136810376292059456}
+  floatingText: {fileID: 2427611322882296992, guid: 28462f1a4bfe32947ad93143f0236a1f, type: 3}
   patrolDistance: 5
   currentHeatlh: 0
   maxHealth: 50
