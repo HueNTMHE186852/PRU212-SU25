@@ -14,7 +14,7 @@ public class EnemyAttackDame : MonoBehaviour
             Debug.Log($"Player nhận {damage} damage!");
 
             // Thêm logic gây damage ở đây
-            // Ví dụ: other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+            other.GetComponent<AuronPlayerController>()?.TakeDamage((int)damage);
         }
     }
 }
