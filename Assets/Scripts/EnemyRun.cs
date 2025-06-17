@@ -414,8 +414,12 @@ public class EnemyRun : MonoBehaviour
             prefab.transform.position = fixedPos;
 
             prefab.GetComponentInChildren<TextMesh>().text = text;
+
+            // 💥 Thêm dòng này để hủy sau 1 giây
+            Destroy(prefab, 0.8f);
         }
     }
+
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)
