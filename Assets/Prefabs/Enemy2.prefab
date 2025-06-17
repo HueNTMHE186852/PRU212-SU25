@@ -126,13 +126,13 @@ MonoBehaviour:
   damage: 10
   speed: 3
   verticalTolerance: 15
-  attackRange: 10
+  attackRange: 8
   detectionRange: 25
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 5576874729815399559}
   attackCollider: {fileID: 7617335269940646652}
-  floatingText: {fileID: 0}
+  floatingText: {fileID: 2427611322882296992, guid: 28462f1a4bfe32947ad93143f0236a1f, type: 3}
   patrolDistance: 5
   currentHeatlh: 0
   maxHealth: 50
@@ -166,7 +166,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &5391493216369998914
 GameObject:
   m_ObjectHideFlags: 0
