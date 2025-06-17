@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8904727700999808970}
-  - component: {fileID: 2487816931999236654}
   - component: {fileID: 937854434920421480}
   m_Layer: 0
   m_Name: AttackCollider
@@ -33,19 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8950537346499803018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2487816931999236654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342906338333669503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d29a2f17e16ff49b4e278aca876d48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
 --- !u!61 &937854434920421480
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -348,7 +334,6 @@ MonoBehaviour:
   maxMP: 100
   currentMP: 100
   GroundCheck: {fileID: 4470477808677339218}
-  attackHitbox: {fileID: 8904727700999808970}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
@@ -363,6 +348,7 @@ MonoBehaviour:
   attackCooldown: 0.3
   eSkillSlowFactor: 0.3
   eSkillDuration: 0.6
+  spriteRenderer: {fileID: 0}
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0
