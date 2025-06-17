@@ -117,7 +117,7 @@ public class EnemyRun : MonoBehaviour
                 {
                     originalPolygonPoints[i] = attackPolygonCollider.points[i];
                 }
-              
+
             }
             else
             {
@@ -206,7 +206,7 @@ public class EnemyRun : MonoBehaviour
 
         canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
 
-        
+
     }
 
     void HandleChase()
@@ -214,7 +214,7 @@ public class EnemyRun : MonoBehaviour
         // KIỂM TRA ATTACK TRƯỚC KHI DI CHUYỂN
         if (canAttackNow)
         {
-          
+
             StartAttack();
             return;
         }
@@ -284,18 +284,24 @@ public class EnemyRun : MonoBehaviour
         // Lọ hồi mana và máu spawn ra khi quái die
         // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
         // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
-        float dropChance = Random.Range(0f, 1f); // từ 0.0 đến 1.0
+        float dropChance = Random.Range(0f, 1f);
 
-        if (dropChance < 0.6f)
+        if (dropChance < 1f / 3f)
         {
-            // 60% rơi bowl máu
+            // 33.3% rơi máu
             Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
         }
-        else if (dropChance < 0.9f)
+        else if (dropChance < 2f / 3f)
         {
-            // 30% rơi bowl mana
+            // 33.3% rơi mana
             Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
         }
+        else
+        {
+            // 33.3% không rơi gì
+            Debug.Log("Không rơi gì");
+        }
+
         // 10% còn lại: không rơi gì
 
 
@@ -418,7 +424,7 @@ public class EnemyRun : MonoBehaviour
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
 
         //healthbar.updateHeathBar(currentHeatlh, maxHealth);
-      
+
         if (currentHeatlh <= 0)
         {
             Die();
@@ -436,8 +442,12 @@ public class EnemyRun : MonoBehaviour
             prefab.transform.position = fixedPos;
 
             prefab.GetComponentInChildren<TextMesh>().text = text;
+
+            // 💥 Thêm dòng này để hủy sau 1 giây
+            Destroy(prefab, 0.8f);
         }
     }
+
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)
@@ -453,6 +463,14 @@ public class EnemyRun : MonoBehaviour
         {
             Gizmos.color = canAttackNow ? Color.red : Color.cyan;
             Gizmos.DrawLine(transform.position, player.position);
+        }
+    }
+    public void ApplyKnockback(Vector2 force)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(force.x, rb.velocity.y);
         }
     }
 

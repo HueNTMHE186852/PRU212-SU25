@@ -6,7 +6,7 @@ public class AuronPlayerController : MonoBehaviour
 {
     private Animator animator;
     public float moveSpeed = 3f;
-    public GameObject arrowPrefab;
+    public GameObject arrowPrefab; 
     public Transform firePoint;    // Vị trí xuất phát mũi tên
     public float arrowForce = 10f; // Lực bắn mũi tên
     public float fireRate = 0.5f;  // Thời gian giữa các lần bắn
@@ -16,7 +16,7 @@ public class AuronPlayerController : MonoBehaviour
     public float jumpForce = 7f;
     private bool isGrounded = true;
     private bool isAttacking = false;
-    private bool isDefending = false;
+    private bool isDefending = false; 
 
     public GameObject arrowFallEffectPrefab; // Prefab hiệu ứng cung rơi
     public Transform arrowFallSpawnPoint;    // Vị trí rơi xuống (có thể là ground hoặc vị trí chỉ định)
@@ -86,7 +86,7 @@ public class AuronPlayerController : MonoBehaviour
                 MPBar.SetMP((float)currentMP / maxMP);
             Debug.Log("SetTrigger SkillAttack");
             animator.SetTrigger("IsAttacking2");
-
+           
         }
 
 
@@ -102,7 +102,7 @@ public class AuronPlayerController : MonoBehaviour
         else if (movement.x > 0 && wasFlipped)
         {
             spriteRenderer.flipX = false;
-
+  
         }
 
 
@@ -142,7 +142,7 @@ public class AuronPlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            Die();  
         }
     }
 
@@ -197,13 +197,18 @@ public class AuronPlayerController : MonoBehaviour
         float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
         arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Tăng kích thước arrow (không lật scale X)
-        float scaleMultiplier = 5f;
-        arrow.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
+        // Tăng kích thước arrow (ví dụ: gấp đôi)
+        float scaleMultiplier = 2f;
+        Vector3 baseScale = new Vector3(1f, 1f, 1f); // scale gốc
+        if (direction < 0)
+            arrow.transform.localScale = new Vector3(-scaleMultiplier, scaleMultiplier, 1f);
+        else
+            arrow.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
 
         Debug.Log("🚀 Arrow bắn ra hướng: " + shootDir);
         Destroy(arrow, 2f);
     }
+
 
 
     public void TestEvent()
@@ -236,7 +241,7 @@ public class AuronPlayerController : MonoBehaviour
                     }
                 }
                 spawnPos.z = 0f;
-                spawnPos.y += 0.6f; // Offset nhỏ để không bị chìm
+                spawnPos.y += 0.05f; // Offset nhỏ để không bị chìm
             }
             else
             {
@@ -250,10 +255,12 @@ public class AuronPlayerController : MonoBehaviour
             if ((isFacingRight && dirToMouse >= 0) || (!isFacingRight && dirToMouse <= 0))
             {
                 GameObject effect = Instantiate(arrowFallEffectPrefab, spawnPos, Quaternion.identity);
-                effect.transform.localScale *= 5f;
+                effect.transform.localScale *= 1f;
                 Destroy(effect, 1f);
             }
         }
     }
 
 }
+
+

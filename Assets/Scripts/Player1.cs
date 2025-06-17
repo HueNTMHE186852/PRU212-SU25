@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -20,6 +20,7 @@ public class Player1 : MonoBehaviour
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
+    public PlayerAttackTrigger attackTrigger;
 
     public int eSkillMPCost = 20;
     public int qSkillMPCost = 30;
@@ -253,5 +254,23 @@ public class Player1 : MonoBehaviour
         isAttacking = true;
         yield return new WaitForSeconds(duration);
         isAttacking = false;
+    }
+    public void SetSkillType(string skillName)
+    {
+        if (attackTrigger == null)
+        {
+            Debug.LogWarning("⚠️ Player1: attackTrigger chưa được gán!");
+            return;
+        }
+
+        if (System.Enum.TryParse(skillName, out PlayerAttackTrigger.SkillType parsedSkill))
+        {
+            attackTrigger.skillType = parsedSkill;
+            Debug.Log("✅ Skill type set to: " + parsedSkill);
+        }
+        else
+        {
+            Debug.LogWarning("❌ Không thể chuyển đổi skill: " + skillName);
+        }
     }
 }

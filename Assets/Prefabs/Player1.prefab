@@ -198,7 +198,6 @@ GameObject:
   - component: {fileID: 4699997911923337472}
   - component: {fileID: 7081564891563122426}
   - component: {fileID: 5454880603362762206}
-  - component: {fileID: 6640082849893180434}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -354,6 +353,7 @@ MonoBehaviour:
     m_Bits: 64
   healthBar: {fileID: 5352300208623216703}
   MPBar: {fileID: 7182029657398762238}
+  attackTrigger: {fileID: 9144503799341645423}
   eSkillMPCost: 20
   qSkillMPCost: 30
   mpRegenRate: 5
@@ -425,19 +425,6 @@ PolygonCollider2D:
       - {x: 0.000574287, y: -0.637225}
       - {x: 0.0124043375, y: -0.6378487}
   m_UseDelaunayMesh: 0
---- !u!114 &6640082849893180434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4146250189180606258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 655d59da25c7fc148ba6fc6c799ebe65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillType: 0
 --- !u!1 &5835615933464233961
 GameObject:
   m_ObjectHideFlags: 0
