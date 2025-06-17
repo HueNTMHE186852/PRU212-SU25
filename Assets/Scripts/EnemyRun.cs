@@ -117,7 +117,7 @@ public class EnemyRun : MonoBehaviour
                 {
                     originalPolygonPoints[i] = attackPolygonCollider.points[i];
                 }
-              
+
             }
             else
             {
@@ -206,7 +206,7 @@ public class EnemyRun : MonoBehaviour
 
         canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
 
-        
+
     }
 
     void HandleChase()
@@ -214,7 +214,7 @@ public class EnemyRun : MonoBehaviour
         // KIỂM TRA ATTACK TRƯỚC KHI DI CHUYỂN
         if (canAttackNow)
         {
-          
+
             StartAttack();
             return;
         }
@@ -457,6 +457,14 @@ public class EnemyRun : MonoBehaviour
         {
             Gizmos.color = canAttackNow ? Color.red : Color.cyan;
             Gizmos.DrawLine(transform.position, player.position);
+        }
+    }
+    public void ApplyKnockback(Vector2 force)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(force.x, rb.velocity.y);
         }
     }
 
