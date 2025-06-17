@@ -284,18 +284,24 @@ public class EnemyRun : MonoBehaviour
         // Lọ hồi mana và máu spawn ra khi quái die
         // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
         // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
-        float dropChance = Random.Range(0f, 1f); // từ 0.0 đến 1.0
+        float dropChance = Random.Range(0f, 1f);
 
-        if (dropChance < 0.6f)
+        if (dropChance < 1f / 3f)
         {
-            // 60% rơi bowl máu
+            // 33.3% rơi máu
             Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
         }
-        else if (dropChance < 0.9f)
+        else if (dropChance < 2f / 3f)
         {
-            // 30% rơi bowl mana
+            // 33.3% rơi mana
             Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
         }
+        else
+        {
+            // 33.3% không rơi gì
+            Debug.Log("Không rơi gì");
+        }
+
         // 10% còn lại: không rơi gì
 
 
