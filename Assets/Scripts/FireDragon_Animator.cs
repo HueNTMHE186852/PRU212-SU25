@@ -13,6 +13,9 @@ public class FireDragonController : MonoBehaviour
     public LayerMask groundLayer;
     private bool isGrounded;
 
+    private float idleTimer = 0f;
+    private const float idleDuration = 10f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,77 +24,52 @@ public class FireDragonController : MonoBehaviour
 
     void Update()
     {
-        CheckGrounded();
-
         switch (currentState)
         {
             case DragonState.Idle:
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                    EnterFly();
-                if (Input.GetKeyDown(KeyCode.Space))
-                    EnterAttack();
-                break;
-
-            case DragonState.Flying:
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                    EnterLanding();
-                if (Input.GetKeyDown(KeyCode.Space))
-                    EnterAttack();
-                break;
-
-            case DragonState.Landing:
-                if (isGrounded)
-                    EnterIdle(); // Đã hạ cánh xong
-                break;
-
-            case DragonState.Attacking:
-                // Sau khi tấn công xong thì về trạng thái trước đó
+                idleTimer += Time.deltaTime;
+                if (idleTimer >= idleDuration)
+                {
+                    EnterDie();
+                }
                 break;
         }
     }
 
-    void EnterFly()
+    void EnterDie()
     {
-        rb.velocity = new Vector2(rb.velocity.x, flyForce);
-        currentState = DragonState.Flying;
-        animator.SetTrigger("isFlying");
+        currentState = DragonState.Dying;
+        animator.SetTrigger("isDying");
+        StartCoroutine(DisappearAfterAnimation());
     }
 
-    void EnterLanding()
+    private System.Collections.IEnumerator DisappearAfterAnimation()
     {
-        currentState = DragonState.Landing;
-        animator.SetTrigger("isLanding");
-    }
+        // Wait for the dying animation to finish
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float dieAnimLength = stateInfo.length > 0 ? stateInfo.length : 1f;
+        yield return new WaitForSeconds(dieAnimLength);
 
-    void EnterIdle()
-    {
-        currentState = DragonState.Idle;
-        animator.SetTrigger("isIdle");
-    }
+        // Pause on the last frame of the dying animation
+        animator.speed = 0f;
 
-    void EnterAttack()
-    {
-        currentState = DragonState.Attacking;
-        animator.SetTrigger("isAttacking");
-        Invoke(nameof(BackToIdleOrFly), 0.5f); // giả định attack mất 0.5s
-    }
+        // Fade out
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            float fadeDuration = 1f;
+            float elapsed = 0f;
+            Color originalColor = sr.color;
+            while (elapsed < fadeDuration)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+                sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        }
 
-    void BackToIdleOrFly()
-    {
-        if (isGrounded)
-            EnterIdle();
-        else
-            currentState = DragonState.Flying;
-    }
-
-    void CheckGrounded()
-    {
-        // Dùng Raycast từ chân rồng xuống đất
-        Vector2 position = transform.position;
-        Vector2 direction = Vector2.down;
-        float distance = 0.1f;
-
-        RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, groundLayer);
-        isGrounded = hit.collider != null;
+        gameObject.SetActive(false);
     }
 }
