@@ -362,7 +362,9 @@ MonoBehaviour:
   attackCooldown: 0.3
   eSkillSlowFactor: 0.3
   eSkillDuration: 0.6
-  spriteRenderer: {fileID: 0}
+  attackCollider: {fileID: 8904727700999808970}
+  attackColliderRightPos: {x: -0.93, y: 0, z: 0}
+  attackColliderLeftPos: {x: -1.86, y: 0, z: 0}
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0
