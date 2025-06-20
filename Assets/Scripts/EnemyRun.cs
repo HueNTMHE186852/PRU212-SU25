@@ -1,4 +1,5 @@
-﻿using TreeEditor;
+﻿using System.Collections;
+using TreeEditor;
 using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
@@ -44,6 +45,10 @@ public class EnemyRun : MonoBehaviour
     // Thêm biến cho PolygonCollider2D
     private PolygonCollider2D attackPolygonCollider;
     private Vector2[] originalPolygonPoints;
+
+    // Prefabs cho bowl máu và mana
+    [SerializeField] private GameObject hpBowlPrefab;
+    [SerializeField] private GameObject manaBowlPrefab;
 
     private void OnMouseDown()
     {
@@ -113,7 +118,7 @@ public class EnemyRun : MonoBehaviour
                 {
                     originalPolygonPoints[i] = attackPolygonCollider.points[i];
                 }
-              
+
             }
             else
             {
@@ -202,7 +207,7 @@ public class EnemyRun : MonoBehaviour
 
         canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
 
-        
+
     }
 
     void HandleChase()
@@ -210,7 +215,7 @@ public class EnemyRun : MonoBehaviour
         // KIỂM TRA ATTACK TRƯỚC KHI DI CHUYỂN
         if (canAttackNow)
         {
-          
+
             StartAttack();
             return;
         }
@@ -276,6 +281,30 @@ public class EnemyRun : MonoBehaviour
 
         // Đừng tắt collider chính nếu đang chạm đất
         // if (boxCollider != null) boxCollider.enabled = false;
+
+        // Lọ hồi mana và máu spawn ra khi quái die
+        // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
+        // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
+        float dropChance = Random.Range(0f, 1f);
+
+        if (dropChance < 1f / 3f)
+        {
+            // 33.3% rơi máu
+            Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
+        }
+        else if (dropChance < 2f / 3f)
+        {
+            // 33.3% rơi mana
+            Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            // 33.3% không rơi gì
+            Debug.Log("Không rơi gì");
+        }
+
+        // 10% còn lại: không rơi gì
+
 
         // Delay hủy
         Destroy(gameObject, 1f);
@@ -392,16 +421,37 @@ public class EnemyRun : MonoBehaviour
     public void TakeDamage(int amount)
     {
         ShowDame(amount.ToString());
+        animator.SetTrigger("Hurt");
+
+        isAttacking = false;
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
 
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
-      
         if (currentHeatlh <= 0)
         {
             Die();
         }
+        else
+        {
+            StartCoroutine(PlayHurtAndRecover());
+        }
     }
+
+    IEnumerator PlayHurtAndRecover()
+    {
+        float originalSpeed = speed;
+        speed = 0;
+
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        speed = originalSpeed;
+        // Let the Update() method handle setting movement and animation
+    }
+
+
+
+
+
     void ShowDame(string text)
     {
         if (floatingText)
@@ -414,8 +464,12 @@ public class EnemyRun : MonoBehaviour
             prefab.transform.position = fixedPos;
 
             prefab.GetComponentInChildren<TextMesh>().text = text;
+
+            // 💥 Thêm dòng này để hủy sau 1 giây
+            Destroy(prefab, 0.8f);
         }
     }
+
     void OnDrawGizmosSelected()
     {
         // Attack range (đỏ)
@@ -431,6 +485,14 @@ public class EnemyRun : MonoBehaviour
         {
             Gizmos.color = canAttackNow ? Color.red : Color.cyan;
             Gizmos.DrawLine(transform.position, player.position);
+        }
+    }
+    public void ApplyKnockback(Vector2 force)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(force.x, rb.velocity.y);
         }
     }
 
