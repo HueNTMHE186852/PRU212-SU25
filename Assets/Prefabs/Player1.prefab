@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1342906338333669503}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.735, y: -0.007, z: 0}
+  m_LocalPosition: {x: -0.93, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -342,9 +342,9 @@ MonoBehaviour:
   moveSpeed: 20
   jumpForce: 18
   rollForce: 15
-  maxHealth: 100
-  currentHealth: 100
-  maxMP: 100
+  maxHealth: 1000
+  currentHealth: 1000
+  maxMP: 1000
   currentMP: 100
   GroundCheck: {fileID: 4470477808677339218}
   groundCheckRadius: 0.2
@@ -362,7 +362,9 @@ MonoBehaviour:
   attackCooldown: 0.3
   eSkillSlowFactor: 0.3
   eSkillDuration: 0.6
-  spriteRenderer: {fileID: 0}
+  attackCollider: {fileID: 8904727700999808970}
+  attackColliderRightPos: {x: -0.93, y: 0, z: 0}
+  attackColliderLeftPos: {x: -1.86, y: 0, z: 0}
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -436,6 +438,7 @@ GameObject:
   - component: {fileID: 9094707870986336457}
   - component: {fileID: 4681009278736551771}
   - component: {fileID: 1782664540423993498}
+  - component: {fileID: 1838412907409194242}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -517,6 +520,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5835615933464233961}
   m_Enabled: 1
+--- !u!114 &1838412907409194242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5835615933464233961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73c921362e7de34fb08ac33229a773e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3654909947892603698
 PrefabInstance:
   m_ObjectHideFlags: 0
