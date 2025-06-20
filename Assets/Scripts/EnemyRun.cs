@@ -1,4 +1,5 @@
-﻿using TreeEditor;
+﻿using System.Collections;
+using TreeEditor;
 using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
@@ -420,16 +421,37 @@ public class EnemyRun : MonoBehaviour
     public void TakeDamage(int amount)
     {
         ShowDame(amount.ToString());
+        animator.SetTrigger("Hurt");
+
+        isAttacking = false;
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
-
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
 
         if (currentHeatlh <= 0)
         {
             Die();
         }
+        else
+        {
+            StartCoroutine(PlayHurtAndRecover());
+        }
     }
+
+    IEnumerator PlayHurtAndRecover()
+    {
+        float originalSpeed = speed;
+        speed = 0;
+
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        speed = originalSpeed;
+        // Let the Update() method handle setting movement and animation
+    }
+
+
+
+
+
     void ShowDame(string text)
     {
         if (floatingText)

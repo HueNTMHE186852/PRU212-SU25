@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class AttackColliderTrigger : MonoBehaviour
+public class LazerTrigger : MonoBehaviour
 {
-    public int damage = 10;
+    public int damage = 20;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -13,8 +15,7 @@ public class AttackColliderTrigger : MonoBehaviour
             {
                 StartCoroutine(CameraShake.Instance.Shake(0.1f, 0.05f));
             }
-
-            Debug.Log("💥 Player trúng 10 dame " );
+            Debug.Log("💥 Player trúng đòn lazer trừ 20 dame ");
         }
     }
 }
