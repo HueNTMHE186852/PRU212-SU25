@@ -153,7 +153,7 @@ MonoBehaviour:
   damage: 10
   speed: 3.5
   verticalTolerance: 20
-  attackRange: 10
+  attackRange: 5
   detectionRange: 25
   attackCooldown: 0.1
   attackDuration: 1
@@ -162,7 +162,7 @@ MonoBehaviour:
   floatingText: {fileID: 0}
   patrolDistance: 5
   currentHeatlh: 0
-  maxHealth: 50
+  maxHealth: 200
   forceChase: 1
   ignoreVerticalForAttack: 1
   hpBowlPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
@@ -255,7 +255,6 @@ GameObject:
   - component: {fileID: 5639683889007604472}
   - component: {fileID: 3875639629506075954}
   - component: {fileID: 7925555987343481112}
-  - component: {fileID: 2624797239304955356}
   m_Layer: 0
   m_Name: AttackCollider
   m_TagString: AttackZone
@@ -336,16 +335,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2624797239304955356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5391882445843668512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
