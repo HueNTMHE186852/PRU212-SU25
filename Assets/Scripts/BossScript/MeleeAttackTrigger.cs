@@ -11,7 +11,13 @@ public class MeleeAttackTrigger : MonoBehaviour
 		{
 			Player1 player = collision.GetComponentInParent<Player1>();
 			player.TakeDamage(damage);
-			Debug.Log("💥 Player trúng 15 dame ");
+
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.1f));
+            }
+
+            Debug.Log("💥 Player trúng 15 dame ");
 		}
 	}
 }
