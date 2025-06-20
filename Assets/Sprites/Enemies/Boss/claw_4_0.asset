@@ -6,7 +6,7 @@ Sprite:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: claw_4_0
+  m_Name: claw_4
   m_Rect:
     serializedVersion: 2
     x: 514.02673
@@ -19,104 +19,13 @@ Sprite:
   m_Pivot: {x: 0.5745622, y: 0.34352115}
   m_Extrude: 1
   m_IsPolygon: 0
-  m_AtlasName: 
-  m_PackingTag: 
+  m_AtlasName:
+  m_PackingTag:
   m_RenderDataKey:
-    96634987f7ee0a74a84207baca70e3bc: 21300000
+    2fa21b148602e09409f0870437dc1473: 21300000
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
-    serializedVersion: 3
-    texture: {fileID: 2800000, guid: 43025361a4017b5489530bf63f838f54, type: 3}
-    alphaTexture: {fileID: 0}
-    secondaryTextures: []
-    m_SubMeshes:
-    - serializedVersion: 2
-      firstByte: 0
-      indexCount: 27
-      topology: 0
-      baseVertex: 0
-      firstVertex: 0
-      vertexCount: 11
-      localAABB:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 0, y: 0, z: 0}
-    m_IndexBuffer: 0a0009000800050008000900060008000500040006000500070006000400050003000400010004000300000001000300020001000000
-    m_VertexData:
-      serializedVersion: 3
-      m_VertexCount: 11
-      m_Channels:
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 3
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 1
-        offset: 0
-        format: 0
-        dimension: 2
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      m_DataSize: 232
-      _typelessdata: 00004842feff6742000000000000704280ff7f3f0000000000007042fcfff7410000000000001842ffff8142000000000000e0410400d8c100000000000098c1ffff8142000000000000f841020008c200000000000004420400f0c10000000000009ac2020008c2000000000000a2c2fcffdf41000000000000a2c20400d8c1000000000000000000000000000000000040213f00008e3e00c0233f00807f3e00c0233f0040873e00401e3f00c08f3e00c01b3f0080713e0000103f00c08f3e00801c3f00006e3e00001d3f0000703e0080013f00006e3e0080003f0080863e0080003f0080713e
-    m_Bindpose: []
-    textureRect:
-      serializedVersion: 2
-      x: 514.02673
-      y: 476.02673
-      width: 140.93034
-      height: 98.897125
-    textureRectOffset: {x: 0, y: 0}
-    atlasRectOffset: {x: 475, y: 398}
-    settingsRaw: 67
-    uvTransform: {x: 1, y: 595, z: 1, w: 510}
-    downscaleMultiplier: 1
-  m_AtlasRD:
     serializedVersion: 3
     texture: {fileID: 2800000, guid: 43025361a4017b5489530bf63f838f54, type: 3}
     alphaTexture: {fileID: 0}
@@ -207,6 +116,31 @@ Sprite:
     settingsRaw: 67
     uvTransform: {x: 1, y: 595, z: 1, w: 510}
     downscaleMultiplier: 1
+  m_AtlasRD:
+    serializedVersion: 3
+    texture: {fileID: 0}
+    alphaTexture: {fileID: 0}
+    secondaryTextures: []
+    m_SubMeshes: []
+    m_IndexBuffer:
+    m_VertexData:
+      serializedVersion: 3
+      m_VertexCount: 0
+      m_Channels: []
+      m_DataSize: 0
+      _typelessdata:
+    m_Bindpose: []
+    textureRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    textureRectOffset: {x: 0, y: 0}
+    atlasRectOffset: {x: 0, y: 0}
+    settingsRaw: 0
+    uvTransform: {x: 0, y: 0, z: 0, w: 0}
+    downscaleMultiplier: 0
   m_PhysicsShape: []
   m_Bones: []
-  m_SpriteID: 
+  m_SpriteID:
