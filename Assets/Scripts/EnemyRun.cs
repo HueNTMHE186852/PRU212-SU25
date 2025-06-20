@@ -421,7 +421,6 @@ public class EnemyRun : MonoBehaviour
     public void TakeDamage(int amount)
     {
         ShowDame(amount.ToString());
-        animator.SetTrigger("Hurt");
 
         isAttacking = false;
         currentHeatlh -= amount;
@@ -433,9 +432,17 @@ public class EnemyRun : MonoBehaviour
         }
         else
         {
+            StartCoroutine(DelayedHurtAnimation());
             StartCoroutine(PlayHurtAndRecover());
         }
     }
+
+    IEnumerator DelayedHurtAnimation()
+    {
+        yield return new WaitForSeconds(0.1f); // delay animation 0.1 giây
+        animator.SetTrigger("Hurt");
+    }
+
 
     IEnumerator PlayHurtAndRecover()
     {
