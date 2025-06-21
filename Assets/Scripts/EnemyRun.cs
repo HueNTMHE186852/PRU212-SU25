@@ -1,4 +1,5 @@
-﻿using TreeEditor;
+﻿using System.Collections;
+using TreeEditor;
 using UnityEngine;
 
 public class EnemyRun : MonoBehaviour
@@ -284,18 +285,24 @@ public class EnemyRun : MonoBehaviour
         // Lọ hồi mana và máu spawn ra khi quái die
         // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
         // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
-        float dropChance = Random.Range(0f, 1f); // từ 0.0 đến 1.0
+        float dropChance = Random.Range(0f, 1f);
 
-        if (dropChance < 0.6f)
+        if (dropChance < 1f / 3f)
         {
-            // 60% rơi bowl máu
+            // 33.3% rơi máu
             Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
         }
-        else if (dropChance < 0.9f)
+        else if (dropChance < 2f / 3f)
         {
-            // 30% rơi bowl mana
+            // 33.3% rơi mana
             Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
         }
+        else
+        {
+            // 33.3% không rơi gì
+            Debug.Log("Không rơi gì");
+        }
+
         // 10% còn lại: không rơi gì
 
 
@@ -414,16 +421,44 @@ public class EnemyRun : MonoBehaviour
     public void TakeDamage(int amount)
     {
         ShowDame(amount.ToString());
+
+        isAttacking = false;
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
-
-        //healthbar.updateHeathBar(currentHeatlh, maxHealth);
 
         if (currentHeatlh <= 0)
         {
             Die();
         }
+        else
+        {
+            StartCoroutine(DelayedHurtAnimation());
+            StartCoroutine(PlayHurtAndRecover());
+        }
     }
+
+    IEnumerator DelayedHurtAnimation()
+    {
+        yield return new WaitForSeconds(0.1f); // delay animation 0.1 giây
+        animator.SetTrigger("Hurt");
+    }
+
+
+    IEnumerator PlayHurtAndRecover()
+    {
+        float originalSpeed = speed;
+        speed = 0;
+
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        speed = originalSpeed;
+        // Let the Update() method handle setting movement and animation
+    }
+
+
+
+
+
     void ShowDame(string text)
     {
         if (floatingText)

@@ -1,23 +1,26 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class AttackColliderTrigger : MonoBehaviour
 {
     public int damage = 10;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("🟡 Va chạm với: " + collision.name);
+
         if (collision.CompareTag("Player"))
         {
             Player1 player = collision.GetComponentInParent<Player1>();
-            AuronPlayerController auronPlayerController = collision.GetComponentInParent<AuronPlayerController>();
-            if (auronPlayerController != null)
-            {
-                auronPlayerController.TakeDamage(damage);
-            }
             if (player != null)
             {
                 player.TakeDamage(damage);
+                Debug.Log("💥 Gây " + damage + " sát thương cho Player");
             }
-            Debug.Log("💥 Player trúng 10 dame " );
+            else
+            {
+                Debug.Log("❌ Không tìm thấy Player1");
+            }
         }
     }
 }
+
