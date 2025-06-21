@@ -8,7 +8,15 @@ public class AttackColliderTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Player1 player = collision.GetComponentInParent<Player1>();
-            player.TakeDamage(damage);
+            AuronPlayerController auronPlayerController = collision.GetComponentInParent<AuronPlayerController>();
+            if (auronPlayerController != null)
+            {
+                auronPlayerController.TakeDamage(damage);
+            }
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
             Debug.Log("💥 Player trúng 10 dame " );
         }
     }

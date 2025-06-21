@@ -10,27 +10,46 @@ public class PotionPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        // Player1
+        var player1 = other.GetComponent<Player1>();
+        if (player1 != null)
         {
-            Player1 player = other.GetComponent<Player1>();
-            if (player != null)
+            if (type == PotionType.Health)
             {
-                if (type == PotionType.Health)
-                {
-                    int restoreAmount = Mathf.RoundToInt(player.maxHealth * restorePercent);
-                    player.currentHealth = Mathf.Min(player.maxHealth, player.currentHealth + restoreAmount);
-                    player.healthBar.SetHealth((float)player.currentHealth / player.maxHealth);
-                }
-                else if (type == PotionType.Mana)
-                {
-                    int restoreAmount = Mathf.RoundToInt(player.maxMP * restorePercent);
-                    player.currentMP = Mathf.Min(player.maxMP, player.currentMP + restoreAmount);
-                    player.MPBar.SetMP((float)player.currentMP / player.maxMP);
-                }
-
-                Destroy(gameObject);
+                int restoreAmount = Mathf.RoundToInt(player1.maxHealth * restorePercent);
+                player1.currentHealth = Mathf.Min(player1.maxHealth, player1.currentHealth + restoreAmount);
+                player1.healthBar.SetHealth((float)player1.currentHealth / player1.maxHealth);
             }
+            else if (type == PotionType.Mana)
+            {
+                int restoreAmount = Mathf.RoundToInt(player1.maxMP * restorePercent);
+                player1.currentMP = Mathf.Min(player1.maxMP, player1.currentMP + restoreAmount);
+                player1.MPBar.SetMP((float)player1.currentMP / player1.maxMP);
+            }
+
+            Destroy(gameObject);
+            return;
+        }
+
+        // Player2 (Auron)
+        var player2 = other.GetComponent<AuronPlayerController>();
+        if (player2 != null)
+        {
+            if (type == PotionType.Health)
+            {
+                int restoreAmount = Mathf.RoundToInt(player2.maxHealth * restorePercent);
+                player2.currentHealth = Mathf.Min(player2.maxHealth, player2.currentHealth + restoreAmount);
+                player2.healthBar.SetHealth((float)player2.currentHealth / player2.maxHealth);
+            }
+            else if (type == PotionType.Mana)
+            {
+                int restoreAmount = Mathf.RoundToInt(player2.maxMP * restorePercent);
+                player2.currentMP = Mathf.Min(player2.maxMP, player2.currentMP + restoreAmount);
+                player2.MPBar.SetMP((float)player2.currentMP / player2.maxMP);
+            }
+
+            Destroy(gameObject);
+            return;
         }
     }
-
 }
