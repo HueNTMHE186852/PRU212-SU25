@@ -302124,12 +302124,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6541467115439965523, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12.2718
+      objectReference: {fileID: 0}
+    - target: {fileID: 6541467115439965523, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 12.7278
+      objectReference: {fileID: 0}
+    - target: {fileID: 6541467115439965523, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -114.7
+      value: -125.9
       objectReference: {fileID: 0}
     - target: {fileID: 6541467115439965523, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 49.5
+      value: 53.8
       objectReference: {fileID: 0}
     - target: {fileID: 6541467115439965523, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
       propertyPath: m_LocalPosition.z
@@ -307880,7 +307888,7 @@ MonoBehaviour:
     spawnCount: 2
   zonesToSpawn: 6
   minDistance: 8
-  playerTransform: {fileID: 2054344042}
+  playerTransform: {fileID: 0}
   avoidPlayerDistance: 5
 --- !u!4 &1927882297
 Transform:
@@ -308890,3 +308898,7 @@ SceneRoots:
   - {fileID: 1186477673}
   - {fileID: 1927882297}
   - {fileID: 1509220915075008252}
+  - {fileID: 1990182586}
+  - {fileID: 1807442973}
+  - {fileID: 851906891}
+  - {fileID: 958286184}
