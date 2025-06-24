@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -20,6 +20,7 @@ public class Player1 : MonoBehaviour
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
+    public PlayerAttackTrigger attackTrigger;
 
     public int eSkillMPCost = 20;
     public int qSkillMPCost = 30;
@@ -45,12 +46,15 @@ public class Player1 : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
-    [HideInInspector]
-    public SpriteRenderer spriteRenderer;
-
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] 
+    private Transform attackCollider; 
     private Vector2 movement;
+    [SerializeField] private Vector3 attackColliderRightPos = new Vector3(-0.93f, 0f, 0f);
+    [SerializeField] private Vector3 attackColliderLeftPos = new Vector3(-1.86f, 0f, 0f);
 
-    
+
+
 
     void Start()
     {
@@ -64,8 +68,6 @@ public class Player1 : MonoBehaviour
 
         MPBar.SetMaxMP();
         MPBar.gameObject.SetActive(true);
-
-        Debug.Log("PlayerAttackCollider active on: " + gameObject.name);
 
     }
 
@@ -86,6 +88,10 @@ public class Player1 : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+        else
+        {
+            animator.SetTrigger("Hurt");
         }
 
     }
@@ -207,18 +213,17 @@ public class Player1 : MonoBehaviour
             MPBar.SetMP((float)currentMP / maxMP);
         }
 
-        // Flip sprite
         bool wasFlipped = spriteRenderer.flipX;
+
         if (movement.x < 0 && !wasFlipped)
         {
-            spriteRenderer.flipX = true;
-            //FlipHitbox(true);
+            FlipCharacter(true);
         }
         else if (movement.x > 0 && wasFlipped)
         {
-            spriteRenderer.flipX = false;
-            //FlipHitbox(false);
+            FlipCharacter(false);
         }
+
 
 
         // Animator parameters
@@ -226,12 +231,42 @@ public class Player1 : MonoBehaviour
         animator.SetBool("isGrounded", isGrounded);
         animator.SetFloat("VerticalVelocity", rb.velocity.y);
     }
-    //void FlipHitbox(bool facingLeft)
-    //{
-    //    Vector3 pos = attackHitbox.localPosition;
-    //    pos.x = Mathf.Abs(pos.x) * (facingLeft ? -1 : 1);
-    //    attackHitbox.localPosition = pos;
-    //}
+    void FlipCharacter(bool facingLeft)
+    {
+        spriteRenderer.flipX = facingLeft;
+
+        if (attackCollider != null)
+        {
+            attackCollider.localPosition = facingLeft ? attackColliderLeftPos : attackColliderRightPos;
+            Debug.Log($"🔁 Hardcoded flip to {(facingLeft ? "LEFT" : "RIGHT")}, new pos: {attackCollider.localPosition}");
+        }
+    }
+
+    public void EnableAttackCollider()
+    {
+        if (attackCollider == null) return;
+
+        attackCollider.localPosition = spriteRenderer.flipX ? attackColliderLeftPos : attackColliderRightPos;
+
+        var col = attackCollider.GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        Debug.Log($"✅ Attack collider enabled at {attackCollider.localPosition}");
+    }
+
+    public void DisableAttackCollider()
+    {
+        if (attackCollider == null) return;
+
+        BoxCollider2D col = attackCollider.GetComponent<BoxCollider2D>();
+        if (col != null)
+            col.enabled = false;
+
+        Debug.Log("🛑 Collider disabled");
+    }
+
+
+
     void FixedUpdate()
     {
         if (isRolling) return;
@@ -254,5 +289,23 @@ public class Player1 : MonoBehaviour
         isAttacking = true;
         yield return new WaitForSeconds(duration);
         isAttacking = false;
+    }
+    public void SetSkillType(string skillName)
+    {
+        if (attackTrigger == null)
+        {
+            Debug.LogWarning("⚠️ Player1: attackTrigger chưa được gán!");
+            return;
+        }
+
+        if (System.Enum.TryParse(skillName, out PlayerAttackTrigger.SkillType parsedSkill))
+        {
+            attackTrigger.skillType = parsedSkill;
+            Debug.Log("✅ Skill type set to: " + parsedSkill);
+        }
+        else
+        {
+            Debug.LogWarning("❌ Không thể chuyển đổi skill: " + skillName);
+        }
     }
 }
