@@ -23,6 +23,11 @@ public class AttackColliderTrigger : MonoBehaviour
             Player1 player = collision.GetComponentInParent<Player1>();
             if (player != null)
             {
+                if (player.isDefending)
+                {
+                    Debug.Log("🛡️ Player is defending — no laser damage.");
+                    return;
+                }
                 player.TakeDamage(damage);
                 Debug.Log("💥 Gây " + damage + " sát thương cho Player1");
                 tookDamage = true;
