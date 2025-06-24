@@ -86,4 +86,13 @@ public class EnemySpawner : MonoBehaviour
         float y = Random.Range(bounds.min.y, bounds.max.y);
         return new Vector2(x, y);
     }
+    private void OnDrawGizmos()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(col.bounds.center, col.bounds.size);
+        }
+    }
 }

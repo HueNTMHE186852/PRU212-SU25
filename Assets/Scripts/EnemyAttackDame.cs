@@ -15,6 +15,12 @@ public class EnemyAttackDame : MonoBehaviour
 
             // Thêm logic gây damage ở đây
             other.GetComponent<AuronPlayerController>()?.TakeDamage((int)damage);
+
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.1f));
+            }
         }
+    
     }
 }
