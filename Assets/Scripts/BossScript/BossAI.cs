@@ -10,15 +10,14 @@ public class BossAI : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
-	public GameObject laserPrefab;
-	public Transform laserSpawnPoint;
-	public float laserLifetime = 0.5f;
+	public GameObject incinerationParticles;
+	public Transform incinerationSpawnPoint;
+	public float incinerationLifetime = 0.5f;
 	private bool hasHealthBarAppeared = false;
 
 	[HideInInspector] public Transform player;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isFlipped = true;
-    [HideInInspector] public bool isKnockback = false;
 
     private Animator animator;
     private bool isAttacking = false;
@@ -26,8 +25,6 @@ public class BossAI : MonoBehaviour
     private bool isShooting = false;
     private float idleTimer;
     private bool decidedAction = false;
-
-	[HideInInspector] public bool hasCollidedWithPlayer = false;
 
 	void Start()
     {
@@ -124,7 +121,7 @@ public class BossAI : MonoBehaviour
 		bool inDetectionRange = InDetectionRange();
 		bool inAttackRange = InAttackRange();
 
-		if (animator.GetBool("isRunning") && inDetectionRange && !inAttackRange)
+		if (animator.GetBool("isWalking") && inDetectionRange && !inAttackRange)
 		{
 			Vector2 target = new Vector2(player.position.x, rb.position.y);
 			Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
@@ -167,7 +164,7 @@ public class BossAI : MonoBehaviour
         isChargingFinished = true;
     }
 
-    public void OnShootAnimationEnd()
+    public void OnCastAnimationEnd()
     {
         isShooting = false;
         animator.SetBool("isCharging", false);
@@ -184,41 +181,9 @@ public class BossAI : MonoBehaviour
         idleTimer = Random.Range(0.5f, 1f);
     }
 
-    public void ShootLaser()
-    {
-        if (laserPrefab != null && laserSpawnPoint != null)
-        {
-            GameObject laser = Instantiate(laserPrefab, laserSpawnPoint.position, Quaternion.identity);
-
-            Vector3 scale = laser.transform.localScale;
-            scale.x = Mathf.Abs(scale.x);
-            laser.transform.localScale = scale;
-
-            if (!isFlipped)
-            {
-                laser.transform.rotation = Quaternion.Euler(0, 180f, 0);
-            }
-
-            Vector3 offset = new Vector3(1f, 0, 0);
-            if (!isFlipped)
-                offset.x *= -1;
-
-            laser.transform.position += offset;
-
-            Destroy(laser, laserLifetime);
-        }
-    }
-    public void ApplyKnockback(Vector2 force)
-    {
-        if (rb != null)
-        {
-            rb.velocity = new Vector2(force.x, rb.velocity.y);
-        }
-    }
-
 	void Die()
 	{
-		animator.SetTrigger("die");
+		animator.SetTrigger("Death");
 		rb.velocity = Vector2.zero; 
 		this.enabled = false;
 		Destroy(gameObject, 2.5f);
