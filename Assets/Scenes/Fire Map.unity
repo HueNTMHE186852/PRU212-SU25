@@ -302103,6 +302103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: idle_1
       objectReference: {fileID: 0}
+    - target: {fileID: 3537252545143001085, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5026357475966106413, guid: d53b23b177d82d24cbc15558ae8730ee, type: 3}
       propertyPath: arrowForce
       value: 25
@@ -308819,6 +308823,10 @@ PrefabInstance:
     - target: {fileID: 3606013742843047843, guid: ca184ccd6ad768542a8174c73e0bb0dd, type: 3}
       propertyPath: m_Name
       value: DemonEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3606013742843047843, guid: ca184ccd6ad768542a8174c73e0bb0dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7478901194383944209, guid: ca184ccd6ad768542a8174c73e0bb0dd, type: 3}
       propertyPath: m_LocalPosition.x
