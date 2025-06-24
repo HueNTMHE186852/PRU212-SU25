@@ -20,15 +20,16 @@ public class BossAI : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isFlipped = true;
     [HideInInspector] public bool isKnockback = false;
-
+    private bool hasTriggered70 = false;
+    private bool hasTriggered30 = false;
     private Animator animator;
     public  bool isAttacking = false;
     private bool isChargingFinished = false;
     private bool isShooting = false;
     private float idleTimer;
     private bool decidedAction = false;
-
-	[HideInInspector] public bool hasCollidedWithPlayer = false;
+    public IceSpikeManager iceSpikeManager;
+    [HideInInspector] public bool hasCollidedWithPlayer = false;
 
 	private BoxCollider2D boxCollider;
 	private BoxCollider2D attackBoxCollider;
@@ -199,21 +200,60 @@ public class BossAI : MonoBehaviour
 			isShooting = true;
 			animator.SetBool("isShooting", true);
 		}
-	}
+    }
 	public void TakeDamage(int damage)
     {
 		Debug.Log("nhan " + damage + "dame");
         currentHealth -= damage;
 		currentHealth = Mathf.Max(currentHealth, 0);
 		healthBar.SetHealth(currentHealth);
-		if (currentHealth <= 0)
+        float percent = (float)currentHealth / maxHealth;
+
+        if (!hasTriggered70 && percent <= 0.7f)
+        {
+            hasTriggered70 = true;
+            animator.SetTrigger("bossHit");
+
+            float bossHitDuration = GetAnimationClipLength("BossHit");
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(bossHitDuration, 0.1f));
+            }
+        }
+
+        if (!hasTriggered30 && percent <= 0.3f)
+        {
+            hasTriggered30 = true;
+            animator.SetTrigger("bossHit");
+
+            float bossHitDuration = GetAnimationClipLength("BossHit");
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(bossHitDuration, 0.15f));
+            }
+        }
+        if (currentHealth <= 0)
 		{
 			healthBar.gameObject.SetActive(false);
 			Die();
 		}
 	}
 
-	void FixedUpdate()
+    private float GetAnimationClipLength(string clipName)
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+        foreach (var clip in ac.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip.length;
+            }
+        }
+        Debug.LogWarning("Animation clip not found: " + clipName);
+        return 0.5f; // fallback duration
+    }
+
+    void FixedUpdate()
 	{
 		if (player == null) return;
 
@@ -370,4 +410,34 @@ public class BossAI : MonoBehaviour
 
 		return new Vector2(Mathf.Abs(bossPos.x - playerPos.x), Mathf.Abs(bossPos.y - playerPos.y));
 	}
+    public void SummonIceSpikes()
+    {
+        Debug.Log("⛄ SummonIceSpikes called!");
+
+        if (iceSpikeManager != null)
+        {
+            iceSpikeManager.StartSpikeAttack();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ IceSpikeManager not assigned on BossAI!");
+        }
+    }
+    public void LaunchIceSpikes()
+    {
+        Debug.Log("🚀 LaunchIceSpikes called from Animation Event!");
+
+        if (iceSpikeManager != null)
+        {
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.05f));
+            }
+            iceSpikeManager.LaunchAllSpikes();
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ IceSpikeManager not assigned on BossAI!");
+        }
+    }
 }
