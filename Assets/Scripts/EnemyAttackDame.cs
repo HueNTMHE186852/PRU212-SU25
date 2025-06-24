@@ -8,19 +8,43 @@ public class EnemyAttackDame : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"🔍 OnTriggerEnter2D with: {other.name}, Tag: {other.tag}");
+
+        if (other.CompareTag("Defend"))
+        {
+            Debug.Log("🛡️ Hit Defend collider — attack blocked!");
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
-            // Gây damage cho player
-            Debug.Log($"Player nhận {damage} damage!");
+            Player1 player1 = other.GetComponent<Player1>();
 
-            // Thêm logic gây damage ở đây
-            other.GetComponent<AuronPlayerController>()?.TakeDamage((int)damage);
-
-            if (CameraShake.Instance != null)
+            if (player1 == null)
             {
-                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.1f));
+                Debug.LogWarning("⚠️ Player script (Player1) not found on the collided object.");
+                return;
+            }
+
+            if (!player1.isDefending)
+            {
+                Debug.Log($"💥 Player hit for {damage} damage!");
+                player1.TakeDamage((int)damage);
+
+                if (CameraShake.Instance != null)
+                {
+                    Debug.Log("📸 Camera shake triggered.");
+                    StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.1f));
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ CameraShake.Instance is null.");
+                }
+            }
+            else
+            {
+                Debug.Log("🛡️ Player is defending — no damage taken.");
             }
         }
-    
     }
 }

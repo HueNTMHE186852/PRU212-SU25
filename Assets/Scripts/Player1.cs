@@ -42,6 +42,7 @@ public class Player1 : MonoBehaviour
     private bool isRolling;
     private bool isAttacking;
     private bool isUsingESkill;
+    public bool isDefending;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -52,6 +53,9 @@ public class Player1 : MonoBehaviour
     private Vector2 movement;
     [SerializeField] private Vector3 attackColliderRightPos = new Vector3(-0.93f, 0f, 0f);
     [SerializeField] private Vector3 attackColliderLeftPos = new Vector3(-1.86f, 0f, 0f);
+    [SerializeField] private Transform defendCollider;
+    [SerializeField] private Vector2 defendColliderLeftPos = new Vector3(-1.3f, 0f, 0f);
+    [SerializeField] private Vector2 defendColliderRightPos = new Vector3(-0.93f, 0f, 0f);
 
 
 
@@ -171,7 +175,12 @@ public class Player1 : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !isRolling && !isAttacking)
         {
             animator.SetTrigger("Defend");
-            StartCoroutine(ResetAttackLock(0.4f));
+
+            isDefending = true;                // ✅ Start defending
+            EnableDefendCollider();            // ✅ Activate hitbox
+
+            StartCoroutine(ResetDefendCollider(0.4f)); // Disable collider early
+            StartCoroutine(ResetIsDefending(0.2f));   // Disable defend state after 0.75s
         }
 
         // Skill E (slow move)
@@ -235,11 +244,51 @@ public class Player1 : MonoBehaviour
     {
         spriteRenderer.flipX = facingLeft;
 
+        // Flip Attack Collider
         if (attackCollider != null)
         {
             attackCollider.localPosition = facingLeft ? attackColliderLeftPos : attackColliderRightPos;
-            Debug.Log($"🔁 Hardcoded flip to {(facingLeft ? "LEFT" : "RIGHT")}, new pos: {attackCollider.localPosition}");
         }
+
+        // Flip Defend Collider
+        if (defendCollider != null)
+        {
+            defendCollider.localPosition = facingLeft ? defendColliderLeftPos : defendColliderRightPos;
+        }
+
+    }
+
+    private IEnumerator ResetDefendCollider(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        DisableDefendCollider();
+    }
+
+    private IEnumerator ResetIsDefending(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isDefending = false;
+    }
+    public void EnableDefendCollider()
+    {
+        if (defendCollider == null) return;
+
+        var col = defendCollider.GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = true;
+
+        Debug.Log($"🛡️ Defend collider ENABLED at {defendCollider.localPosition}");
+    }
+
+    public void DisableDefendCollider()
+    {
+        if (defendCollider == null) return;
+
+        var col = defendCollider.GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
+
+        Debug.Log("🛑 Defend collider DISABLED");
     }
 
     public void EnableAttackCollider()
@@ -251,7 +300,6 @@ public class Player1 : MonoBehaviour
         var col = attackCollider.GetComponent<Collider2D>();
         if (col != null) col.enabled = true;
 
-        Debug.Log($"✅ Attack collider enabled at {attackCollider.localPosition}");
     }
 
     public void DisableAttackCollider()
@@ -262,7 +310,6 @@ public class Player1 : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-        Debug.Log("🛑 Collider disabled");
     }
 
 
@@ -294,14 +341,12 @@ public class Player1 : MonoBehaviour
     {
         if (attackTrigger == null)
         {
-            Debug.LogWarning("⚠️ Player1: attackTrigger chưa được gán!");
             return;
         }
 
         if (System.Enum.TryParse(skillName, out PlayerAttackTrigger.SkillType parsedSkill))
         {
             attackTrigger.skillType = parsedSkill;
-            Debug.Log("✅ Skill type set to: " + parsedSkill);
         }
         else
         {
