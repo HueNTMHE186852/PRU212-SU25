@@ -37,7 +37,7 @@ public class LazerTrigger : MonoBehaviour
 
             if (CameraShake.Instance != null)
             {
-                StartCoroutine(CameraShake.Instance.Shake(0.1f, 0.05f));
+                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.05f));
             }
             else
             {

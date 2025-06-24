@@ -180,7 +180,7 @@ public class Player1 : MonoBehaviour
             EnableDefendCollider();            // ✅ Activate hitbox
 
             StartCoroutine(ResetDefendCollider(0.4f)); // Disable collider early
-            StartCoroutine(ResetIsDefending(0.5f));   // Disable defend state after 0.75s
+            StartCoroutine(ResetIsDefending(0.2f));   // Disable defend state after 0.75s
         }
 
         // Skill E (slow move)
