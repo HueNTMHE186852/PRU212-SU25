@@ -13,7 +13,7 @@ public class AuronPlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    public float jumpForce = 7f;
+    public float jumpForce = 18f;
     private bool isGrounded = true;
     private bool isAttacking = false;
     private bool isDefending = false; 
