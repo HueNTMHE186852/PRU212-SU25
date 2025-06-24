@@ -32,7 +32,6 @@ public class PlayerAttackTrigger : MonoBehaviour
         if (System.Enum.TryParse(skillName, out SkillType parsedSkill))
         {
             skillType = parsedSkill;
-            Debug.Log("Skill type set to: " + skillType);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,14 +42,12 @@ public class PlayerAttackTrigger : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Debug.Log($"🗡️ Gây {damage} damage cho enemy: {enemy.name} bằng skill {skillType}");
         }
 
         BossAI boss = other.GetComponentInParent<BossAI>();
         if (boss != null)
         {
             boss.TakeDamage(damage);
-            Debug.Log($"🔥 Gây {damage} damage cho boss: {boss.name} bằng skill {skillType}");
         }
     }
 }

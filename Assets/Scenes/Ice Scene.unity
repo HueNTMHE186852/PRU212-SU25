@@ -79082,6 +79082,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084816733d39ec14cac1df98c73df7bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1395285583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6901483336936140127, guid: 8df68961903f2f447a4f634627241239, type: 3}
+  m_PrefabInstance: {fileID: 9068485836966607573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1596067953
 GameObject:
   m_ObjectHideFlags: 0
@@ -79651,6 +79656,18 @@ PrefabInstance:
     - target: {fileID: 4146250189180606258, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7081564891563122426, guid: 8df68961903f2f447a4f634627241239, type: 3}
+      propertyPath: defendCollider
+      value: 
+      objectReference: {fileID: 1395285583}
+    - target: {fileID: 7081564891563122426, guid: 8df68961903f2f447a4f634627241239, type: 3}
+      propertyPath: defendColliderLeftPos.x
+      value: -1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 7081564891563122426, guid: 8df68961903f2f447a4f634627241239, type: 3}
+      propertyPath: defendColliderRightPos.x
+      value: -0.93
       objectReference: {fileID: 0}
     - target: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
       propertyPath: m_LocalPosition.x
