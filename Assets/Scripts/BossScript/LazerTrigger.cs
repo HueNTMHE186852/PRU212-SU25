@@ -13,7 +13,7 @@ public class LazerTrigger : MonoBehaviour
             player.TakeDamage(damage);
             if (CameraShake.Instance != null)
             {
-                StartCoroutine(CameraShake.Instance.Shake(0.1f, 0.05f));
+                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.05f));
             }
             Debug.Log("💥 Player trúng đòn lazer trừ 20 dame ");
         }
