@@ -17,7 +17,6 @@ public class DragonController : MonoBehaviour
     public GameObject floatingText;
     private bool isDead = false;
     private Vector3 startPosition;
-    public float patrolDistance = 8f;
     public float currentHealth;
     public float maxHealth = 100;
     private float lastAttackTime = -10f;
@@ -25,8 +24,6 @@ public class DragonController : MonoBehaviour
     private Transform player;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private bool isPatrolling = true;
-    private bool movingRight = true;
 
     public bool forceChase = true;
     public bool ignoreVerticalForAttack = true;
@@ -67,12 +64,15 @@ public class DragonController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ Không tìm thấy Player!");
             return;
         }
 
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        Transform modelTransform = transform.Find("Model");
+        if (modelTransform != null)
+        {
+            spriteRenderer = modelTransform.GetComponent<SpriteRenderer>();
+            animator = modelTransform.GetComponent<Animator>();
+        }
 
         if (colliderHolder != null)
         {
@@ -81,14 +81,6 @@ public class DragonController : MonoBehaviour
             {
                 originalColliderOffset = boxCollider.offset;
             }
-            else
-            {
-                Debug.LogError("❌ ColliderHolder không có BoxCollider2D component!");
-            }
-        }
-        else
-        {
-            Debug.LogError("❌ ColliderHolder chưa được gán trong Inspector!");
         }
 
         if (attackCollider != null)
@@ -108,55 +100,41 @@ public class DragonController : MonoBehaviour
                     originalPolygonPoints[i] = attackPolygonCollider.points[i];
                 }
             }
-            else
-            {
-                Debug.LogError("❌ AttackCollider không có BoxCollider2D hoặc PolygonCollider2D component!");
-            }
         }
-        else
-        {
-            Debug.LogError("❌ AttackCollider chưa được gán trong Inspector!");
-        }
-
-        if (animator != null)
-        {
-            animator.Play("Run", 0, 0f);
-        }
-
         currentHealth = maxHealth;
     }
 
     void Update()
     {
-        if (player == null) return;
-        if (isDead) return;
+        if (player == null || isDead) return;
 
-        if (isAttacking)
+        UpdateDistances();
+
+        if (canAttackNow && !isAttacking)
         {
-            if (Time.time >= lastAttackTime + attackDuration)
+            animator.SetBool("IsWalking", false);
+            if (animator != null && animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
-                EndAttack();
+                animator.Play("Idle", 0, 0f);
             }
+            StartAttack();
             return;
         }
 
-        UpdateDistances();
 
         bool shouldChase = (cachedVerticalDistance <= verticalTolerance) && (cachedHorizontalDistance <= detectionRange);
 
         if (shouldChase)
         {
-            isPatrolling = false;
             HandleChase();
         }
         else
         {
-            if (!isPatrolling)
+            animator.SetBool("IsWalking", false);
+            if (animator != null && animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
             {
-                isPatrolling = true;
-                movingRight = true;
+                animator.Play("Idle", 0, 0f);
             }
-            Patrol();
         }
 
         if (currentHealth <= 0 && !isDead)
@@ -165,35 +143,14 @@ public class DragonController : MonoBehaviour
         }
     }
 
-    void UpdateDistances()
-    {
-        Vector3 playerPos = player.position;
-        Vector3 myPos = transform.position;
-
-        cachedHorizontalDistance = Mathf.Abs(myPos.x - playerPos.x);
-        cachedVerticalDistance = Mathf.Abs(myPos.y - playerPos.y);
-
-        bool inHorizontalRange = cachedHorizontalDistance <= attackRange;
-        bool inVerticalRange = ignoreVerticalForAttack || cachedVerticalDistance <= verticalTolerance;
-        bool cooldownReady = Time.time >= lastAttackTime + attackCooldown;
-
-        canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
-    }
-
     void HandleChase()
     {
-        if (canAttackNow)
+        if (isAttacking || canAttackNow)
         {
-            StartAttack();
             return;
         }
 
-        if (cachedHorizontalDistance <= attackRange)
-        {
-            float remainingCooldown = (lastAttackTime + attackCooldown) - Time.time;
-            FacePlayer();
-        }
-
+        FacePlayer();
         MoveTowardsPlayer();
     }
 
@@ -207,20 +164,9 @@ public class DragonController : MonoBehaviour
             animator.ResetTrigger("Attack");
             animator.SetTrigger("Attack");
         }
-
         FacePlayer();
     }
 
-    void EndAttack()
-    {
-        isAttacking = false;
-
-        if (animator != null)
-        {
-            animator.ResetTrigger("Attack");
-            animator.Play("Run");
-        }
-    }
 
     void Die()
     {
@@ -261,10 +207,15 @@ public class DragonController : MonoBehaviour
 
     void MoveTowardsPlayer()
     {
+        if (animator != null && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            animator.Play("Walk", 0, 0f);
+        }
+        animator.SetBool("IsWalking", true);
+
         Vector2 direction = (player.position - transform.position).normalized;
         Vector3 movement = (Vector3)(direction * speed * Time.deltaTime);
         transform.position += movement;
-
         bool flip = direction.x < 0;
         spriteRenderer.flipX = flip;
 
@@ -276,28 +227,6 @@ public class DragonController : MonoBehaviour
         bool flip = player.position.x < transform.position.x;
         spriteRenderer.flipX = flip;
         UpdateColliderFlip(flip);
-    }
-
-    void Patrol()
-    {
-        float dir = movingRight ? 1f : -1f;
-        transform.Translate(Vector2.right * dir * speed * Time.deltaTime);
-
-        bool flip = !movingRight;
-        spriteRenderer.flipX = flip;
-        UpdateColliderFlip(flip);
-
-        float distanceFromStart = transform.position.x - startPosition.x;
-        float buffer = 0.5f;
-
-        if (movingRight && distanceFromStart >= patrolDistance + buffer)
-        {
-            movingRight = false;
-        }
-        else if (!movingRight && distanceFromStart <= -patrolDistance - buffer)
-        {
-            movingRight = true;
-        }
     }
 
     void UpdateColliderFlip(bool isFlipped)
@@ -348,27 +277,6 @@ public class DragonController : MonoBehaviour
         {
             Die();
         }
-        else
-        {
-            StartCoroutine(DelayedHurtAnimation());
-            StartCoroutine(PlayHurtAndRecover());
-        }
-    }
-
-    IEnumerator DelayedHurtAnimation()
-    {
-        yield return new WaitForSeconds(0.1f);
-        animator.SetTrigger("Hurt");
-    }
-
-    IEnumerator PlayHurtAndRecover()
-    {
-        float originalSpeed = speed;
-        speed = 0;
-
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-
-        speed = originalSpeed;
     }
 
     void ShowDame(string text)
@@ -385,15 +293,6 @@ public class DragonController : MonoBehaviour
         }
     }
 
-    public void ApplyKnockback(Vector2 force)
-    {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = new Vector2(force.x, rb.velocity.y);
-        }
-    }
-
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -407,5 +306,20 @@ public class DragonController : MonoBehaviour
             Gizmos.color = canAttackNow ? Color.red : Color.cyan;
             Gizmos.DrawLine(transform.position, player.position);
         }
+    }
+
+    void UpdateDistances()
+    {
+        Vector3 playerPos = player.position;
+        Vector3 myPos = transform.position;
+
+        cachedHorizontalDistance = Mathf.Abs(myPos.x - playerPos.x);
+        cachedVerticalDistance = Mathf.Abs(myPos.y - playerPos.y);
+
+        bool inHorizontalRange = cachedHorizontalDistance <= attackRange;
+        bool inVerticalRange = ignoreVerticalForAttack || cachedVerticalDistance <= verticalTolerance;
+        bool cooldownReady = Time.time >= lastAttackTime + attackCooldown;
+
+        canAttackNow = inHorizontalRange && inVerticalRange && cooldownReady;
     }
 }
