@@ -72,7 +72,7 @@ public class AuronPlayerController : MonoBehaviour
             isAttacking = true;
             animator.SetBool("IsAttacking", true);
 
-            float attackRadius = 1.5f;
+            float attackRadius = 5f;
             float attackOffsetX = 1.0f;
             Vector3 attackCenter = transform.position + new Vector3(spriteRenderer.flipX ? -attackOffsetX : attackOffsetX, 0, 0);
 
@@ -184,7 +184,11 @@ public class AuronPlayerController : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-
+        if (isDefending)
+        {
+            Debug.Log("Blocked damage while defending!");
+            return;
+        }
         animator.SetTrigger("Hit"); // Gọi animation nhận damage
 
         currentHealth -= damage;
