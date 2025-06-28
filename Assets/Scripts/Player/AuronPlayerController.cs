@@ -39,6 +39,17 @@ public class AuronPlayerController : MonoBehaviour
     private float mpRegenTimer = 0f;
     public int damage = 10;
     private SpriteRenderer spriteRenderer;
+
+    public float slideSpeed = 8f;
+    public float slideDuration = 1f;
+    private bool isSliding = false;
+    private float slideTimer = 0f;
+
+    public float rollSpeed = 12f;
+    public float rollDuration = 0.5f;
+    private bool isRolling = false;
+    private float rollTimer = 0f;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -129,6 +140,55 @@ public class AuronPlayerController : MonoBehaviour
         {
             spriteRenderer.flipX = false;
 
+        }
+        // Slide input (LeftShift)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded && !isSliding)
+        {
+            isSliding = true;
+            slideTimer = 0f;
+            animator.SetTrigger("Slide");
+        }
+
+        // Roll input (phím C)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && !isRolling && !isSliding)
+        {
+            isRolling = true;
+            rollTimer = 0f;
+            animator.SetTrigger("Roll");
+        }
+        if (isRolling)
+        {
+            rollTimer += Time.deltaTime;
+            float rollDirection = spriteRenderer.flipX ? -1f : 1f;
+            rb.velocity = new Vector2(rollDirection * rollSpeed, rb.velocity.y);
+
+            // Không cho nhảy hoặc tấn công khi đang roll
+            animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsJumping", false);
+
+            if (rollTimer >= rollDuration)
+            {
+                isRolling = false;
+            }
+        }
+        else if (isSliding)
+        {
+            slideTimer += Time.deltaTime;
+            float slideDirection = spriteRenderer.flipX ? -1f : 1f;
+            rb.velocity = new Vector2(slideDirection * slideSpeed, rb.velocity.y);
+
+            animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsJumping", false);
+
+            if (slideTimer >= slideDuration)
+            {
+                isSliding = false;
+            }
+        }
+        else
+        {
+            // Di chuyển bình thường
+            rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
         }
 
 
@@ -328,7 +388,6 @@ public class AuronPlayerController : MonoBehaviour
 
             if (!foundGroundBelow)
             {
-
                 float mouseToPlayerX = Mathf.Abs(mouseWorldPos.x - transform.position.x);
 
                 if (isGrounded && groundCheckPoint != null && mouseToPlayerX < 1.0f)
@@ -354,9 +413,30 @@ public class AuronPlayerController : MonoBehaviour
                 GameObject effect = Instantiate(arrowFallEffectPrefab, spawnPos, Quaternion.identity);
                 effect.transform.localScale *= 5f;
                 Destroy(effect, 1f);
+
+                // Gây damage cho enemy trong vùng spawn
+                float fallRadius = 3f; // bán kính vùng gây damage, chỉnh theo ý bạn
+                int fallDamage = damage * 2; // damage, có thể chỉnh theo ý bạn
+
+                Collider2D[] enemies = Physics2D.OverlapCircleAll(spawnPos, fallRadius);
+                HashSet<EnemyRun> damagedEnemies = new HashSet<EnemyRun>();
+                foreach (var col in enemies)
+                {
+                    EnemyRun enemy = col.GetComponent<EnemyRun>();
+                    if (enemy == null)
+                        enemy = col.GetComponentInParent<EnemyRun>();
+
+                    if (enemy != null && enemy.gameObject.CompareTag("Enemy") && !damagedEnemies.Contains(enemy))
+                    {
+                        Debug.Log("ArrowFallEffect gây damage lên: " + enemy.gameObject.name);
+                        enemy.TakeDamage(fallDamage);
+                        damagedEnemies.Add(enemy);
+                    }
+                }
             }
         }
     }
+
 
 
 }
