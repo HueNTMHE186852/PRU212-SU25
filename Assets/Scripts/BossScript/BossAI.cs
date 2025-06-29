@@ -30,8 +30,7 @@ public class BossAI : MonoBehaviour
     private bool decidedAction = false;
     public IceSpikeManager iceSpikeManager;
     [HideInInspector] public bool hasCollidedWithPlayer = false;
-
-	private BoxCollider2D boxCollider;
+    private BoxCollider2D boxCollider;
 	private BoxCollider2D attackBoxCollider;
 	private PolygonCollider2D attackPolygonCollider;
 	private Vector2 originalColliderOffset;

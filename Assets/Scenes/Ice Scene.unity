@@ -79793,11 +79793,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be75790a92cbec841a2a544129c54b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iceSpikePrefab: {fileID: 2780761559851938323, guid: 7365bd3dd257c164f987fd2a96e1addc, type: 3}
+  iceSpikePrefab: {fileID: 710617292676694610, guid: f6b1da416515e174197a056d4522fa85, type: 3}
   groundReference: {fileID: 1484395720}
-  totalSlots: 6
+  totalSlots: 10
   delayBeforeLaunch: 1.5
-  spawnRange: 50
+  spawnRange: 110
   spikeLaunchForce: 5
   spikeLifetime: 2
 --- !u!4 &1340208615
@@ -79898,7 +79898,7 @@ Transform:
   m_GameObject: {fileID: 1484395718}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.2, y: -108.6, z: -2.3953419}
+  m_LocalPosition: {x: -10, y: -109.7, z: -2.3953419}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
