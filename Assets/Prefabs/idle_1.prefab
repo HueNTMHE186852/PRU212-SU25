@@ -347,6 +347,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  maxJumpCount: 2
   arrowFallEffectPrefab: {fileID: 5539491704844275831, guid: c524107ad6ff4664a88758375cc881e7, type: 3}
   arrowFallSpawnPoint: {fileID: 3889797153617332734}
   healthBar: {fileID: 2301730592178972570}
@@ -358,6 +359,11 @@ MonoBehaviour:
   eSkillMPCost: 20
   mpRegenRate: 5
   damage: 10
+  slideSpeed: 8
+  slideDuration: 1
+  rollSpeed: 12
+  rollDuration: 0.5
+  explosionEffectPrefab: {fileID: 0}
 --- !u!1 &5496475150127187538
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,8 @@ public class AuronPlayerController : MonoBehaviour
     private bool isRolling = false;
     private float rollTimer = 0f;
 
+    public GameObject explosionEffectPrefab; // Gán trong Inspector
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -125,7 +127,11 @@ public class AuronPlayerController : MonoBehaviour
             animator.SetTrigger("IsAttacking2");
 
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            animator.SetTrigger("BowShootQ");
 
+        }
 
         // Defend (hold right mouse button)
         isDefending = Input.GetMouseButton(1);
@@ -436,6 +442,40 @@ public class AuronPlayerController : MonoBehaviour
             }
         }
     }
+    public void FireQSkillArrow()
+    {
+        Vector3 mouseScreenPos = Input.mousePosition;
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0f;
+
+        if (mouseWorldPos.x < transform.position.x)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
+
+        Vector3 firePointLocalPos = firePoint.localPosition;
+        firePointLocalPos.x = Mathf.Abs(firePointLocalPos.x) * (spriteRenderer.flipX ? -1 : 1);
+        firePoint.localPosition = firePointLocalPos;
+
+        Vector2 shootDir = (mouseWorldPos - firePoint.position).normalized;
+        float angle = Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg;
+        firePoint.rotation = Quaternion.Euler(0, 0, angle);
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.Euler(0, 0, angle));
+        Arrow arrowScript = arrow.GetComponent<Arrow>();
+        arrowScript.damage = damage;
+        arrowScript.explosionEffectPrefab = explosionEffectPrefab; // Gán hiệu ứng nổ
+        arrowScript.isQSkillArrow = true; // Đánh dấu là mũi tên Q
+
+        Rigidbody2D arrowRb = arrow.GetComponent<Rigidbody2D>();
+        arrowRb.velocity = shootDir * arrowForce;
+
+        float scaleMultiplier = 5f;
+        arrow.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
+
+        Destroy(arrow, 1f);
+    }
+
 
 
 
