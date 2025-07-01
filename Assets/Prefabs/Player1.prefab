@@ -733,11 +733,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7177767992460674665, guid: 44f42eabff7d1b8418da4eb2b2006cd3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.08
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7177767992460674665, guid: 44f42eabff7d1b8418da4eb2b2006cd3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7177767992460674665, guid: 44f42eabff7d1b8418da4eb2b2006cd3, type: 3}
       propertyPath: m_LocalScale.z
@@ -745,11 +745,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7177767992460674665, guid: 44f42eabff7d1b8418da4eb2b2006cd3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -15.2
+      value: -42.7
       objectReference: {fileID: 0}
     - target: {fileID: 7177767992460674665, guid: 44f42eabff7d1b8418da4eb2b2006cd3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10.7
+      value: 26.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -908,19 +908,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.08
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -15.27
+      value: -43.2
       objectReference: {fileID: 0}
     - target: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 9.29
+      value: 24.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -951,6 +951,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8950537346499803018}
     m_Modifications:
+    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 18.7
+      objectReference: {fileID: 0}
     - target: {fileID: 4997560070134661167, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
       propertyPath: m_Name
       value: Boss_Health
@@ -966,7 +982,7 @@ PrefabInstance:
     - target: {fileID: 7112243819647020179, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4681009278736551771}
     - target: {fileID: 8567314813611965858, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
       propertyPath: m_Pivot.x
       value: 0
