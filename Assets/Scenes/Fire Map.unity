@@ -676,7 +676,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &97805153
@@ -296602,7 +296602,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &371463621
@@ -296906,7 +296906,7 @@ MonoBehaviour:
   - {fileID: 3952900526627526538, guid: cc2b06cb9b0f22548a8dc031fdc82d0c, type: 3}
   - {fileID: 9012045150772685911, guid: 49ea274383b58984299efedd30d364a5, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &422277581
@@ -297463,7 +297463,7 @@ MonoBehaviour:
   - {fileID: 3952900526627526538, guid: cc2b06cb9b0f22548a8dc031fdc82d0c, type: 3}
   - {fileID: 9012045150772685911, guid: 49ea274383b58984299efedd30d364a5, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &590279153
@@ -298065,7 +298065,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &716280189
@@ -298667,7 +298667,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &810311177
@@ -299018,7 +299018,7 @@ MonoBehaviour:
   - {fileID: 3952900526627526538, guid: cc2b06cb9b0f22548a8dc031fdc82d0c, type: 3}
   - {fileID: 9012045150772685911, guid: 49ea274383b58984299efedd30d364a5, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &872191049
@@ -299116,7 +299116,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &877500396
@@ -299718,7 +299718,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1095028577
@@ -299850,98 +299850,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1115967749
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1115967752}
-  - component: {fileID: 1115967751}
-  - component: {fileID: 1115967750}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &1115967750
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115967749}
-  m_Enabled: 1
---- !u!20 &1115967751
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115967749}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 20
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1115967752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115967749}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4033408, y: 0.19609697, z: -10.366563}
-  m_LocalScale: {x: 0.05467798, y: 0.053534452, z: 1.0366561}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2054344042}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1119581484
 GameObject:
   m_ObjectHideFlags: 0
@@ -301014,7 +300922,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1315165851
@@ -301886,7 +301794,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1463070496
@@ -303502,7 +303410,7 @@ MonoBehaviour:
   - {fileID: 3952900526627526538, guid: cc2b06cb9b0f22548a8dc031fdc82d0c, type: 3}
   - {fileID: 9012045150772685911, guid: 49ea274383b58984299efedd30d364a5, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1710894954
@@ -304013,7 +303921,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1759931951
@@ -304111,7 +304019,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1767308212
@@ -304293,7 +304201,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1779987051
@@ -304391,7 +304299,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1786477159
@@ -304909,7 +304817,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1912411754
@@ -305325,7 +305233,7 @@ MonoBehaviour:
     spawnCount: 2
   zonesToSpawn: 6
   minDistance: 8
-  playerTransform: {fileID: 2054344042}
+  playerTransform: {fileID: 0}
   avoidPlayerDistance: 5
 --- !u!4 &1927882297
 Transform:
@@ -305392,7 +305300,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1930881093
@@ -305574,7 +305482,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1934449486
@@ -305672,7 +305580,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &1940592803
@@ -306106,7 +306014,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &2027898439
@@ -306289,7 +306197,7 @@ MonoBehaviour:
   - {fileID: 3952900526627526538, guid: cc2b06cb9b0f22548a8dc031fdc82d0c, type: 3}
   - {fileID: 9012045150772685911, guid: 49ea274383b58984299efedd30d364a5, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &2031449451
@@ -306337,11 +306245,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 154.31805, y: 1.0849915}
   m_EdgeRadius: 0
---- !u!4 &2054344042 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8950537346499803018, guid: 8df68961903f2f447a4f634627241239, type: 3}
-  m_PrefabInstance: {fileID: 1430038344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2069489855
 GameObject:
   m_ObjectHideFlags: 0
@@ -306644,7 +306547,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 432986572688046185, guid: 89b6e12da33057b43871bb931c21475e, type: 3}
   minDistance: 3
-  avoidTarget: {fileID: 2054344042}
+  avoidTarget: {fileID: 0}
   avoidDistance: 5
   spawnZ: 0
 --- !u!61 &2125261589
@@ -306855,7 +306758,6 @@ SceneRoots:
   - {fileID: 552760929}
   - {fileID: 370082692}
   - {fileID: 5232431144631871570}
-  - {fileID: 1430038344}
   - {fileID: 1759315233}
   - {fileID: 1514759494}
   - {fileID: 1573223319}
