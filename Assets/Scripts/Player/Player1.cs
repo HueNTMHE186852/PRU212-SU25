@@ -67,9 +67,11 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        currentHealth = maxHealth;
         healthBar.SetMaxHealth();
         healthBar.gameObject.SetActive(true);
 
+        currentMP = maxMP;
         MPBar.SetMaxMP();
         MPBar.gameObject.SetActive(true);
 
@@ -220,6 +222,7 @@ public class Player1 : MonoBehaviour
             mpRegenTimer = 0f;
             currentMP = Mathf.Min(currentMP + (int)mpRegenRate, maxMP);
             MPBar.SetMP((float)currentMP / maxMP);
+            Debug.Log("Current Mp: " + (float)currentMP / maxMP);
         }
 
         bool wasFlipped = spriteRenderer.flipX;
