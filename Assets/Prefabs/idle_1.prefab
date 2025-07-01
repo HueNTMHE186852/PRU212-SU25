@@ -153,8 +153,8 @@ Transform:
   m_GameObject: {fileID: 3537252545143001085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -124.4, y: 49.6, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: -69, y: 176, z: 1}
+  m_LocalScale: {x: 20, y: 21, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7355960814168350559}
@@ -357,6 +357,7 @@ MonoBehaviour:
   maxMP: 100
   currentMP: 100
   eSkillMPCost: 20
+  qSkillMPCost: 25
   mpRegenRate: 5
   damage: 10
   slideSpeed: 8
