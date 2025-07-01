@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator animator;
     private bool hasHit = false;
-    public int damage = 10; // Default value, can be set from AuronPlayerController
+    public int damage = 10;
+    public GameObject explosionEffectPrefab; // Prefab hiệu ứng nổ (chỉ là explosion, không phải arrow)
+    public bool isQSkillArrow = false;
 
     void Start()
     {
@@ -17,10 +17,9 @@ public class Arrow : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Arrow va chạm với: " + collision.gameObject.name + " | Tag: " + collision.gameObject.tag + " | Layer: " + LayerMask.LayerToName(collision.gameObject.layer));
-
         if (hasHit) return;
 
+        // Va chạm với Enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
             hasHit = true;
@@ -28,11 +27,24 @@ public class Arrow : MonoBehaviour
             rb.isKinematic = true;
             animator.SetTrigger("StickToEnemy");
 
-            //Đặt mũi tên vào đúng điểm va chạm
             if (collision.contacts.Length > 0)
             {
                 Vector2 hitPoint = collision.contacts[0].point;
                 transform.position = hitPoint;
+
+                if (isQSkillArrow && explosionEffectPrefab != null)
+                {
+                    var sr = GetComponent<SpriteRenderer>();
+                    if (sr != null) sr.enabled = false;
+                    GameObject effect = Instantiate(explosionEffectPrefab, hitPoint, transform.rotation);
+                    var effectSR = effect.GetComponent<SpriteRenderer>();
+                    if (effectSR != null)
+                    {
+                        effectSR.sortingLayerName = "Default";
+                        effectSR.sortingOrder = 10;
+                    }
+                    Destroy(effect, 1f);
+                }
             }
 
             transform.parent = collision.transform;
@@ -40,25 +52,44 @@ public class Arrow : MonoBehaviour
             EnemyRun enemy = collision.gameObject.GetComponent<EnemyRun>();
             if (boss != null)
             {
-                // Knockback chỉ theo trục X, không có thành phần Y
                 float direction = collision.transform.position.x > transform.position.x ? 1f : -1f;
                 float knockbackForce = 5f;
                 Vector2 knockback = new Vector2(direction * knockbackForce, 0f);
                 boss.ApplyKnockback(knockback);
-
-              
             }
-            if(enemy != null)
+            if (enemy != null)
             {
                 enemy.TakeDamage(damage);
-                float direction = collision.transform.position.x > transform.position.x ? 1f : -1f;
-                float knockbackForce = 5f;
-                Vector2 knockback = new Vector2(direction * knockbackForce, 0f);
-                enemy.ApplyKnockback(knockback);
             }
             GetComponent<Collider2D>().enabled = false;
+            Destroy(gameObject, 1f);
+            return;
+        }
+
+        // Va chạm với Ground hoặc Tilemap
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Tilemap"))
+        {
+            hasHit = true;
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = false;
+            rb.bodyType = RigidbodyType2D.Static;
+
+            if (collision.contacts.Length > 0)
+            {
+                Vector2 hitPoint = collision.contacts[0].point;
+                Vector2 hitNormal = collision.contacts[0].normal;
+                transform.position = hitPoint;
+
+                // Xoay mũi tên theo hướng tiếp xúc mặt đất
+                float angle = Mathf.Atan2(hitNormal.y, hitNormal.x) * Mathf.Rad2Deg - 90f;
+                transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+
+            transform.parent = collision.transform;
+            GetComponent<Collider2D>().enabled = false;
+            Destroy(gameObject, 1f);
+            return;
         }
     }
-
 
 }

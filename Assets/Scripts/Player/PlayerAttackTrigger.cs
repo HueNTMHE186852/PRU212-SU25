@@ -49,5 +49,11 @@ public class PlayerAttackTrigger : MonoBehaviour
         {
             boss.TakeDamage(damage);
         }
+
+        DragonController dragon = other.GetComponentInParent<DragonController>();
+        if (dragon != null)
+        {
+            dragon.TakeDamage(damage);
+        }
     }
 }
