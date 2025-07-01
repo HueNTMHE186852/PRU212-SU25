@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -11,14 +10,31 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Panels")]
     public GameObject SettingsPanel;
+    public GameObject ChooseCharacterPanel;
 
-    private void Awake()
+    private void Start()
     {
+        if (SettingsPanel != null)
+            SettingsPanel.SetActive(false);
+
+        if (ChooseCharacterPanel != null)
+            ChooseCharacterPanel.SetActive(false);
+
+        PlayButton.onClick.AddListener(OpenCharacterSelection);
+        SettingsButton.onClick.AddListener(OpenSettings);
+        ExitButton.onClick.AddListener(QuitGame);
     }
 
-    public void StartGame()
+    public void OpenCharacterSelection()
     {
-        SceneManager.LoadScene("GameScene");
+        if (ChooseCharacterPanel != null)
+            ChooseCharacterPanel.SetActive(true);
+    }
+
+    public void CloseCharacterSelection()
+    {
+        if (ChooseCharacterPanel != null)
+            ChooseCharacterPanel.SetActive(false);
     }
 
     public void OpenSettings()
@@ -36,7 +52,6 @@ public class MainMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
