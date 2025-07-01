@@ -1,442 +1,438 @@
+// BossCombinedAI.cs
+// Combines the full behaviour of EnemyRun with the special actions (Laser + IceSpike)
+// Author: ChatGPT – merged on 29 Jun 2025
+
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class BossAI : MonoBehaviour
 {
-    public float detectionRange = 16f;
-    public float attackRange = 2.5f;
-    public float speed = 3f;
+    // ———————————————————————————————————————————————————————————
+    // 🗡️  Combat & Stats
+    // ———————————————————————————————————————————————————————————
+    [Header("Stats")]
     public int maxHealth = 100;
     public int currentHealth;
+
+    [Tooltip("Melee damage per hit")]
+    public int damage = 10;
+    [Tooltip("Seconds between 2 melee attacks")]
+    public float attackCooldown = 0.1f;
+    [Tooltip("Duration the attack animation keeps the boss locked in place")]
+    public float attackDuration = 1f;
+
+    // ———————————————————————————————————————————————————————————
+    // 🚶‍♂️  Movement & Detection
+    // ———————————————————————————————————————————————————————————
+    [Header("Detection & Movement")]
+    public float speed = 3.5f;
+    public float detectionRange = 62f;
+    public float attackRange = 10f;
+    public float verticalTolerance = 20f;
+
+    [Tooltip("Should the boss ignore vertical distance when deciding to attack?")]
+    public bool ignoreVerticalForAttack = true;
+    [Tooltip("Force chasing even when outside detection (e.g. after being hit)")]
+    public bool forceChase = true;
+
+    [Header("Patrol")]
+    public bool usePatrol = true;
+    public float patrolDistance = 5f;
+
+    // ———————————————————————————————————————————————————————————
+    // 🖼️  Rendering / VFX
+    // ———————————————————————————————————————————————————————————
     public HealthBar healthBar;
-	public GameObject laserPrefab;
-	public Transform laserSpawnPoint;
-	public float laserLifetime = 0.5f;
-	private bool hasHealthBarAppeared = false;
-	public Transform colliderHolder;
-	public Transform attackCollider;
-	[HideInInspector] public Transform player;
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public bool isFlipped = true;
-    [HideInInspector] public bool isKnockback = false;
+    public GameObject floatingText;
+
+    // ———————————————————————————————————————————————————————————
+    // 🔫  Special Attacks
+    // ———————————————————————————————————————————————————————————
+    [Header("Laser Shot")]
+    public GameObject laserPrefab;
+    public Transform laserSpawnPoint;
+    public float laserLifetime = 0.5f;
+
+    [Header("Ice Spike (Phase 2)")]
+    public IceSpikeManager iceSpikeManager;
+
+    // ———————————————————————————————————————————————————————————
+    // ⚙️  Internal/Private State
+    // ———————————————————————————————————————————————————————————
+    // Cached references
+    private Animator animator;
+    public Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    public Transform player;
+
+    // Distances / decision helpers
+    private float cachedHorizontalDistance;
+    private float cachedVerticalDistance;
+    private bool canAttackNow;
+
+    // Timers / state flags
+    private float lastAttackTime = -10f;
+    private bool isAttacking = false;
+    private bool isDead = false;
+    private bool isPatrolling = true;
+    private bool movingRight = true;
+    private bool hasHealthBarAppeared = false;
     private bool hasTriggered70 = false;
     private bool hasTriggered30 = false;
-    private Animator animator;
-    public  bool isAttacking = false;
-    private bool isChargingFinished = false;
-    private bool isShooting = false;
-    private float idleTimer;
-    private bool decidedAction = false;
-    public IceSpikeManager iceSpikeManager;
-    [HideInInspector] public bool hasCollidedWithPlayer = false;
+
+    // Patrol helpers
+    private Vector3 startPosition;
+
+    // Collider handling / flipping (shared with small‑enemy logic)
+    [Header("Colliders")] public Transform colliderHolder;
+    public Transform attackCollider;
     private BoxCollider2D boxCollider;
-	private BoxCollider2D attackBoxCollider;
-	private PolygonCollider2D attackPolygonCollider;
-	private Vector2 originalColliderOffset;
-	private Vector2 originalAttackColliderOffset;
-	private Vector2[] originalPolygonPoints;
+    private BoxCollider2D attackBoxCollider;
+    private PolygonCollider2D attackPolygonCollider;
+    private Vector2 originalColliderOffset;
+    private Vector2 originalAttackColliderOffset;
+    private Vector2[] originalPolygonPoints;
 
-	void Start()
+    // ———————————————————————————————————————————————————————————
+    // 🏁  Unity Lifecycle
+    // ———————————————————————————————————————————————————————————
+    private void Awake()
     {
-		animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
-		GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-            player = playerObj.transform;
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj) player = playerObj.transform;
 
-        idleTimer = Random.Range(0.5f, 1f);
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-
-		healthBar.gameObject.SetActive(false);
-
-
-		// Lưu offset gốc của BoxCollider
-		if (colliderHolder != null)
-		{
-			boxCollider = colliderHolder.GetComponent<BoxCollider2D>();
-			if (boxCollider != null)
-			{
-				originalColliderOffset = boxCollider.offset;
-				Debug.Log($"💾 Saved original BoxCollider offset: {originalColliderOffset}");
-			}
-			else
-			{
-				Debug.LogError("❌ ColliderHolder không có BoxCollider2D component!");
-			}
-		}
-		else
-		{
-			Debug.LogError("❌ ColliderHolder chưa được gán trong Inspector!");
-		}
-
-		// Kiểm tra và lưu thông tin cho AttackCollider
-		if (attackCollider != null)
-		{
-			// Kiểm tra xem là BoxCollider2D hay PolygonCollider2D
-			attackBoxCollider = attackCollider.GetComponent<BoxCollider2D>();
-			attackPolygonCollider = attackCollider.GetComponent<PolygonCollider2D>();
-
-			if (attackBoxCollider != null)
-			{
-				originalAttackColliderOffset = attackBoxCollider.offset;
-			}
-			else if (attackPolygonCollider != null)
-			{
-				// Lưu các điểm gốc của PolygonCollider
-				originalPolygonPoints = new Vector2[attackPolygonCollider.points.Length];
-				for (int i = 0; i < attackPolygonCollider.points.Length; i++)
-				{
-					originalPolygonPoints[i] = attackPolygonCollider.points[i];
-				}
-
-			}
-			else
-			{
-				Debug.LogError("❌ AttackCollider không có BoxCollider2D hoặc PolygonCollider2D component!");
-			}
-		}
-		else
-		{
-			Debug.LogError("❌ AttackCollider chưa được gán trong Inspector!");
-		}
-	}
-
-	void UpdateColliderFlip(bool isFlipped)
-	{
-		// Lật BoxCollider2D chính (gắn vào colliderHolder)
-		if (boxCollider != null)
-		{
-			Vector2 newOffset = originalColliderOffset;
-			newOffset.x = originalColliderOffset.x * (isFlipped ? -1f : 1f);
-			boxCollider.offset = newOffset;
-		}
-
-		// Lật AttackCollider
-		if (attackCollider != null)
-		{
-			if (attackBoxCollider != null)
-			{
-				// Lật offset BoxCollider2D tấn công
-				Vector2 newOffset = originalAttackColliderOffset;
-				newOffset.x = originalAttackColliderOffset.x * (isFlipped ? -1f : 1f);
-				attackBoxCollider.offset = newOffset;
-			}
-			else if (attackPolygonCollider != null && originalPolygonPoints != null)
-			{
-				// Lật điểm của PolygonCollider2D tấn công
-				Vector2[] flippedPoints = new Vector2[originalPolygonPoints.Length];
-
-				for (int i = 0; i < originalPolygonPoints.Length; i++)
-				{
-					flippedPoints[i] = originalPolygonPoints[i];
-					flippedPoints[i].x *= (isFlipped ? -1f : 1f);
-				}
-
-				attackPolygonCollider.points = flippedPoints;
-			}
-		}
-	}
-
-	void Update()
-	{
-		if (player == null) return;
-
-		// Gọi kiểm tra khoảng cách
-		bool inDetectionRange = InDetectionRange();
-		bool inAttackRange = InAttackRange();
-
-		// Hiện thanh máu nếu trong vùng phát hiện
-		if (!hasHealthBarAppeared && inDetectionRange)
-		{
-			hasHealthBarAppeared = true;
-			healthBar.gameObject.SetActive(true);
-		}
-
-		// Nếu chưa phát hiện, boss đứng yên
-		if (!inDetectionRange) return;
-
-		if (!animator.GetBool("isCharging") && !isShooting)
-		{
-			LookAtPlayer();
-		}
-
-
-		// Hành vi AI
-		if (!decidedAction)
-		{
-			idleTimer -= Time.deltaTime;
-			if (idleTimer <= 0)
-			{
-				decidedAction = true;
-				int rand = Random.Range(0, 2);
-
-				if (rand == 0)
-				{
-					animator.SetBool("isRunning", true);
-					animator.SetBool("isCharging", false);
-				}
-				else
-				{
-					animator.SetBool("isCharging", true);
-					animator.SetBool("isRunning", false);
-					isChargingFinished = false;
-				}
-			}
-		}
-
-		if (animator.GetBool("isRunning") && inAttackRange && !isAttacking)
-		{
-			animator.SetBool("isRunning", false);
-			isAttacking = true;
-			animator.SetTrigger("meleeAttack");
-		}
-
-		if (animator.GetBool("isCharging") && inAttackRange && isChargingFinished && !isShooting)
-		{
-			isShooting = true;
-			animator.SetBool("isShooting", true);
-		}
+        // Cache colliders & their original offsets/points for proper flipping
+        CacheColliders();
     }
-	public void TakeDamage(int damage)
+
+    private void Start()
     {
-		Debug.Log("nhan " + damage + "dame");
-        currentHealth -= damage;
-		currentHealth = Mathf.Max(currentHealth, 0);
-		healthBar.SetHealth(currentHealth);
-        float percent = (float)currentHealth / maxHealth;
+        startPosition = transform.position;
+        currentHealth = maxHealth;
+        if (healthBar) { healthBar.gameObject.SetActive(false); healthBar.SetMaxHealth(maxHealth); }
+        animator.Play("Idle", 0, 0f);
+    }
 
-        if (!hasTriggered70 && percent <= 0.7f)
+    private void Update()
+    {
+        if (!player || isDead) return;
+
+        // Healthbar appears when boss detected
+        if (!hasHealthBarAppeared && DistanceToPlayer() <= detectionRange)
         {
-            hasTriggered70 = true;
-            animator.SetTrigger("bossHit");
-
-            float bossHitDuration = GetAnimationClipLength("BossHit");
-            if (CameraShake.Instance != null)
-            {
-                StartCoroutine(CameraShake.Instance.Shake(bossHitDuration, 0.1f));
-            }
+            hasHealthBarAppeared = true;
+            if (healthBar) healthBar.gameObject.SetActive(true);
         }
 
-        if (!hasTriggered30 && percent <= 0.3f)
+        // If currently in an attack animation → wait until finished
+        if (isAttacking)
         {
-            hasTriggered30 = true;
-            animator.SetTrigger("bossHit");
-
-            float bossHitDuration = GetAnimationClipLength("BossHit");
-            if (CameraShake.Instance != null)
+            if (Time.time >= lastAttackTime + attackDuration)
             {
-                StartCoroutine(CameraShake.Instance.Shake(bossHitDuration, 0.15f));
+                EndAttack();
             }
+            return;
         }
-        if (currentHealth <= 0)
-		{
-			healthBar.gameObject.SetActive(false);
-			Die();
-		}
-	}
+
+        UpdateDistances();
+
+        bool shouldChase = (cachedVerticalDistance <= verticalTolerance) && (cachedHorizontalDistance <= detectionRange);
+        if (!shouldChase && forceChase && currentHealth < maxHealth) shouldChase = true; // chase if already aggroed
+
+        if (shouldChase)
+        {
+            isPatrolling = false;
+            HandleChase();
+        }
+        else if (usePatrol)
+        {
+            if (!isPatrolling) { isPatrolling = true; movingRight = true; }
+            Patrol();
+        }
+    }
+
+    // Physics‑based movement in FixedUpdate when running state is active
+    private void FixedUpdate()
+    {
+        if (player == null || isDead) return;
+        if (animator.GetBool("isRunning"))
+        {
+            Vector2 target = new Vector2(player.position.x, rb.position.y);
+            Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+            rb.MovePosition(newPos);
+        }
+    }
+
+    // ———————————————————————————————————————————————————————————
+    //  🔍 Distance & Decision Helpers
+    // ———————————————————————————————————————————————————————————
+    private void UpdateDistances()
+    {
+        Vector3 p = player.position;
+        Vector3 me = transform.position;
+
+        cachedHorizontalDistance = Mathf.Abs(me.x - p.x);
+        cachedVerticalDistance = Mathf.Abs(me.y - p.y);
+
+        bool inHorizontal = cachedHorizontalDistance <= attackRange;
+        bool inVertical = ignoreVerticalForAttack || cachedVerticalDistance <= verticalTolerance;
+        bool cooldownReady = Time.time >= lastAttackTime + attackCooldown;
+        canAttackNow = inHorizontal && inVertical && cooldownReady;
+    }
+
+    private float DistanceToPlayer() => Vector2.Distance(transform.position, player.position);
+
+    // ———————————————————————————————————————————————————————————
+    //  🚗 Movement Behaviours
+    // ———————————————————————————————————————————————————————————
+    private void HandleChase()
+    {
+        // Try melee first
+        if (canAttackNow)
+        {
+            StartAttack();
+            return;
+        }
+
+        // Move toward player
+        MoveTowardsPlayer();
+    }
+
+    private void MoveTowardsPlayer()
+    {
+        Vector2 dir = (player.position - transform.position).normalized;
+        Vector3 movement = dir * speed * Time.deltaTime;
+        transform.position += movement;
+
+        bool flip = dir.x < 0;
+        spriteRenderer.flipX = flip;
+        UpdateColliderFlip(flip);
+
+        animator.SetBool("isRunning", true);
+    }
+
+    private void Patrol()
+    {
+        float dir = movingRight ? 1f : -1f;
+        transform.Translate(Vector2.right * dir * speed * Time.deltaTime);
+
+        bool flip = !movingRight;
+        spriteRenderer.flipX = flip;
+        UpdateColliderFlip(flip);
+
+        float buffer = .5f;
+        float deltaFromStart = transform.position.x - startPosition.x;
+        if (movingRight && deltaFromStart >= patrolDistance + buffer) movingRight = false;
+        else if (!movingRight && deltaFromStart <= -patrolDistance - buffer) movingRight = true;
+
+        animator.SetBool("isRunning", true);
+    }
+
+    // ———————————————————————————————————————————————————————————
+    //  ⚔️ Melee Attack
+    // ———————————————————————————————————————————————————————————
+    private void StartAttack()
+    {
+        isAttacking = true;
+        lastAttackTime = Time.time;
+
+        animator.ResetTrigger("meleeAttack");
+        animator.SetTrigger("meleeAttack");
+        animator.SetBool("isRunning", false);
+
+        FacePlayer();
+    }
+
+    private void EndAttack()
+    {
+        isAttacking = false;
+        animator.ResetTrigger("meleeAttack");
+        animator.SetBool("isRunning", false);
+    }
+
+    private void FacePlayer()
+    {
+        bool flip = player.position.x < transform.position.x;
+        spriteRenderer.flipX = flip;
+        UpdateColliderFlip(flip);
+    }
+
+    // ———————————————————————————————————————————————————————————
+    //  🏹 Ranged & Special Attacks
+    // ———————————————————————————————————————————————————————————
+    public void ShootLaser()
+    {
+        if (!laserPrefab || !laserSpawnPoint) return;
+
+        GameObject laser = Instantiate(laserPrefab, laserSpawnPoint.position, Quaternion.identity);
+        Vector3 scale = laser.transform.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        laser.transform.localScale = scale;
+
+        bool facingRight = !spriteRenderer.flipX;
+        if (facingRight)
+        {
+            laser.transform.rotation = Quaternion.Euler(0, 180f, -10f);
+        }
+        else
+        {
+            laser.transform.rotation = Quaternion.Euler(0, 0f, -10f);
+        }
+
+        laser.transform.position += new Vector3(facingRight ? -1f : 1f, 0, 0);
+        Destroy(laser, laserLifetime);
+    }
+
+    public void SummonIceSpikes()
+    {
+        if (iceSpikeManager) iceSpikeManager.StartSpikeAttack();
+    }
+
+    public void LaunchIceSpikes()
+    {
+        if (!iceSpikeManager) return;
+        iceSpikeManager.LaunchAllSpikes();
+    }
+
+    // ———————————————————————————————————————————————————————————
+    //  💔 Damage & Death
+    // ———————————————————————————————————————————————————————————
+    public void TakeDamage(int amount)
+    {
+        if (isDead) return;
+
+        ShowDamage(amount.ToString());
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        if (healthBar) healthBar.SetHealth(currentHealth);
+
+        float pct = (float)currentHealth / maxHealth;
+        if (!hasTriggered70 && pct <= 0.7f) { hasTriggered70 = true; TriggerBossHit(0.1f); }
+        if (!hasTriggered30 && pct <= 0.3f) { hasTriggered30 = true; TriggerBossHit(0.15f); }
+
+        if (currentHealth <= 0) Die();
+        else StartCoroutine(HurtRoutine());
+    }
+
+    private void TriggerBossHit(float shakeIntensity)
+    {
+        animator.SetTrigger("bossHit");
+        float len = GetAnimationClipLength("BossHit");
+        if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, shakeIntensity));
+    }
+
+    private IEnumerator HurtRoutine()
+    {
+        animator.SetTrigger("Hurt");
+        float len = animator.GetCurrentAnimatorStateInfo(0).length;
+        speed = 0f;
+        yield return new WaitForSeconds(len);
+        speed = 3.5f; // reset (could store original)
+    }
 
     private float GetAnimationClipLength(string clipName)
     {
-        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
-        foreach (var clip in ac.animationClips)
+        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            if (clip.name == clipName) return clip.length;
+        return 0.5f;
+    }
+
+    private void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+        animator.SetTrigger("die");
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+        this.enabled = false;
+        Destroy(gameObject, 2.5f);
+    }
+
+    // ———————————————————————————————————————————————————————————
+    //  🎨 GUI / Debug / Helpers
+    // ———————————————————————————————————————————————————————————
+    private void ShowDamage(string text)
+    {
+        if (!floatingText) return;
+        GameObject go = Instantiate(floatingText, transform.position, Quaternion.identity);
+        Vector3 p = go.transform.position; p.z = -1; go.transform.position = p;
+        go.GetComponentInChildren<TextMesh>().text = text;
+        Destroy(go, 0.8f);
+    }
+
+    private void CacheColliders()
+    {
+        if (colliderHolder)
         {
-            if (clip.name == clipName)
+            boxCollider = colliderHolder.GetComponent<BoxCollider2D>();
+            if (boxCollider) originalColliderOffset = boxCollider.offset;
+        }
+
+        if (attackCollider)
+        {
+            attackBoxCollider = attackCollider.GetComponent<BoxCollider2D>();
+            attackPolygonCollider = attackCollider.GetComponent<PolygonCollider2D>();
+            if (attackBoxCollider) originalAttackColliderOffset = attackBoxCollider.offset;
+            if (attackPolygonCollider)
             {
-                return clip.length;
+                originalPolygonPoints = new Vector2[attackPolygonCollider.points.Length];
+                for (int i = 0; i < originalPolygonPoints.Length; i++) originalPolygonPoints[i] = attackPolygonCollider.points[i];
             }
         }
-        Debug.LogWarning("Animation clip not found: " + clipName);
-        return 0.5f; // fallback duration
     }
 
-    void FixedUpdate()
-	{
-		if (player == null) return;
-
-		bool inDetectionRange = InDetectionRange();
-		bool inAttackRange = InAttackRange();
-
-		if (animator.GetBool("isRunning") && inDetectionRange && !inAttackRange && !isAttacking)
-		{
-			Vector2 target = new Vector2(player.position.x, rb.position.y);
-			Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-			rb.MovePosition(newPos);
-		}
-	}
-
-
-	public void LookAtPlayer()
-    {
-        if (player == null) return;
-
-        if (transform.position.x > player.position.x && isFlipped)
-        {
-            Flip();
-        }
-        else if (transform.position.x < player.position.x && !isFlipped)
-        {
-            Flip();
-        }
-    }
-
-    void Flip()
-    {
-        isFlipped = !isFlipped;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
-    }
-
-    public void OnAttackAnimationEnd()
-    {
-        isAttacking = false;
-        animator.SetBool("isRunning", false);
-        ResetState();
-    }
-
-    public void OnChargingAnimationEnd()
-    {
-        isChargingFinished = true;
-    }
-
-    public void OnShootAnimationEnd()
-    {
-        isShooting = false;
-        animator.SetBool("isCharging", false);
-        animator.SetBool("isShooting", false);
-
-        LookAtPlayer();
-
-        ResetState();
-    }
-
-    private void ResetState()
-    {
-        decidedAction = false;
-        idleTimer = Random.Range(0.5f, 1f);
-    }
-
-	public void ShootLaser()
-	{
-		if (laserPrefab != null && laserSpawnPoint != null)
-		{
-			GameObject laser = Instantiate(laserPrefab, laserSpawnPoint.position, Quaternion.identity);
-
-			Vector3 scale = laser.transform.localScale;
-			scale.x = Mathf.Abs(scale.x);
-			laser.transform.localScale = scale;
-
-			if (!isFlipped)
-			{
-				// Boss quay phải → xoay ngược lại 180 độ + lệch xuống 10 độ
-				laser.transform.rotation = Quaternion.Euler(0, 180f, -10f);
-			}
-			else
-			{
-				// Boss quay trái → lệch xuống 10 độ
-				laser.transform.rotation = Quaternion.Euler(0, 0f, -10f);
-			}
-
-			Vector3 offset = new Vector3(1f, 0, 0);
-			if (!isFlipped)
-				offset.x *= -1;
-
-			laser.transform.position += offset;
-
-			Destroy(laser, laserLifetime);
-		}
-	}
-
-	public void ApplyKnockback(Vector2 force)
+    public void ApplyKnockback(Vector2 force)
     {
         if (rb != null)
         {
             rb.velocity = new Vector2(force.x, rb.velocity.y);
         }
-    }
+    }   
 
-	void Die()
-	{
-		animator.SetTrigger("die");
-		rb.velocity = Vector2.zero; 
-		this.enabled = false;
-		Destroy(gameObject, 2.5f);
-	}
-
-	private bool InDetectionRange()
-	{
-		return DistanceToPlayer() <= detectionRange;
-	}
-
-	private bool InAttackRange()
-	{
-		Vector2 delta = AxisDistanceToPlayer();
-		return delta.x <= attackRange && delta.y <= 1f; // dy là 1f để đảm bảo cùng tầng
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.CompareTag("Player"))
-		{
-			hasCollidedWithPlayer = true;
-
-			animator.SetBool("isRunning", false);
-			isAttacking = true;
-			animator.SetTrigger("meleeAttack");
-			Debug.Log($"Cham Player");
-		}
-	}
-
-
-	private void OnTriggerExit2D(Collider2D collision)
-	{
-		if (collision.CompareTag("Player"))
-		{
-			hasCollidedWithPlayer = false;	
-		}
-	}
-	private float DistanceToPlayer()
-	{
-		return Vector2.Distance(transform.position, player.position);
-	}
-	private Vector2 AxisDistanceToPlayer()
-	{
-		Vector2 bossPos = transform.position;
-		Vector2 playerPos = player.position;
-
-		return new Vector2(Mathf.Abs(bossPos.x - playerPos.x), Mathf.Abs(bossPos.y - playerPos.y));
-	}
-    public void SummonIceSpikes()
+    private void UpdateColliderFlip(bool flipped)
     {
-        Debug.Log("⛄ SummonIceSpikes called!");
-
-        if (iceSpikeManager != null)
+        // Main collider
+        if (boxCollider)
         {
-            iceSpikeManager.StartSpikeAttack();
+            Vector2 off = originalColliderOffset;
+            off.x = Mathf.Abs(off.x) * (flipped ? -1f : 1f);
+            boxCollider.offset = off;
         }
-        else
-        {
-            Debug.LogWarning("⚠️ IceSpikeManager not assigned on BossAI!");
-        }
-    }
-    public void LaunchIceSpikes()
-    {
-        Debug.Log("🚀 LaunchIceSpikes called from Animation Event!");
 
-        if (iceSpikeManager != null)
+        // Attack collider
+        if (attackBoxCollider)
         {
-            if (CameraShake.Instance != null)
+            Vector2 off = originalAttackColliderOffset;
+            off.x = Mathf.Abs(off.x) * (flipped ? -1f : 1f);
+            attackBoxCollider.offset = off;
+        }
+        else if (attackPolygonCollider && originalPolygonPoints != null)
+        {
+            Vector2[] pts = new Vector2[originalPolygonPoints.Length];
+            for (int i = 0; i < pts.Length; i++)
             {
-                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.05f));
+                pts[i] = originalPolygonPoints[i];
+                pts[i].x = Mathf.Abs(pts[i].x) * (flipped ? -1f : 1f);
             }
-            iceSpikeManager.LaunchAllSpikes();
+            attackPolygonCollider.points = pts;
         }
-        else
+    }
+
+    // Optional: expose Gizmos similar to EnemyRun
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red; Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow; Gizmos.DrawWireSphere(transform.position, detectionRange);
+        if (player)
         {
-            Debug.LogWarning("⚠️ IceSpikeManager not assigned on BossAI!");
+            Gizmos.color = canAttackNow ? Color.red : Color.cyan;
+            Gizmos.DrawLine(transform.position, player.position);
         }
     }
 }
