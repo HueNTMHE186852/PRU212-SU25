@@ -35,6 +35,7 @@ public class AuronPlayerController : MonoBehaviour
     public int maxMP = 100;
     public int currentMP;
     public int eSkillMPCost = 20;
+    public int qSkillMPCost = 25;
     public float mpRegenRate = 5f;
     private float mpRegenTimer = 0f;
     public int damage = 10;
@@ -127,10 +128,12 @@ public class AuronPlayerController : MonoBehaviour
             animator.SetTrigger("IsAttacking2");
 
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && currentMP >= qSkillMPCost)
         {
+            currentMP -= qSkillMPCost;
+            if (MPBar != null)
+                MPBar.SetMP((float)currentMP / maxMP);
             animator.SetTrigger("BowShootQ");
-
         }
 
         // Defend (hold right mouse button)
@@ -463,7 +466,7 @@ public class AuronPlayerController : MonoBehaviour
 
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.Euler(0, 0, angle));
         Arrow arrowScript = arrow.GetComponent<Arrow>();
-        arrowScript.damage = damage;
+        arrowScript.damage = 15;
         arrowScript.explosionEffectPrefab = explosionEffectPrefab; // Gán hiệu ứng nổ
         arrowScript.isQSkillArrow = true; // Đánh dấu là mũi tên Q
 
