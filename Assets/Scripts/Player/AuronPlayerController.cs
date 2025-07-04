@@ -5,15 +5,15 @@ using UnityEngine;
 public class AuronPlayerController : MonoBehaviour
 {
     private Animator animator;
-    public float moveSpeed = 3f;
+    public float moveSpeed = 25f;
     public GameObject arrowPrefab;
     public Transform firePoint;    // Vị trí xuất phát mũi tên
-    public float arrowForce = 10f; // Lực bắn mũi tên
-    public float fireRate = 0.5f;  // Thời gian giữa các lần bắn
+    public float arrowForce = 70f; // Lực bắn mũi tên
+    public float fireRate = 0.8f;  // Thời gian giữa các lần bắn
 
     private Rigidbody2D rb;
 
-    public float jumpForce = 18f;
+    public float jumpForce = 25f;
     public Transform groundCheckPoint;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
@@ -41,12 +41,12 @@ public class AuronPlayerController : MonoBehaviour
     public int damage = 10;
     private SpriteRenderer spriteRenderer;
 
-    public float slideSpeed = 8f;
+    public float slideSpeed = 18f;
     public float slideDuration = 1f;
     private bool isSliding = false;
     private float slideTimer = 0f;
 
-    public float rollSpeed = 12f;
+    public float rollSpeed = 18f;
     public float rollDuration = 0.5f;
     private bool isRolling = false;
     private float rollTimer = 0f;
@@ -296,16 +296,24 @@ public class AuronPlayerController : MonoBehaviour
             isGrounded = true;
             jumpCount = 0;
             isFalling = false;
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsFalling", false);
+            if (animator != null)
+            {
+                animator.SetBool("IsJumping", false);
+                animator.SetBool("IsFalling", false);
 
-            // Update IsMoving as before
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            bool isMoving = (new Vector3(horizontal, 0, vertical)).sqrMagnitude > 0f;
-            animator.SetBool("IsMoving", isMoving);
+                // Update IsMoving as before
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                bool isMoving = (new Vector3(horizontal, 0, vertical)).sqrMagnitude > 0f;
+                animator.SetBool("IsMoving", isMoving);
+            }
+            else
+            {
+                Debug.LogWarning("Animator is null in OnCollisionEnter2D!");
+            }
         }
     }
+
 
     public void EndAttack()
     {
@@ -345,9 +353,9 @@ public class AuronPlayerController : MonoBehaviour
         arrow.GetComponent<Arrow>().damage = damage;
         Rigidbody2D arrowRb = arrow.GetComponent<Rigidbody2D>();
         arrowRb.velocity = shootDir * arrowForce;
-
+        Debug.Log("Arrow velocity: " + arrowRb.velocity);
         // Tăng kích thước arrow (không lật scale X)
-        float scaleMultiplier = 5f;
+        float scaleMultiplier = 11f;
         arrow.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
 
         Debug.Log("🚀 Arrow bắn ra hướng: " + shootDir);
@@ -473,7 +481,7 @@ public class AuronPlayerController : MonoBehaviour
         Rigidbody2D arrowRb = arrow.GetComponent<Rigidbody2D>();
         arrowRb.velocity = shootDir * arrowForce;
 
-        float scaleMultiplier = 5f;
+        float scaleMultiplier = 11f;
         arrow.transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1f);
 
         Destroy(arrow, 1f);

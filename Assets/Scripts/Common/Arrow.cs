@@ -37,6 +37,7 @@ public class Arrow : MonoBehaviour
                     var sr = GetComponent<SpriteRenderer>();
                     if (sr != null) sr.enabled = false;
                     GameObject effect = Instantiate(explosionEffectPrefab, hitPoint, transform.rotation);
+                    effect.transform.localScale *= 11f;
                     var effectSR = effect.GetComponent<SpriteRenderer>();
                     if (effectSR != null)
                     {
