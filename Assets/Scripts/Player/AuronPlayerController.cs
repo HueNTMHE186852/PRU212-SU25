@@ -30,12 +30,12 @@ public class AuronPlayerController : MonoBehaviour
 
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
-    public int maxHealth = 100;
+    public int maxHealth = 1000;
     public int currentHealth;
-    public int maxMP = 100;
+    public int maxMP = 200;
     public int currentMP;
     public int eSkillMPCost = 20;
-    public int qSkillMPCost = 25;
+    public int qSkillMPCost = 30;
     public float mpRegenRate = 5f;
     private float mpRegenTimer = 0f;
     public int damage = 10;
@@ -58,7 +58,8 @@ public class AuronPlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
-
+        currentHealth = maxHealth;
+        currentMP = 100;
         if (healthBar != null)
         {
             healthBar.SetMaxHealth();
