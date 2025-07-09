@@ -341,7 +341,7 @@ MonoBehaviour:
   firePoint: {fileID: 5735323613020878907}
   arrowForce: 70
   fireRate: 0.8
-  jumpForce: 25
+  jumpForce: 18
   groundCheckPoint: {fileID: 197163425543538104}
   groundCheckRadius: 0.2
   groundLayer:
@@ -352,12 +352,12 @@ MonoBehaviour:
   arrowFallSpawnPoint: {fileID: 3889797153617332734}
   healthBar: {fileID: 1407554491455355887}
   MPBar: {fileID: 8255958042211067982}
-  maxHealth: 100
+  maxHealth: 1000
   currentHealth: 0
-  maxMP: 100
-  currentMP: 0
+  maxMP: 200
+  currentMP: 100
   eSkillMPCost: 20
-  qSkillMPCost: 25
+  qSkillMPCost: 30
   mpRegenRate: 5
   damage: 10
   slideSpeed: 18
