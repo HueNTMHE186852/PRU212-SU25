@@ -49,6 +49,7 @@ public class EnemyRun : MonoBehaviour
     // Prefabs cho bowl máu và mana
     [SerializeField] private GameObject hpBowlPrefab;
     [SerializeField] private GameObject manaBowlPrefab;
+    [SerializeField] private GameObject coin;
 
     private void OnMouseDown()
     {
@@ -287,23 +288,26 @@ public class EnemyRun : MonoBehaviour
         // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
         float dropChance = Random.Range(0f, 1f);
 
-        if (dropChance < 1f / 3f)
+        if (dropChance < 0.25f)
         {
-            // 33.3% rơi máu
+            // 25% rơi máu
             Instantiate(hpBowlPrefab, transform.position, Quaternion.identity);
         }
-        else if (dropChance < 2f / 3f)
+        else if (dropChance < 0.50f)
         {
-            // 33.3% rơi mana
+            // 25% rơi mana
             Instantiate(manaBowlPrefab, transform.position, Quaternion.identity);
+        }
+        else if (dropChance < 0.75f)
+        {
+            // 25% rơi coin
+            Instantiate(coin, transform.position, Quaternion.identity);
         }
         else
         {
-            // 33.3% không rơi gì
+            // 25% không rơi gì
             Debug.Log("Không rơi gì");
         }
-
-        // 10% còn lại: không rơi gì
 
 
         // Delay hủy

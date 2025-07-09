@@ -244,6 +244,7 @@ MonoBehaviour:
   ignoreVerticalForAttack: 1
   hpBowlPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
   manaBowlPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
+  coin: {fileID: 6080172890629669693, guid: a5bf0c2d88b2ec84ab64e87b621750a3, type: 3}
 --- !u!1 &3338002788949011570
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
 --- !u!61 &7010003449267467407
 BoxCollider2D:
   m_ObjectHideFlags: 0
