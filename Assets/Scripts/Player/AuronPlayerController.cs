@@ -54,7 +54,7 @@ public class AuronPlayerController : MonoBehaviour
     private float rollTimer = 0f;
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
-
+    public Description instructionPanelController;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -83,7 +83,10 @@ public class AuronPlayerController : MonoBehaviour
         Vector2 movement = new Vector2(horizontal, vertical).normalized;
         bool isMoving = movement.sqrMagnitude > 0f;
         animator.SetBool("IsMoving", isMoving);
-
+        if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
+        {
+            instructionPanelController.TogglePanel();
+        }
         if (Input.GetKeyDown(KeyCode.X))
         {
             isAttacking = true;
