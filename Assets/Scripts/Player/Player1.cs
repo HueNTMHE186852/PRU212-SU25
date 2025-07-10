@@ -20,6 +20,7 @@ public class Player1 : MonoBehaviour
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
+    public Player1Coin coinManager;
     public PlayerAttackTrigger attackTrigger;
 
     public int eSkillMPCost = 20;
@@ -74,7 +75,7 @@ public class Player1 : MonoBehaviour
         currentMP = maxMP;
         MPBar.SetMaxMP();
         MPBar.gameObject.SetActive(true);
-
+        
     }
 
     public void TakeDamage(int damage)

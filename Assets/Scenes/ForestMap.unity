@@ -545,7 +545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &279825273
 Transform:
   m_ObjectHideFlags: 0
@@ -23703,8 +23703,7 @@ MonoBehaviour:
     enemyTypes:
     - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
-    spawnCount: 3
+    spawnCount: 2
   - zoneName: 
     area: {fileID: 2099855002}
     enemyTypes:
