@@ -30,6 +30,8 @@ public class AuronPlayerController : MonoBehaviour
 
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
+    public Player1Coin coinManager;
+
     public int maxHealth = 1000;
     public int currentHealth;
     public int maxMP = 200;
