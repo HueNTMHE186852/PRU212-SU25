@@ -1713,7 +1713,7 @@ MonoBehaviour:
   healthBar: {fileID: 1407554491455355887}
   MPBar: {fileID: 4482115152886565863}
   coinManager: {fileID: 6740595061470227807}
-  maxHealth: 1000
+  maxHealth: 800
   currentHealth: 0
   maxMP: 200
   currentMP: 100
@@ -3769,20 +3769,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1554435534748115563, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3822328957536310895}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7602945439959175026, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6740595061470227807}
   m_SourcePrefab: {fileID: 100100000, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
---- !u!224 &1181090441331127300 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5343917034798286982, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
-  m_PrefabInstance: {fileID: 6506992574839471234}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3733041937093522416 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7602945439959175026, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
@@ -3800,7 +3792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0e69909e4d864193e50f28eef8f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinText: {fileID: 6098404970395500695}
+  coinText: {fileID: 0}
 --- !u!224 &9129649925076389510 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2665694993258164740, guid: 6809d7b015282d44fbca53fbdc579976, type: 3}
