@@ -51,11 +51,6 @@ public class EnemyRun : MonoBehaviour
     [SerializeField] private GameObject manaBowlPrefab;
     [SerializeField] private GameObject coin;
 
-    private void OnMouseDown()
-    {
-        TakeDamage(10);
-        Debug.Log("Enemy nhận 10 dame");
-    }
 
     void Start()
     {

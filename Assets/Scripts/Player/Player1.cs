@@ -57,7 +57,7 @@ public class Player1 : MonoBehaviour
     [SerializeField] private Vector2 defendColliderLeftPos = new Vector3(-1.3f, 0f, 0f);
     [SerializeField] private Vector2 defendColliderRightPos = new Vector3(-0.93f, 0f, 0f);
 
-
+    public Description instructionPanelController;
 
 
     void Start()
@@ -147,7 +147,10 @@ public class Player1 : MonoBehaviour
         bool isFalling = !isGrounded && rb.velocity.y < -0.1f;
         animator.SetBool("isJumping", isJumping);
         animator.SetBool("isFalling", isFalling);
-
+        if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
+        {
+            instructionPanelController.TogglePanel();
+        }
         // Rolling
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
