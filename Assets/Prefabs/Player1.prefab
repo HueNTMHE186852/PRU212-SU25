@@ -517,11 +517,10 @@ MonoBehaviour:
   eSkillMPCost: 20
   qSkillMPCost: 30
   mpRegenRate: 5
-  damage: 10
-  maxJumps: 2
   attackCooldown: 0.3
   eSkillSlowFactor: 0.3
   eSkillDuration: 0.6
+  maxJumps: 2
   isDefending: 0
   attackCollider: {fileID: 8904727700999808970}
   attackColliderRightPos: {x: -0.93, y: 0, z: 0}
@@ -529,6 +528,11 @@ MonoBehaviour:
   defendCollider: {fileID: 6901483336936140127}
   defendColliderLeftPos: {x: -1.86, y: 0}
   defendColliderRightPos: {x: -0.93, y: 0}
+  baseStats:
+    BaseDamage: 0
+    BaseHP: 0
+    BaseMaxMP: 0
+    BaseMoveSpeed: 0
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0

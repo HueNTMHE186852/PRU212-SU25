@@ -37,23 +37,6 @@ public class PlayerAttackTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         int damage = GetDamageBySkill();
-
-        EnemyRun enemy = other.GetComponentInParent<EnemyRun>();
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-
-        BossAI boss = other.GetComponentInParent<BossAI>();
-        if (boss != null)
-        {
-            boss.TakeDamage(damage);
-        }
-
-        DragonController dragon = other.GetComponentInParent<DragonController>();
-        if (dragon != null)
-        {
-            dragon.TakeDamage(damage);
-        }
+        DamageManager.ApplyDamage(other.gameObject, damage);
     }
 }

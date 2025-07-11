@@ -4,64 +4,79 @@ using UnityEngine;
 
 public class AuronPlayerController : MonoBehaviour
 {
-    private Animator animator;
     public float moveSpeed = 25f;
-    public GameObject arrowPrefab;
-    public Transform firePoint;    // Vị trí xuất phát mũi tên
-    public float arrowForce = 70f; // Lực bắn mũi tên
-    public float fireRate = 0.8f;  // Thời gian giữa các lần bắn
-
-    private Rigidbody2D rb;
-
     public float jumpForce = 25f;
-    public Transform groundCheckPoint;
-    public float groundCheckRadius = 0.2f;
-    public LayerMask groundLayer;
-    private bool isGrounded = true;
-    private bool isAttacking = false;
-    private bool isDefending = false;
-    private int jumpCount = 0;
-    public int maxJumpCount = 2; // Allow double jump
-    private bool isFalling = false;
+    public int maxHealth = 1000;
+    public int currentHealth;
+    public int maxMP = 200;
+    public int currentMP;
+    public int damage = 10;
+    public float mpRegenRate = 5f;
 
+    public float arrowForce = 70f;
+    public float fireRate = 0.8f;
+    public Transform firePoint;
+    public GameObject arrowPrefab;
 
-    public GameObject arrowFallEffectPrefab; // Prefab hiệu ứng cung rơi
-    public Transform arrowFallSpawnPoint;    // Vị trí rơi xuống (có thể là ground hoặc vị trí chỉ định)
+    public GameObject arrowFallEffectPrefab;
+    public Transform arrowFallSpawnPoint;
 
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
     public Player1Coin coinManager;
 
-    public int maxHealth = 1000;
-    public int currentHealth;
-    public int maxMP = 200;
-    public int currentMP;
-    public int eSkillMPCost = 20;
-    public int qSkillMPCost = 30;
-    public float mpRegenRate = 5f;
-    private float mpRegenTimer = 0f;
-    public int damage = 10;
-    private SpriteRenderer spriteRenderer;
+    public Transform groundCheckPoint;
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
 
     public float slideSpeed = 18f;
     public float slideDuration = 1f;
-    private bool isSliding = false;
-    private float slideTimer = 0f;
-
     public float rollSpeed = 18f;
     public float rollDuration = 0.5f;
-    private bool isRolling = false;
-    private float rollTimer = 0f;
+
+    private Rigidbody2D rb;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+
+    private bool isGrounded;
+    private bool isAttacking;
+    private bool isDefending;
+    private bool isFalling;
+    private bool isSliding;
+    private bool isRolling;
+
+    private float slideTimer;
+    private float rollTimer;
+    private float mpRegenTimer = 0f;
+    private int jumpCount = 0;
+    public int maxJumpCount = 2;
+    public int eSkillMPCost = 20;
+    public int qSkillMPCost = 30;
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
+
+    public BasePlayerStats baseStats;
+    private FinalPlayerStats finalStats = new FinalPlayerStats();
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
+
+        CharacterStatsSO baseStats = GameManager.Instance.SelectedCharacterStats;
+        finalStats.Calculate(baseStats.baseStats, GameManager.Instance.sharedStats);
+
+        maxHealth = finalStats.MaxHP;
+        maxMP = finalStats.MaxMP;
+
+        currentHealth = finalStats.MaxHP;
+        currentMP = finalStats.MaxMP;
+
+        moveSpeed = finalStats.MoveSpeed;
+        damage = finalStats.Damage;
         currentHealth = maxHealth;
-        currentMP = 100;
+
         if (healthBar != null)
         {
             healthBar.SetMaxHealth();

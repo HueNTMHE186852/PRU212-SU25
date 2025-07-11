@@ -6,6 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Player1 : MonoBehaviour
 {
+    [Header("General Stats")]
     public float moveSpeed = 15f;
     public float jumpForce = 8f;
     public float rollForce = 8f;
@@ -13,9 +14,9 @@ public class Player1 : MonoBehaviour
     public int currentHealth;
     public int maxMP = 100;
     public int currentMP;
-    private bool isDead = false;
+
+    [Header("Components")]
     public Transform GroundCheck;
-    //public Transform attackHitbox;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
@@ -23,31 +24,32 @@ public class Player1 : MonoBehaviour
     public Player1Coin coinManager;
     public PlayerAttackTrigger attackTrigger;
 
+    [Header("Skills")]
     public int eSkillMPCost = 20;
     public int qSkillMPCost = 30;
-    public float mpRegenRate = 5f; 
-    private float mpRegenTimer = 0f;
-    public int damage = 10;
-
-    public int maxJumps = 2;
+    public float mpRegenRate = 5f;
     public float attackCooldown = 0.3f;
     public float eSkillSlowFactor = 0.3f;
     public float eSkillDuration = 0.6f;
 
-    private int currentAttack = 0;
+    [Header("Jump")]
+    public int maxJumps = 2;
     private int jumpCount = 0;
-    private float timeSinceAttack = 0.0f;
-    private float eSkillTimer = 0f;
 
+    private bool isDead = false;
     private bool isGrounded;
     private bool isRolling;
     private bool isAttacking;
     private bool isUsingESkill;
     public bool isDefending;
 
-    private Rigidbody2D rb;
-    private Animator animator;
+    private float mpRegenTimer = 0f;
+    private float timeSinceAttack = 0.0f;
+    private float eSkillTimer = 0f;
+    private int currentAttack = 0;
 
+    private Animator animator;
+    private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     [SerializeField] 
     private Transform attackCollider; 
@@ -57,6 +59,9 @@ public class Player1 : MonoBehaviour
     [SerializeField] private Transform defendCollider;
     [SerializeField] private Vector2 defendColliderLeftPos = new Vector3(-1.3f, 0f, 0f);
     [SerializeField] private Vector2 defendColliderRightPos = new Vector3(-0.93f, 0f, 0f);
+
+    public BasePlayerStats baseStats;
+    private FinalPlayerStats finalStats = new FinalPlayerStats();
 
 
 
@@ -68,11 +73,19 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        CharacterStatsSO baseStats = GameManager.Instance.SelectedCharacterStats;
+        finalStats.Calculate(baseStats.baseStats, GameManager.Instance.sharedStats);
+
+        maxHealth = finalStats.MaxHP;
+        maxMP = finalStats.MaxMP;
+
+        currentMP = finalStats.MaxMP;
+        moveSpeed = finalStats.MoveSpeed;
         currentHealth = maxHealth;
+        
         healthBar.SetMaxHealth();
         healthBar.gameObject.SetActive(true);
 
-        currentMP = maxMP;
         MPBar.SetMaxMP();
         MPBar.gameObject.SetActive(true);
         
