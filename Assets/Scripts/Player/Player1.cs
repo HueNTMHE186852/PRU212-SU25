@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -120,7 +121,12 @@ public class Player1 : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static; // Freeze position
         }
 
-        Destroy(gameObject, 1f);
+        Invoke("RestartScene", 2f);
+    }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Update()

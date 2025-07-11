@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AuronPlayerController : MonoBehaviour
 {
@@ -293,8 +294,14 @@ public class AuronPlayerController : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static;
         }
 
-        Destroy(gameObject, 2f);
+        Invoke("RestartScene", 2f);
     }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Tilemap"))
