@@ -3493,6 +3493,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCoin
       objectReference: {fileID: 0}
+    - target: {fileID: 2070678065271274642, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1072.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070678065271274642, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -344.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8244857237555693072, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3784,22 +3792,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8950537346499803018}
     m_Modifications:
-    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2259513531088630198, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 18.7
-      objectReference: {fileID: 0}
     - target: {fileID: 4997560070134661167, guid: 72da69f730c8fba479cff1d1b5293d34, type: 3}
       propertyPath: m_Name
       value: Boss_Health

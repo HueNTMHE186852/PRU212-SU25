@@ -62,7 +62,7 @@ public class Player1 : MonoBehaviour
 
     public Description instructionPanelController;
     public FinalPlayerStats finalStats = new FinalPlayerStats();
-    public BasePlayerStats baseStats = GameManager.Instance.helronStats.baseStats;
+    public BasePlayerStats baseStats;
 
     void Start()
     {
@@ -71,9 +71,7 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // 🧠 Lấy chỉ số gốc từ nhân vật đã chọn
-        BasePlayerStats baseStats = GameManager.Instance.selectedRuntimeStats.baseStats;
-
+        baseStats = GameManager.Instance.helronStats.baseStats;
         // 🧠 Lấy chỉ số nâng cấp
         SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
 
