@@ -5,6 +5,8 @@ public class PauseManager : MonoBehaviour
 {
     public GameObject pausePanel; // Kéo PausePanel vào
 
+    public GameObject resumeButton; // Kéo ResumeButton vào
+
     private bool isPaused = false;
 
     void Update()
