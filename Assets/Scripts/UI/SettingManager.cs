@@ -28,13 +28,12 @@ public class SettingManager : MonoBehaviour
     {
         settingsPanel.SetActive(false);
     }
-
     public void OnMusicVolumeChanged(float value)
     {
-        // Save and apply music volume
         PlayerPrefs.SetFloat("MusicVolume", value);
-        // AudioManager.Instance.SetMusicVolume(value); // Optional
+        AudioManager.Instance.SetMusicVolume(value);
     }
+
 
     public void OnSFXVolumeChanged(float value)
     {
