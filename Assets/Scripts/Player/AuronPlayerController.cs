@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static SharedPlayerStats;
 
 public class AuronPlayerController : MonoBehaviour
 {
@@ -55,25 +56,43 @@ public class AuronPlayerController : MonoBehaviour
     private float rollTimer = 0f;
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
+    public FinalPlayerStats finalStats = new FinalPlayerStats();
+    public BasePlayerStats baseStats = GameManager.Instance.auronStats.baseStats;
     public Description instructionPanelController;
     void Start()
     {
-        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
-        currentHealth = maxHealth;
-        currentMP = 100;
-        if (healthBar != null)
-        {
-            healthBar.SetMaxHealth();
-            healthBar.gameObject.SetActive(true);
-        }
-        if (MPBar != null)
-        {
-            MPBar.SetMaxMP();
-            MPBar.gameObject.SetActive(true);
-        }
+        rb.freezeRotation = true;
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
+        // 🧠 Lấy chỉ số gốc từ nhân vật đã chọn
+        BasePlayerStats baseStats = GameManager.Instance.selectedRuntimeStats.baseStats;
+
+        // 🧠 Lấy chỉ số nâng cấp
+        SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
+
+        // 🧮 Tính toán chỉ số cuối cùng
+        finalStats.Calculate(baseStats, sharedStats);
+
+        // 💾 Gán cho gameplay
+        maxHealth = finalStats.MaxHP;
+        currentHealth = maxHealth;
+
+        maxMP = finalStats.MaxMP;
+        currentMP = maxMP;
+
+        moveSpeed = finalStats.MoveSpeed;
+        damage = finalStats.Damage;
+
+        // 🎨 Cập nhật UI
+        healthBar.SetMaxHealth();
+        healthBar.SetHealth(currentHealth);
+        healthBar.gameObject.SetActive(true);
+
+        MPBar.SetMaxMP();
+        MPBar.SetMP(currentMP);
+        MPBar.gameObject.SetActive(true);
     }
 
     void Update()

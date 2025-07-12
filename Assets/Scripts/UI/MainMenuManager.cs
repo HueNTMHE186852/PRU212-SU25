@@ -68,6 +68,7 @@ public class MainMenuManager : MonoBehaviour
             SettingsPanel.SetActive(false);
     }
 
+
     public void QuitGame()
     {
         Application.Quit();
