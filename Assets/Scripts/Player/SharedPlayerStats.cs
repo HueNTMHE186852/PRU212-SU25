@@ -1,12 +1,12 @@
-﻿[System.Serializable]
+﻿using System.Buffers.Text;
+using UnityEngine;
+
+[System.Serializable]
 public class SharedPlayerStats
 {
     public int Coins = 1000;
 
-    public float DamageMultiplier = 1f; // 🌟 Start at 1x
-    public int MaxMPBonus = 0;
-    public int MaxHPBonus = 0;
-    public float MoveSpeedBonus = 0f;
+    public float DamageMultiplier = 1f; 
 
     public int HpLevel = 0;
     public int DamageLevel = 0;
@@ -26,7 +26,7 @@ public class SharedPlayerStats
             "MoveSpeed" => MoveSpeedLevel,
             _ => 0
         };
-        return 100 + level * 50;
+        return 10 + level * 5;
     }
 
     public bool TryUpgrade(string statName)
@@ -37,19 +37,19 @@ public class SharedPlayerStats
         switch (statName)
         {
             case "Damage":
-                DamageMultiplier += 0.1f; // 📈 Increase 10% per level
+                DamageMultiplier += 0.2f; // 📈 Increase 20% per level
                 DamageLevel++;
                 break;
+
             case "MaxMP":
-                MaxMPBonus += 10;
                 ManaLevel++;
                 break;
+
             case "MaxHP":
-                MaxHPBonus += 20;
                 HpLevel++;
                 break;
+
             case "MoveSpeed":
-                MoveSpeedBonus += 0.5f;
                 MoveSpeedLevel++;
                 break;
         }

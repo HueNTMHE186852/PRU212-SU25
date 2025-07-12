@@ -51,17 +51,26 @@ public class AuronAttack : MonoBehaviour
     {
         Vector3 center = transform.position + new Vector3(spriteRenderer.flipX ? -offsetX : offsetX, 0, 0);
         Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius);
-        HashSet<GameObject> damaged = new HashSet<GameObject>();
+
+        HashSet<GameObject> damagedRoots = new HashSet<GameObject>();
 
         foreach (var hit in hits)
         {
-            if (!damaged.Contains(hit.gameObject))
+            if (!hit.CompareTag("Enemy")) continue;
+
+            Transform parent = hit.transform.parent;
+            if (parent == null) continue;
+
+            GameObject root = parent.gameObject;
+
+            if (!damagedRoots.Contains(root))
             {
-                DamageManager.ApplyDamage(hit.gameObject, dmg);
-                damaged.Add(hit.gameObject);
+                DamageManager.ApplyDamage(hit.gameObject, dmg); // Truyền hit.gameObject để giữ quy tắc tag và parent
+                damagedRoots.Add(root);
             }
         }
     }
+
 
     void FireArrow()
     {

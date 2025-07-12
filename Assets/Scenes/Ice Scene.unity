@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sharedStats:
     Coins: 1000
-    DamageMultiplier: 1
+    DamageMultiplier: 1.1
     MaxMPBonus: 0
     MaxHPBonus: 0
     MoveSpeedBonus: 0
@@ -161,10 +161,8 @@ MonoBehaviour:
     DamageLevel: 0
     ManaLevel: 0
     MoveSpeedLevel: 0
-  selectedCharacterName: 
-  characterStatsList:
-  - {fileID: 11400000, guid: a867d67c3042b8841b3c6de2b40e6263, type: 2}
-  - {fileID: 11400000, guid: d00c60ec9c34e5643a05ce071394040b, type: 2}
+  auronStats: {fileID: 11400000, guid: a867d67c3042b8841b3c6de2b40e6263, type: 2}
+  helronStats: {fileID: 11400000, guid: d00c60ec9c34e5643a05ce071394040b, type: 2}
 --- !u!4 &126697493
 Transform:
   m_ObjectHideFlags: 0
@@ -79573,6 +79571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minimap
       objectReference: {fileID: 0}
+    - target: {fileID: 6592801761672133925, guid: e0644809c6d71204db50fce96cc29354, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8535302776720624548, guid: e0644809c6d71204db50fce96cc29354, type: 3}
       propertyPath: m_LocalPosition.x
       value: 106
@@ -79952,7 +79954,6 @@ MonoBehaviour:
   - {fileID: 2296163601951400124, guid: 3e876820c92fba64bbea2ccb2510df50, type: 3}
   - {fileID: 1432492056032394018, guid: ff4f4da85d614104891c5f34760048d4, type: 3}
   - {fileID: 3015953546176416344, guid: 8840fc4a18b710e49adf56604a2a4d78, type: 3}
-  - {fileID: 2780761559851938323, guid: 7365bd3dd257c164f987fd2a96e1addc, type: 3}
   - {fileID: 8144939183091986180, guid: 40fd87da16e159847bf0924a96611d5a, type: 3}
   minDistance: 3
   avoidTarget: {fileID: 2118262231}
