@@ -1891,7 +1891,7 @@ MonoBehaviour:
     m_Bits: 64
   healthBar: {fileID: 2017978265115506940}
   MPBar: {fileID: 4369410230239737620}
-  coinManager: {fileID: 6419850217139039777}
+  coinManager: {fileID: 0}
   attackTrigger: {fileID: 9144503799341645423}
   eSkillMPCost: 20
   qSkillMPCost: 30
@@ -1909,11 +1909,6 @@ MonoBehaviour:
   defendColliderLeftPos: {x: -1.86, y: 0}
   defendColliderRightPos: {x: -0.93, y: 0}
   instructionPanelController: {fileID: 5422009667447219263}
-  baseStats:
-    BaseDamage: 0
-    BaseHP: 0
-    BaseMaxMP: 0
-    BaseMoveSpeed: 0
 --- !u!60 &5454880603362762206
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3586,17 +3581,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}
---- !u!114 &6419850217139039777 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5860294428637668809, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}
-  m_PrefabInstance: {fileID: 595620265966128104}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7be0e69909e4d864193e50f28eef8f50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8804410280361561592 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8244857237555693072, guid: b21fc6efc5f6e1d41803f911f2e417e3, type: 3}

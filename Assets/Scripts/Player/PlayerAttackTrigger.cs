@@ -36,16 +36,24 @@ public class PlayerAttackTrigger : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Transform parent = other.transform.parent;
-        if (parent == null) return;
-
-        GameObject enemyRoot = parent.gameObject;
-
-        if (!enemyRoot.CompareTag("Enemy")) return;
-
-        // Nếu có tag Enemy ở GameObject cha => xử lý
         int damage = GetDamageBySkill();
-        DamageManager.ApplyDamage(enemyRoot, damage);
-    }
 
+        EnemyRun enemy = other.GetComponentInParent<EnemyRun>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+
+        BossAI boss = other.GetComponentInParent<BossAI>();
+        if (boss != null)
+        {
+            boss.TakeDamage(damage);
+        }
+
+        DragonController dragon = other.GetComponentInParent<DragonController>();
+        if (dragon != null)
+        {
+            dragon.TakeDamage(damage);
+        }
+    }
 }
