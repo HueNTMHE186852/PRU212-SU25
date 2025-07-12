@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AuronPlayerController : MonoBehaviour
 {
@@ -30,12 +31,14 @@ public class AuronPlayerController : MonoBehaviour
 
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
-    public int maxHealth = 100;
+    public Player1Coin coinManager;
+
+    public int maxHealth = 1000;
     public int currentHealth;
-    public int maxMP = 100;
+    public int maxMP = 200;
     public int currentMP;
     public int eSkillMPCost = 20;
-    public int qSkillMPCost = 25;
+    public int qSkillMPCost = 30;
     public float mpRegenRate = 5f;
     private float mpRegenTimer = 0f;
     public int damage = 10;
@@ -52,13 +55,14 @@ public class AuronPlayerController : MonoBehaviour
     private float rollTimer = 0f;
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
-
+    public Description instructionPanelController;
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
-
+        currentHealth = maxHealth;
+        currentMP = 100;
         if (healthBar != null)
         {
             healthBar.SetMaxHealth();
@@ -80,7 +84,10 @@ public class AuronPlayerController : MonoBehaviour
         Vector2 movement = new Vector2(horizontal, vertical).normalized;
         bool isMoving = movement.sqrMagnitude > 0f;
         animator.SetBool("IsMoving", isMoving);
-
+        if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
+        {
+            instructionPanelController.TogglePanel();
+        }
         if (Input.GetKeyDown(KeyCode.X))
         {
             isAttacking = true;
@@ -287,8 +294,14 @@ public class AuronPlayerController : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static;
         }
 
-        Destroy(gameObject, 2f);
+        Invoke("RestartScene", 2f);
     }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Tilemap"))

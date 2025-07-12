@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1206799434671331270}
   m_Layer: 0
   m_Name: Mushroom
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,8 +106,8 @@ Transform:
   m_GameObject: {fileID: 8083587103930390502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -150.67, y: 47.61, z: 0}
-  m_LocalScale: {x: 8.017441, y: 6.3151155, z: 1}
+  m_LocalPosition: {x: -140.5187, y: 54.8806, z: 0}
+  m_LocalScale: {x: 23.534353, y: 16.693327, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 383826690786562844}
@@ -181,9 +181,9 @@ MonoBehaviour:
   healthbar: {fileID: 0}
   damage: 10
   speed: 3.5
-  verticalTolerance: 20
-  attackRange: 4
-  detectionRange: 25
+  verticalTolerance: 30
+  attackRange: 10
+  detectionRange: 30
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 5062820161417725453}
@@ -196,6 +196,7 @@ MonoBehaviour:
   ignoreVerticalForAttack: 1
   hpBowlPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
   manaBowlPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
+  coin: {fileID: 6080172890629669693, guid: a5bf0c2d88b2ec84ab64e87b621750a3, type: 3}
 --- !u!50 &8733957814284879648
 Rigidbody2D:
   serializedVersion: 4
@@ -289,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
 --- !u!61 &5824194084871726556
 BoxCollider2D:
   m_ObjectHideFlags: 0

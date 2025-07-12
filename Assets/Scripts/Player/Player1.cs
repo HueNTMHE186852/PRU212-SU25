@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -20,6 +21,7 @@ public class Player1 : MonoBehaviour
     public LayerMask groundLayer;
     public Player1Healthbar healthBar;
     public Player1MPBar MPBar;
+    public Player1Coin coinManager;
     public PlayerAttackTrigger attackTrigger;
 
     public int eSkillMPCost = 20;
@@ -57,7 +59,7 @@ public class Player1 : MonoBehaviour
     [SerializeField] private Vector2 defendColliderLeftPos = new Vector3(-1.3f, 0f, 0f);
     [SerializeField] private Vector2 defendColliderRightPos = new Vector3(-0.93f, 0f, 0f);
 
-
+    public Description instructionPanelController;
 
 
     void Start()
@@ -74,7 +76,7 @@ public class Player1 : MonoBehaviour
         currentMP = maxMP;
         MPBar.SetMaxMP();
         MPBar.gameObject.SetActive(true);
-
+        
     }
 
     public void TakeDamage(int damage)
@@ -119,7 +121,12 @@ public class Player1 : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static; // Freeze position
         }
 
-        Destroy(gameObject, 1f);
+        Invoke("RestartScene", 2f);
+    }
+
+    void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Update()
@@ -147,7 +154,10 @@ public class Player1 : MonoBehaviour
         bool isFalling = !isGrounded && rb.velocity.y < -0.1f;
         animator.SetBool("isJumping", isJumping);
         animator.SetBool("isFalling", isFalling);
-
+        if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
+        {
+            instructionPanelController.TogglePanel();
+        }
         // Rolling
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {

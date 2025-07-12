@@ -2,16 +2,34 @@
 
 public class MinimapFollow : MonoBehaviour
 {
-    public Transform player;
-    [Tooltip("How far in front/above the player the minimap camera should sit")]
-    public Vector3 offset = new Vector3(0f, 5f, 0f);   // tweak in Inspector
+    public string playerTag = "Player";
+    public Vector3 offset = new Vector3(0f, 20f, -10f); 
+
+    private Transform player;
+
+    void Start()
+    {
+        FindPlayer();
+    }
 
     void LateUpdate()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            FindPlayer();
+            return;
+        }
 
         Vector3 newPos = player.position + offset;
-        newPos.z = transform.position.z;   // keep original z (‑10, etc.)
         transform.position = newPos;
+    }
+
+    void FindPlayer()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
     }
 }

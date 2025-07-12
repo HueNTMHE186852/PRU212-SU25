@@ -6,11 +6,23 @@ public class EnemySpawner : MonoBehaviour
     public List<SpawnZone> spawnZones;  // Danh sách các vùng spawn
     public int zonesToSpawn = 5;        // Số vùng sẽ được chọn ngẫu nhiên
     public float minDistance = 8f;      // Khoảng cách tối thiểu giữa các quái
-    public Transform playerTransform;  // Kéo Player vào trong Inspector
     public float avoidPlayerDistance = 5f; // Khoảng cách tối thiểu tới Player
+
+    private Transform playerTransform;  // Tự động tìm Player theo tag
 
     private void Start()
     {
+        // 🔍 Tự tìm player theo tag
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerTransform = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogWarning("❌ Không tìm thấy Player có tag 'Player'.");
+        }
+
         // ✅ Kiểm tra số lượng vùng có đủ không
         if (spawnZones.Count < zonesToSpawn)
         {
@@ -67,12 +79,16 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
-            if (found && playerTransform != null)
+            if (found)
             {
-                if (Vector2.Distance(spawnPos, playerTransform.position) < avoidPlayerDistance)
+                if (playerTransform != null && Vector2.Distance(spawnPos, playerTransform.position) < avoidPlayerDistance)
                 {
                     found = false;
                 }
+            }
+
+            if (found)
+            {
                 usedPositions.Add(spawnPos);
                 GameObject enemyPrefab = zone.enemyTypes[Random.Range(0, zone.enemyTypes.Length)];
                 Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
@@ -86,6 +102,7 @@ public class EnemySpawner : MonoBehaviour
         float y = Random.Range(bounds.min.y, bounds.max.y);
         return new Vector2(x, y);
     }
+
     private void OnDrawGizmos()
     {
         Collider2D col = GetComponent<Collider2D>();
