@@ -11,30 +11,37 @@ public class SettingManager : MonoBehaviour
 
     private void Start()
     {
-        // Load saved settings (if any)
+        bool wasActive = settingsPanel.activeSelf;
+        settingsPanel.SetActive(true); 
+
+        // Load saved settings
         musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
         fullscreenToggle.isOn = Screen.fullScreen;
 
         ApplySettings();
+
+        settingsPanel.SetActive(wasActive);
     }
+
 
     public void OpenSettings()
     {
+        Debug.Log("OpenSettings called!");
         settingsPanel.SetActive(true);
     }
+
 
     public void CloseSettings()
     {
         settingsPanel.SetActive(false);
     }
-
     public void OnMusicVolumeChanged(float value)
     {
-        // Save and apply music volume
         PlayerPrefs.SetFloat("MusicVolume", value);
-        // AudioManager.Instance.SetMusicVolume(value); // Optional
+        AudioManager.Instance.SetMusicVolume(value);
     }
+
 
     public void OnSFXVolumeChanged(float value)
     {
