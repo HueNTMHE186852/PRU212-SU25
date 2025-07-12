@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static SharedPlayerStats;
 
 public class AuronPlayerController : MonoBehaviour
 {
@@ -55,16 +56,14 @@ public class AuronPlayerController : MonoBehaviour
     private float rollTimer = 0f;
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
-<<<<<<< HEAD
     public FinalPlayerStats finalStats = new FinalPlayerStats();
     public BasePlayerStats baseStats;
-=======
->>>>>>> parent of a3e0273 (Merge branch 'develop' into huentm)
     public Description instructionPanelController;
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
         animator = GetComponent<Animator>();
-<<<<<<< HEAD
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         baseStats = GameManager.Instance.auronStats.baseStats;
@@ -76,23 +75,22 @@ public class AuronPlayerController : MonoBehaviour
 
         // 💾 Gán cho gameplay
         maxHealth = finalStats.MaxHP;
-=======
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Thêm dòng này
->>>>>>> parent of a3e0273 (Merge branch 'develop' into huentm)
         currentHealth = maxHealth;
-        currentMP = 100;
-        if (healthBar != null)
-        {
-            healthBar.SetMaxHealth();
-            healthBar.gameObject.SetActive(true);
-        }
-        if (MPBar != null)
-        {
-            MPBar.SetMaxMP();
-            MPBar.gameObject.SetActive(true);
-        }
 
+        maxMP = finalStats.MaxMP;
+        currentMP = maxMP;
+
+        moveSpeed = finalStats.MoveSpeed;
+        damage = finalStats.Damage;
+
+        // 🎨 Cập nhật UI
+        healthBar.SetMaxHealth();
+        healthBar.SetHealth(currentHealth);
+        healthBar.gameObject.SetActive(true);
+
+        MPBar.SetMaxMP();
+        MPBar.SetMP(currentMP);
+        MPBar.gameObject.SetActive(true);
     }
 
     void Update()

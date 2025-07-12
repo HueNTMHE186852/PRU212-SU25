@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class Player1Coin : MonoBehaviour
 {
-    public Text coinText; 
-    private int coinCount = 0;
+    public Text coinText;
 
     void Start()
     {
@@ -13,7 +12,13 @@ public class Player1Coin : MonoBehaviour
 
     public void AddCoin(int amount)
     {
-        coinCount += amount;
+        SharedPlayerStats.GameStats.sharedStats.Coins += amount;
+        UpdateCoinUI();
+    }
+
+    public void SetCoins(int amount) // Optional: to force set from saved data
+    {
+        SharedPlayerStats.GameStats.sharedStats.Coins = amount;
         UpdateCoinUI();
     }
 
@@ -21,14 +26,14 @@ public class Player1Coin : MonoBehaviour
     {
         if (coinText != null)
         {
-            coinText.text = coinCount.ToString(); 
-            Debug.Log("Update" + coinCount); 
+            int current = SharedPlayerStats.GameStats.sharedStats.Coins;
+            coinText.text = current.ToString();
+            Debug.Log("Updated Coins: " + current);
         }
     }
 
-
     public int GetCoinCount()
     {
-        return coinCount;
+        return SharedPlayerStats.GameStats.sharedStats.Coins;
     }
 }
