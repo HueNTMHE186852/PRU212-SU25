@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class MainMenuManager : MonoBehaviour
     [Header("Panels")]
     public GameObject SettingsPanel;
     public GameObject ChooseCharacterPanel;
+    public IntroVideoManager introVideoManager;
+
+    private bool hasPlayedIntro = false;
 
     private void Start()
     {
@@ -20,9 +24,22 @@ public class MainMenuManager : MonoBehaviour
         if (ChooseCharacterPanel != null)
             ChooseCharacterPanel.SetActive(false);
 
-        PlayButton.onClick.AddListener(OpenCharacterSelection);
+        PlayButton.onClick.AddListener(PlayWithIntro);
         SettingsButton.onClick.AddListener(OpenSettings);
         ExitButton.onClick.AddListener(QuitGame);
+    }
+
+    public void PlayWithIntro()
+    {
+        if (!hasPlayedIntro)
+        {
+            hasPlayedIntro = true;
+            introVideoManager?.PlayIntro(); // Gọi trực tiếp
+        }
+        else
+        {
+            OpenCharacterSelection();
+        }
     }
 
     public void OpenCharacterSelection()

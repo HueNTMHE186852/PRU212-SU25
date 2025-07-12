@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
@@ -38,8 +38,9 @@ public class SettingManager : MonoBehaviour
     public void OnSFXVolumeChanged(float value)
     {
         PlayerPrefs.SetFloat("SFXVolume", value);
-        // AudioManager.Instance.SetSFXVolume(value); // Optional
+        AudioManager.Instance.SetSFXVolume(value); // ✅ Bỏ comment dòng này
     }
+
 
     public void OnFullscreenToggle(bool isFullscreen)
     {
@@ -48,7 +49,9 @@ public class SettingManager : MonoBehaviour
 
     private void ApplySettings()
     {
-        // Apply stored settings immediately (if needed)
         Screen.fullScreen = fullscreenToggle.isOn;
+        AudioManager.Instance.SetMusicVolume(musicVolumeSlider.value);
+        AudioManager.Instance.SetSFXVolume(sfxVolumeSlider.value);
     }
+
 }
