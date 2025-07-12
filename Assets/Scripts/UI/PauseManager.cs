@@ -7,6 +7,9 @@ public class PauseManager : MonoBehaviour
 
     public GameObject resumeButton; // Kéo ResumeButton vào
 
+    [Header("Settings")]
+    public SettingManager settingManager;
+
     private bool isPaused = false;
 
     void Update()
@@ -17,12 +20,19 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    public GameObject settingsPanel;
+
     public void TogglePause()
     {
         isPaused = !isPaused;
         pausePanel.SetActive(isPaused);
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false); 
+
         Time.timeScale = isPaused ? 0f : 1f;
     }
+
 
     public void ResumeGame()
     {
@@ -40,5 +50,10 @@ public class PauseManager : MonoBehaviour
     public void QuitGame()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void OpenSettingsPanel()
+    {
+        settingManager.OpenSettings();
     }
 }

@@ -8,13 +8,16 @@ public class MainMenuManager : MonoBehaviour
     public Button PlayButton;
     public Button SettingsButton;
     public Button ExitButton;
+    public Button UpgradeButton;
 
     [Header("Panels")]
     public GameObject SettingsPanel;
     public GameObject ChooseCharacterPanel;
+
     public IntroVideoManager introVideoManager;
 
     private bool hasPlayedIntro = false;
+    public GameObject UpgradePanel;
 
     private void Start()
     {
@@ -25,6 +28,11 @@ public class MainMenuManager : MonoBehaviour
             ChooseCharacterPanel.SetActive(false);
 
         PlayButton.onClick.AddListener(PlayWithIntro);
+        if (UpgradePanel != null)
+            UpgradePanel.SetActive(false);
+
+        UpgradeButton.onClick.AddListener(OpenUpgrade);
+        PlayButton.onClick.AddListener(OpenCharacterSelection);
         SettingsButton.onClick.AddListener(OpenSettings);
         ExitButton.onClick.AddListener(QuitGame);
     }
@@ -50,10 +58,23 @@ public class MainMenuManager : MonoBehaviour
 
     public void CloseCharacterSelection()
     {
-        if (ChooseCharacterPanel != null)
+        if (UpgradePanel != null)
+            UpgradePanel.SetActive(false);
+    }
+    public void OpenUpgrade()
+    {
+        if (UpgradePanel != null)
+        {
+            UpgradePanel.SetActive(true);
             ChooseCharacterPanel.SetActive(false);
+        }
     }
 
+    public void CloseUpgrade()
+    {
+        if (UpgradePanel != null)
+            UpgradePanel.SetActive(false);
+    }
     public void OpenSettings()
     {
         if (SettingsPanel != null)
@@ -65,6 +86,7 @@ public class MainMenuManager : MonoBehaviour
         if (SettingsPanel != null)
             SettingsPanel.SetActive(false);
     }
+
 
     public void QuitGame()
     {
