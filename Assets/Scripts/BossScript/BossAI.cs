@@ -1,7 +1,3 @@
-// BossCombinedAI.cs
-// Combines the full behaviour of EnemyRun with the special actions (Laser + IceSpike)
-// Author: ChatGPT – merged on 29 Jun 2025
-
 using System.Collections;
 using UnityEngine;
 
@@ -9,9 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossAI : MonoBehaviour
 {
-    // ———————————————————————————————————————————————————————————
-    // 🗡️  Combat & Stats
-    // ———————————————————————————————————————————————————————————
+
     [Header("Stats")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -23,9 +17,7 @@ public class BossAI : MonoBehaviour
     [Tooltip("Duration the attack animation keeps the boss locked in place")]
     public float attackDuration = 1f;
 
-    // ———————————————————————————————————————————————————————————
-    // 🚶‍♂️  Movement & Detection
-    // ———————————————————————————————————————————————————————————
+
     [Header("Detection & Movement")]
     public float speed = 3.5f;
     public float detectionRange = 62f;
@@ -41,15 +33,11 @@ public class BossAI : MonoBehaviour
     public bool usePatrol = true;
     public float patrolDistance = 5f;
 
-    // ———————————————————————————————————————————————————————————
-    // 🖼️  Rendering / VFX
-    // ———————————————————————————————————————————————————————————
+
     public HealthBar healthBar;
     public GameObject floatingText;
 
-    // ———————————————————————————————————————————————————————————
-    // 🔫  Special Attacks
-    // ———————————————————————————————————————————————————————————
+
     [Header("Laser Shot")]
     public GameObject laserPrefab;
     public Transform laserSpawnPoint;
@@ -58,21 +46,15 @@ public class BossAI : MonoBehaviour
     [Header("Ice Spike (Phase 2)")]
     public IceSpikeManager iceSpikeManager;
 
-    // ———————————————————————————————————————————————————————————
-    // ⚙️  Internal/Private State
-    // ———————————————————————————————————————————————————————————
-    // Cached references
     private Animator animator;
     public Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     public Transform player;
 
-    // Distances / decision helpers
     private float cachedHorizontalDistance;
     private float cachedVerticalDistance;
     private bool canAttackNow;
 
-    // Timers / state flags
     private float lastAttackTime = -10f;
     private bool isAttacking = false;
     private bool isDead = false;
@@ -95,9 +77,7 @@ public class BossAI : MonoBehaviour
     private Vector2 originalAttackColliderOffset;
     private Vector2[] originalPolygonPoints;
 
-    // ———————————————————————————————————————————————————————————
-    // 🏁  Unity Lifecycle
-    // ———————————————————————————————————————————————————————————
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -130,11 +110,12 @@ public class BossAI : MonoBehaviour
             if (healthBar) healthBar.gameObject.SetActive(true);
         }
 
-        // If currently in an attack animation → wait until finished
         if (isAttacking)
         {
+            Debug.Log("⛔ Boss đang tấn công. Bỏ qua update.");
             if (Time.time >= lastAttackTime + attackDuration)
             {
+                Debug.Log("⏱️ Đã hết thời gian tấn công, gọi EndAttack()");
                 EndAttack();
             }
             return;
@@ -161,7 +142,7 @@ public class BossAI : MonoBehaviour
     private void FixedUpdate()
     {
         if (player == null || isDead) return;
-        if (animator.GetBool("isRunning"))
+        if (animator.GetBool("isRunning") && !isAttacking)
         {
             Vector2 target = new Vector2(player.position.x, rb.position.y);
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
@@ -169,9 +150,6 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    // ———————————————————————————————————————————————————————————
-    //  🔍 Distance & Decision Helpers
-    // ———————————————————————————————————————————————————————————
     private void UpdateDistances()
     {
         Vector3 p = player.position;
@@ -188,15 +166,19 @@ public class BossAI : MonoBehaviour
 
     private float DistanceToPlayer() => Vector2.Distance(transform.position, player.position);
 
-    // ———————————————————————————————————————————————————————————
-    //  🚗 Movement Behaviours
-    // ———————————————————————————————————————————————————————————
     private void HandleChase()
     {
-        // Try melee first
         if (canAttackNow)
         {
-            StartAttack();
+            int rand = Random.Range(0, 2); 
+            if (rand == 0)
+            {
+                StartAttack();
+            }
+            else
+            {
+                StartLaserAttack();
+            }
             return;
         }
 
@@ -204,8 +186,22 @@ public class BossAI : MonoBehaviour
         MoveTowardsPlayer();
     }
 
+    private void StartLaserAttack()
+    {
+        isAttacking = true;
+        lastAttackTime = Time.time;
+
+        animator.ResetTrigger("meleeAttack");
+        animator.SetBool("isRunning", false);
+
+        animator.SetBool("isCharging", true);
+
+        FacePlayer();
+    }
+
     private void MoveTowardsPlayer()
     {
+        if (isAttacking) return;
         Vector2 dir = (player.position - transform.position).normalized;
         Vector3 movement = dir * speed * Time.deltaTime;
         transform.position += movement;
@@ -233,10 +229,7 @@ public class BossAI : MonoBehaviour
 
         animator.SetBool("isRunning", true);
     }
-
-    // ———————————————————————————————————————————————————————————
-    //  ⚔️ Melee Attack
-    // ———————————————————————————————————————————————————————————
+    
     private void StartAttack()
     {
         isAttacking = true;
@@ -278,15 +271,22 @@ public class BossAI : MonoBehaviour
         bool facingRight = !spriteRenderer.flipX;
         if (facingRight)
         {
-            laser.transform.rotation = Quaternion.Euler(0, 180f, -10f);
+            laser.transform.rotation = Quaternion.Euler(0, 0f, -10f);
         }
         else
         {
-            laser.transform.rotation = Quaternion.Euler(0, 0f, -10f);
+            laser.transform.rotation = Quaternion.Euler(0, 180f, -10f);
         }
 
-        laser.transform.position += new Vector3(facingRight ? -1f : 1f, 0, 0);
+        laser.transform.position += new Vector3(facingRight ? -1f : -95f, 0, 0);
         Destroy(laser, laserLifetime);
+    }
+
+    public void EndLaserAttack()
+    {
+        isAttacking = false;
+        animator.SetBool("isCharging", false); 
+        animator.SetBool("isRunning", false);
     }
 
     public void SummonIceSpikes()
@@ -308,33 +308,52 @@ public class BossAI : MonoBehaviour
         if (isDead) return;
 
         ShowDamage(amount.ToString());
+
+        float pct = (float)currentHealth / maxHealth;
+
+        // Giảm sát thương dựa trên phase
+        if (hasTriggered30)
+        {
+            amount = Mathf.RoundToInt(amount * 0.3f); // phase 3: nhận 30% damage
+        }
+        else if (hasTriggered70)
+        {
+            amount = Mathf.RoundToInt(amount * 0.5f); // phase 2: nhận 50% damage
+        }
+
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
         if (healthBar) healthBar.SetHealth(currentHealth);
 
-        float pct = (float)currentHealth / maxHealth;
-        if (!hasTriggered70 && pct <= 0.7f) { hasTriggered70 = true; TriggerBossHit(0.1f); }
-        if (!hasTriggered30 && pct <= 0.3f) { hasTriggered30 = true; TriggerBossHit(0.15f); }
+        pct = (float)currentHealth / maxHealth; // cập nhật lại sau khi trừ máu
+
+        // Phase 2 (≤ 70%)
+        if (!hasTriggered70 && pct <= 0.7f)
+        {
+            hasTriggered70 = true;
+
+            animator.SetTrigger("bossHit");
+            speed *= 1.5f; // tăng 50% tốc độ
+
+            float len = GetAnimationClipLength("BossHit");
+            if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, 0.15f));
+        }
+
+        // Phase 3 (≤ 30%)
+        if (!hasTriggered30 && pct <= 0.3f)
+        {
+            hasTriggered30 = true;
+
+            animator.SetTrigger("bossHit");
+            speed *= 1.5f; // tăng thêm 50% nữa, tổng cộng x2.25 tốc độ gốc
+
+            float len = GetAnimationClipLength("BossHit");
+            if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, 0.2f));
+        }
 
         if (currentHealth <= 0) Die();
-        else StartCoroutine(HurtRoutine());
     }
 
-    private void TriggerBossHit(float shakeIntensity)
-    {
-        animator.SetTrigger("bossHit");
-        float len = GetAnimationClipLength("BossHit");
-        if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, shakeIntensity));
-    }
-
-    private IEnumerator HurtRoutine()
-    {
-        animator.SetTrigger("Hurt");
-        float len = animator.GetCurrentAnimatorStateInfo(0).length;
-        speed = 0f;
-        yield return new WaitForSeconds(len);
-        speed = 3.5f; // reset (could store original)
-    }
 
     private float GetAnimationClipLength(string clipName)
     {
