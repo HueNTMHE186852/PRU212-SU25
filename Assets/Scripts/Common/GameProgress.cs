@@ -42,13 +42,12 @@ public class GameProgress
         Debug.Log("📁 GameProgress saved: " + SavePath);
     }
 
-    public void CompleteLevel(int levelIndex, int starCount, float timeTaken)
+    public void CompleteLevel(int levelIndex, float timeTaken)
     {
         if (levelIndex < 0 || levelIndex >= levels.Count) return;
 
         var level = levels[levelIndex];
         level.isCompleted = true;
-        level.stars = Mathf.Max(level.stars, starCount); // lấy số sao cao nhất
         level.completionTime = Mathf.Min(level.completionTime == 0 ? float.MaxValue : level.completionTime, timeTaken); // thời gian ngắn nhất
 
         if (levelIndex + 1 > highestLevelUnlocked)
@@ -59,6 +58,5 @@ public class GameProgress
 
     public bool IsLevelUnlocked(int levelIndex) => levelIndex <= highestLevelUnlocked;
     public bool IsLevelCompleted(int levelIndex) => levels[levelIndex].isCompleted;
-    public int GetLevelStars(int levelIndex) => levels[levelIndex].stars;
     public float GetLevelTime(int levelIndex) => levels[levelIndex].completionTime;
 }
