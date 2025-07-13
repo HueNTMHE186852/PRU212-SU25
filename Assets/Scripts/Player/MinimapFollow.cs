@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class MinimapFollow : MonoBehaviour
 {
     public string playerTag = "Player";
-    public Vector3 offset = new Vector3(0f, 20f, -10f); 
+    public Vector3 offset = new Vector3(0f, 20f, -10f);
+    public float fixedOrthographicSize = 90f; // Đặt mức zoom mong muốn
 
     private Transform player;
+    private Camera minimapCam;
 
     void Start()
     {
+        minimapCam = GetComponent<Camera>();
+        minimapCam.orthographic = true;
+        minimapCam.orthographicSize = fixedOrthographicSize;
+
         FindPlayer();
     }
 
@@ -20,8 +27,12 @@ public class MinimapFollow : MonoBehaviour
             return;
         }
 
+        // Theo dõi player với offset
         Vector3 newPos = player.position + offset;
         transform.position = newPos;
+
+        // Đảm bảo không bị thay đổi size
+        minimapCam.orthographicSize = fixedOrthographicSize;
     }
 
     void FindPlayer()

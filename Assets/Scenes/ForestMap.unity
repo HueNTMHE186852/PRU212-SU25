@@ -50109,6 +50109,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1205696606}
     m_Modifications:
+    - target: {fileID: 1891180692938847697, guid: e0644809c6d71204db50fce96cc29354, type: 3}
+      propertyPath: offset.y
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891180692938847697, guid: e0644809c6d71204db50fce96cc29354, type: 3}
+      propertyPath: fixedOrthographicSize
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6117898109172339363, guid: e0644809c6d71204db50fce96cc29354, type: 3}
       propertyPath: m_Name
       value: Minimap
