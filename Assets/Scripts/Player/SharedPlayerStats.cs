@@ -66,23 +66,29 @@ public class SharedPlayerStats
         switch (statName)
         {
             case "Damage":
-                DamageMultiplier += 0.2f;
+                if (DamageLevel >= 10) return false;
                 DamageLevel++;
+                DamageMultiplier += 0.2f;
                 break;
+
             case "MaxMP":
+                if (ManaLevel >= 10) return false;
                 ManaLevel++;
                 break;
+
             case "MaxHP":
+                if (HpLevel >= 10) return false;
                 HpLevel++;
                 break;
+
             case "MoveSpeed":
+                if (MoveSpeedLevel >= 10) return false;
                 MoveSpeedLevel++;
                 break;
         }
 
         Coins -= cost;
-
-        SaveToJson(); // 🔐 Lưu ngay sau khi nâng cấp
         return true;
     }
+
 }
