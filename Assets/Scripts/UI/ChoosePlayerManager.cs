@@ -64,7 +64,7 @@ public class ChoosingPlayerManager : MonoBehaviour
         }
 
         PlayerPrefs.SetString("SelectedCharacter", selectedCharacter);
-        SceneManager.LoadScene("ForestMap");
+        SceneManager.LoadScene("MapSelection");
     }
 
     public void CloseChooseCharacter()

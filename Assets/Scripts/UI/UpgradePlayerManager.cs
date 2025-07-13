@@ -51,10 +51,17 @@ public class UpgradePlayerManager : MonoBehaviour
     {
         var stats = SharedPlayerStats.GameStats.sharedStats;
 
-        damageLevelText.text = "" + stats.DamageLevel;
-        speedLevelText.text = "" +  stats.MoveSpeedLevel;
-        hpLevelText.text = "" + stats.HpLevel;
-        mpLevelText.text = "" + stats.ManaLevel;
-        coinsText.text = "" + stats.Coins;
+        damageButton.interactable = stats.DamageLevel < 10;
+        speedButton.interactable = stats.MoveSpeedLevel < 10;
+        hpButton.interactable = stats.HpLevel < 10;
+        mpButton.interactable = stats.ManaLevel < 10;
+
+        // Update text
+        damageLevelText.text = stats.DamageLevel >= 10 ? "MAX" : stats.DamageLevel.ToString();
+        speedLevelText.text = stats.MoveSpeedLevel >= 10 ? "MAX" : stats.MoveSpeedLevel.ToString();
+        hpLevelText.text = stats.HpLevel >= 10 ? "MAX" : stats.HpLevel.ToString();
+        mpLevelText.text = stats.ManaLevel >= 10 ? "MAX" : stats.ManaLevel.ToString();
+        coinsText.text = stats.Coins.ToString();
     }
+
 }
