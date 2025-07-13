@@ -351,6 +351,7 @@ public class BossAI : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
         this.enabled = false;
+        GameManager.Instance.OnBossDefeated();
         Destroy(gameObject, 2.5f);
     }
 
