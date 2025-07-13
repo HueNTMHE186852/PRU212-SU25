@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -12,6 +13,10 @@ public class MainMenuManager : MonoBehaviour
     [Header("Panels")]
     public GameObject SettingsPanel;
     public GameObject ChooseCharacterPanel;
+
+    public IntroVideoManager introVideoManager;
+
+    private bool hasPlayedIntro = false;
     public GameObject UpgradePanel;
 
     private void Start()
@@ -22,6 +27,7 @@ public class MainMenuManager : MonoBehaviour
         if (ChooseCharacterPanel != null)
             ChooseCharacterPanel.SetActive(false);
 
+        PlayButton.onClick.AddListener(PlayWithIntro);
         if (UpgradePanel != null)
             UpgradePanel.SetActive(false);
 
@@ -29,6 +35,19 @@ public class MainMenuManager : MonoBehaviour
         PlayButton.onClick.AddListener(OpenCharacterSelection);
         SettingsButton.onClick.AddListener(OpenSettings);
         ExitButton.onClick.AddListener(QuitGame);
+    }
+
+    public void PlayWithIntro()
+    {
+        if (!hasPlayedIntro)
+        {
+            hasPlayedIntro = true;
+            introVideoManager?.PlayIntro(); // Gọi trực tiếp
+        }
+        else
+        {
+            OpenCharacterSelection();
+        }
     }
 
     public void OpenCharacterSelection()
@@ -67,6 +86,7 @@ public class MainMenuManager : MonoBehaviour
         if (SettingsPanel != null)
             SettingsPanel.SetActive(false);
     }
+
 
     public void QuitGame()
     {

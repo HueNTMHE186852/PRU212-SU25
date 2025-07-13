@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using static SharedPlayerStats;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class Player1 : MonoBehaviour
 {
-    public float moveSpeed = 15f;
-    public float jumpForce = 8f;
-    public float rollForce = 8f;
-    public int maxHealth = 100;
+    public float moveSpeed;
+    public float jumpForce;
+    public float rollForce;
+    public int maxHealth;
     public int currentHealth;
-    public int maxMP = 100;
+    public int maxMP;
     public int currentMP;
     private bool isDead = false;
     public Transform GroundCheck;
@@ -60,7 +61,8 @@ public class Player1 : MonoBehaviour
     [SerializeField] private Vector2 defendColliderRightPos = new Vector3(-0.93f, 0f, 0f);
 
     public Description instructionPanelController;
-
+    public FinalPlayerStats finalStats = new FinalPlayerStats();
+    public BasePlayerStats baseStats;
 
     void Start()
     {
@@ -69,14 +71,31 @@ public class Player1 : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        baseStats = GameManager.Instance.helronStats.baseStats;
+        // 🧠 Lấy chỉ số nâng cấp
+        SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
+
+        // 🧮 Tính toán chỉ số cuối cùng
+        finalStats.Calculate(baseStats, sharedStats);
+
+        // 💾 Gán cho gameplay
+        maxHealth = finalStats.MaxHP;
         currentHealth = maxHealth;
+
+        maxMP = finalStats.MaxMP;
+        currentMP = maxMP;
+
+        moveSpeed = finalStats.MoveSpeed;
+        damage = finalStats.Damage;
+
+        // 🎨 Cập nhật UI
         healthBar.SetMaxHealth();
+        healthBar.SetHealth(currentHealth);
         healthBar.gameObject.SetActive(true);
 
-        currentMP = maxMP;
         MPBar.SetMaxMP();
+        MPBar.SetMP(currentMP);
         MPBar.gameObject.SetActive(true);
-        
     }
 
     public void TakeDamage(int damage)
