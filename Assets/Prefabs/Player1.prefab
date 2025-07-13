@@ -1265,6 +1265,7 @@ GameObject:
   - component: {fileID: 1566686665014172371}
   - component: {fileID: 5519570484595829222}
   - component: {fileID: 7295500449478793527}
+  - component: {fileID: 2338966930973187959}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1355,6 +1356,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2338966930973187959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3649937794484070749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f89af462006d0740a9e08c4576ffa62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player1Hp: {fileID: 1157782908092058161}
+  Player1Mp: {fileID: 2281469653760515313}
+  baseStats:
+    BaseDamage: 0
+    BaseHP: 0
+    BaseMaxMP: 0
+    BaseMoveSpeed: 0
 --- !u!1 &3765490092852882273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,7 +2061,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'MP: 100'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9388759b0761650419840da7ce008a65, type: 2}
   m_sharedMaterial: {fileID: 5398880204462688675, guid: 9388759b0761650419840da7ce008a65, type: 2}
@@ -2404,7 +2424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HP: 1000'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9388759b0761650419840da7ce008a65, type: 2}
   m_sharedMaterial: {fileID: 5398880204462688675, guid: 9388759b0761650419840da7ce008a65, type: 2}
