@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static SharedPlayerStats;
 
 public class AuronPlayerController : MonoBehaviour
 {
@@ -59,8 +58,13 @@ public class AuronPlayerController : MonoBehaviour
     public FinalPlayerStats finalStats = new FinalPlayerStats();
     public BasePlayerStats baseStats;
     public Description instructionPanelController;
+
+    public PolygonCollider2D normalCollider;
+    public PolygonCollider2D slideCollider;
+
     void Start()
     {
+        groundLayer = LayerMask.GetMask("Ground", "Tilemap");
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         animator = GetComponent<Animator>();
@@ -83,6 +87,7 @@ public class AuronPlayerController : MonoBehaviour
         moveSpeed = finalStats.MoveSpeed;
         damage = finalStats.Damage;
 
+
         // 🎨 Cập nhật UI
         healthBar.SetMaxHealth();
         healthBar.SetHealth(currentHealth);
@@ -91,6 +96,7 @@ public class AuronPlayerController : MonoBehaviour
         MPBar.SetMaxMP();
         MPBar.SetMP(currentMP);
         MPBar.gameObject.SetActive(true);
+
     }
 
     void Update()
@@ -99,8 +105,9 @@ public class AuronPlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         Vector2 movement = new Vector2(horizontal, vertical).normalized;
-        bool isMoving = movement.sqrMagnitude > 0f;
+        bool isMoving = movement.sqrMagnitude > 0f && isGrounded;
         animator.SetBool("IsMoving", isMoving);
+        
         if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
         {
             instructionPanelController.TogglePanel();
@@ -250,7 +257,16 @@ public class AuronPlayerController : MonoBehaviour
             animator.SetBool("IsFalling", false);
             animator.Play("jump_up"); // Play your custom jump up animation
         }
-
+        if (isSliding)
+        {
+            normalCollider.enabled = false;
+            slideCollider.enabled = true;
+        }
+        else
+        {
+            normalCollider.enabled = true;
+            slideCollider.enabled = false;
+        }
         // Detect falling
         if (rb.velocity.y < -0.1f && !isGrounded)
         {
