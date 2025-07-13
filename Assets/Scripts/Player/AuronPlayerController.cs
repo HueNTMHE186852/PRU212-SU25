@@ -57,7 +57,7 @@ public class AuronPlayerController : MonoBehaviour
 
     public GameObject explosionEffectPrefab; // Gán trong Inspector
     public FinalPlayerStats finalStats = new FinalPlayerStats();
-    public BasePlayerStats baseStats = GameManager.Instance.auronStats.baseStats;
+    public BasePlayerStats baseStats;
     public Description instructionPanelController;
     void Start()
     {
@@ -66,9 +66,7 @@ public class AuronPlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // 🧠 Lấy chỉ số gốc từ nhân vật đã chọn
-        BasePlayerStats baseStats = GameManager.Instance.selectedRuntimeStats.baseStats;
-
+        baseStats = GameManager.Instance.auronStats.baseStats;
         // 🧠 Lấy chỉ số nâng cấp
         SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
 
