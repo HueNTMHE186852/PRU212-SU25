@@ -70,24 +70,23 @@ public class AuronPlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        //baseStats = GameManager.Instance.auronStats.baseStats;
-        //// 🧠 Lấy chỉ số nâng cấp
-        //SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
+        baseStats = GameManager.Instance.auronStats.baseStats;
+        // 🧠 Lấy chỉ số nâng cấp
+        SharedPlayerStats sharedStats = SharedPlayerStats.GameStats.sharedStats;
 
-        //// 🧮 Tính toán chỉ số cuối cùng
-        //finalStats.Calculate(baseStats, sharedStats);
+        // 🧮 Tính toán chỉ số cuối cùng
+        finalStats.Calculate(baseStats, sharedStats);
 
-        //// 💾 Gán cho gameplay
-        //maxHealth = finalStats.MaxHP;
-        //currentHealth = maxHealth;
-
-        //maxMP = finalStats.MaxMP;
-        //currentMP = maxMP;
-
-        //moveSpeed = finalStats.MoveSpeed;
-        //damage = finalStats.Damage;
+        // 💾 Gán cho gameplay
+        maxHealth = finalStats.MaxHP;
         currentHealth = maxHealth;
+
+        maxMP = finalStats.MaxMP;
         currentMP = maxMP;
+
+        moveSpeed = finalStats.MoveSpeed;
+        damage = finalStats.Damage;
+
 
         // 🎨 Cập nhật UI
         healthBar.SetMaxHealth();
