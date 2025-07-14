@@ -15,7 +15,6 @@ public class CharacterStatsSO : ScriptableObject
         {
             string json = File.ReadAllText(path);
             baseStats = JsonUtility.FromJson<BasePlayerStats>(json);
-            Debug.Log($"✅ Loaded base stats for {characterName}: {json}");
         }
         else
         {

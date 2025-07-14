@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
+public enum ResultType { Win, Lose }
 
 public class GameResultUI : MonoBehaviour
 {
+    [Header("General")]
+    public ResultType resultType;
+
     [Header("UI Elements")]
-    public RectTransform panel;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI coinText;
 
@@ -19,13 +24,19 @@ public class GameResultUI : MonoBehaviour
     public Vector2 shownPos = new Vector2(0, 0);
     public float slideSpeed = 800f;
 
+    private RectTransform rect;
     private bool isVisible = false;
     private bool isAnimating = false;
 
+    void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
+
     void Start()
     {
-        panel.anchoredPosition = hiddenPos;
-        gameObject.SetActive(false);
+        rect.anchoredPosition = hiddenPos;
+        gameObject.SetActive(false); // Ẩn khi bắt đầu
 
         continueButton.onClick.AddListener(OnContinue);
         retryButton.onClick.AddListener(OnRetry);
@@ -34,33 +45,36 @@ public class GameResultUI : MonoBehaviour
 
     void Update()
     {
-        if (!isAnimating) return;
+        if (!isAnimating || rect == null) return;
 
         Vector2 target = isVisible ? shownPos : hiddenPos;
-        panel.anchoredPosition = Vector2.MoveTowards(panel.anchoredPosition, target, slideSpeed * Time.unscaledDeltaTime);
+        rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, target, slideSpeed * Time.unscaledDeltaTime);
 
-        if (!isVisible && Vector2.Distance(panel.anchoredPosition, hiddenPos) < 1f)
+        // Tắt khi ẩn hoàn toàn
+        if (!isVisible && Vector2.Distance(rect.anchoredPosition, hiddenPos) < 0.1f)
         {
             isAnimating = false;
             gameObject.SetActive(false);
         }
-        if (isVisible && Vector2.Distance(panel.anchoredPosition, shownPos) < 1f)
+
+        // Dừng trượt khi hiện hoàn toàn
+        if (isVisible && Vector2.Distance(rect.anchoredPosition, shownPos) < 0.1f)
         {
             isAnimating = false;
         }
     }
 
-    /// <summary>
-    /// Hiện UI thắng hoặc thua
-    /// </summary>
-    public void Show(bool isWin, float playTime, int coins)
+    public void Show(float playTime, int coins)
     {
-        Time.timeScale = 0f;
+        gameObject.SetActive(true);           // Bắt đầu hiển thị
         isVisible = true;
         isAnimating = true;
-        gameObject.SetActive(true);
-        timeText.text = $"⏱ TIME: {playTime:F1}s";
-        coinText.text = $"💰 COINS: {coins}";
+
+        timeText.text = $"{playTime:F1}s";
+        coinText.text = $"{coins}";
+        continueButton.gameObject.SetActive(resultType == ResultType.Win);
+
+        Time.timeScale = 0f;
     }
 
     public void Hide()
@@ -73,19 +87,19 @@ public class GameResultUI : MonoBehaviour
     void OnContinue()
     {
         Hide();
-        // Load màn tiếp theo nếu cần
         Debug.Log("➡️ Continue to next level");
+        // TODO: Load màn tiếp theo
     }
 
     void OnRetry()
     {
         Hide();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnMenu()
     {
         Hide();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 }
