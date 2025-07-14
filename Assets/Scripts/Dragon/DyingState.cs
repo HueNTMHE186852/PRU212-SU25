@@ -20,7 +20,7 @@ public class DyingState : IDragonState
 
         //    GameObject.Instantiate(prefab, controller.transform.position, Quaternion.identity);
         //}
-
+        GameManager.Instance.OnBossDefeated();
         GameObject.Destroy(controller.gameObject, 1.5f);
     }
 

@@ -7,9 +7,8 @@ public class DragonController : MonoBehaviour
     public Transform player;
     public ParticleSystem incinerationEffect;
     [SerializeField] private Transform model;
-    [SerializeField] private GameObject floatingTextPrefab;
-    [SerializeField] private GameObject hpBowlPrefab;
-    [SerializeField] private GameObject manaBowlPrefab;
+    [SerializeField] private HealthBar healthBar;
+    private bool hasHealthBarAppeared = false;
 
     [Header("Colliders")]
     [SerializeField] private GameObject attackColliderObj;
@@ -21,7 +20,6 @@ public class DragonController : MonoBehaviour
     public float attackCooldown = 2f;
     public float maxHealth = 100f;
     public int incinerationEvery = 10;
-    public float dropItemChance = 0.66f;
 
     [Header("Runtime Debug")]
     public float currentHealth;
@@ -51,6 +49,11 @@ public class DragonController : MonoBehaviour
         currentHealth = maxHealth;
         attackColliderObj.SetActive(false);
         fireZoneColliderObj.SetActive(false);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth((int)maxHealth);
+            healthBar.gameObject.SetActive(false);
+        }
 
         // Gán sự kiện animation nếu có
         var animEvents = model.GetComponent<DragonAnimationEvents>();
@@ -65,6 +68,13 @@ public class DragonController : MonoBehaviour
     void Update()
     {
         currentState?.Update();
+        if (!hasHealthBarAppeared && CanSeePlayer())
+        {
+            hasHealthBarAppeared = true;
+            if (healthBar != null)
+                healthBar.gameObject.SetActive(true);
+        }
+
     }
 
     public void TransitionToState(IDragonState newState)
@@ -125,20 +135,17 @@ public class DragonController : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
-        ShowDame(amount.ToString());
+
+        if (healthBar != null)
+            healthBar.SetHealth((int)currentHealth);
+
         if (currentHealth <= 0)
         {
             isDead = true;
+            if (healthBar != null)
+                healthBar.gameObject.SetActive(false);
+
             TransitionToState(dyingState);
         }
-    }
-
-    private void ShowDame(string text)
-    {
-        if (!floatingTextPrefab) return;
-        GameObject floating = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-        floating.GetComponentInChildren<TextMesh>().text = text;
-        floating.transform.position += Vector3.up;
-        Destroy(floating, 1f);
     }
 }
