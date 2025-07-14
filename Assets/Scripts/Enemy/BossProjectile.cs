@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossProjectile : MonoBehaviour
 {
     public float speed = 10f;
-    public int damage = 20;
+    public int damage = 10;
     public float lifetime = 3f;
     [SerializeField] private GameObject explosionEffect;
 
