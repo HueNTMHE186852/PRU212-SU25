@@ -1,23 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public float PlayTimeSeconds { get; private set; } = 0f; // ⏱️ Thời gian chơi
-
+    public float PlayTimeSeconds { get; private set; } = 0f;
     private bool isCountingTime = false;
+
+    public GameResultUI winPanel;
+    public GameResultUI losePanel;
 
     public SharedPlayerStats sharedStats = new SharedPlayerStats();
 
     [Header("Character Stat Assets")]
     public CharacterStatsSO auronStats;
     public CharacterStatsSO helronStats;
-
-    [Header("UI Panels")]
-    public GameObject winPanel;
-    public GameObject losePanel;
 
     void Awake()
     {
@@ -36,14 +33,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     void Update()
     {
         if (isCountingTime)
-        {
             PlayTimeSeconds += Time.deltaTime;
-        }
     }
+
 
     public void StartCountingTime()
     {
@@ -54,33 +49,18 @@ public class GameManager : MonoBehaviour
     public void StopCountingTime()
     {
         isCountingTime = false;
-        Debug.Log("⏳ Tổng thời gian chơi: " + PlayTimeSeconds + " giây");
     }
-
     public void ShowWin()
     {
-        winPanel.SetActive(true);
-        Time.timeScale = 0f;
+        StopCountingTime();
+        winPanel.Show(PlayTimeSeconds, 0); // 0 là số coin, bạn có thể lấy từ stats
     }
 
     public void ShowLose()
     {
-        losePanel.SetActive(true);
-        Time.timeScale = 0f;
+        StopCountingTime();
+        losePanel.Show(PlayTimeSeconds, 0);
     }
-
-    public void ContinueGame()
-    {
-        Time.timeScale = 1f;
-        // Load màn tiếp theo hoặc về menu
-    }
-
-    public void RetryGame()
-    {
-        Time.timeScale = 1f;
-        // Load lại màn chơi hiện tại
-    }
-
     public void OnBossDefeated()
     {
         LevelCompleted();
@@ -90,7 +70,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("🎉 Story Mode: Completed Level!");
         ShowWin();
-        GameProgress.Current.CompleteLevel(GameProgress.Current.currentLevel, PlayTimeSeconds); // nếu bạn có logic lưu tiến trình
+        GameProgress.Current.CompleteLevel(GameProgress.Current.currentLevel, PlayTimeSeconds);
+        
     }
 
     public void OnPlayerDead()
