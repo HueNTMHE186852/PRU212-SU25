@@ -8394,6 +8394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57569cc1d5ced24b8e418aaa0e5874f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winPanel: {fileID: 6158798486180538017, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
+  losePanel: {fileID: 3002619020051171119, guid: 920bfb97b3aabb44dad2638812da3c9f, type: 3}
   sharedStats:
     Coins: 0
     DamageMultiplier: 0
@@ -8403,8 +8405,6 @@ MonoBehaviour:
     MoveSpeedLevel: 0
   auronStats: {fileID: 11400000, guid: a867d67c3042b8841b3c6de2b40e6263, type: 2}
   helronStats: {fileID: 11400000, guid: d00c60ec9c34e5643a05ce071394040b, type: 2}
-  winPanel: {fileID: 2337172638526179602, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
-  losePanel: {fileID: 5539273359831078219, guid: 920bfb97b3aabb44dad2638812da3c9f, type: 3}
 --- !u!4 &1781146321
 Transform:
   m_ObjectHideFlags: 0

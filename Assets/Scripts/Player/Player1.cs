@@ -175,7 +175,8 @@ public class Player1 : MonoBehaviour
         animator.SetBool("isFalling", isFalling);
         if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
         {
-            instructionPanelController.TogglePanel();
+            //instructionPanelController.TogglePanel();
+            GameManager.Instance.OnBossDefeated();
         }
         // Rolling
         if (Input.GetKeyDown(KeyCode.LeftShift))
