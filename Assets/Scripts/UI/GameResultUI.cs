@@ -38,7 +38,7 @@ public class GameResultUI : MonoBehaviour
         rect.anchoredPosition = hiddenPos;
         gameObject.SetActive(false); // Ẩn khi bắt đầu
 
-        continueButton.onClick.AddListener(OnContinue);
+        //continueButton.onClick.AddListener(OnContinue);
         retryButton.onClick.AddListener(OnRetry);
         menuButton.onClick.AddListener(OnMenu);
     }
