@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackColliderTrigger : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class AttackColliderTrigger : MonoBehaviour
 
         Player1 player = collision.GetComponentInParent<Player1>();
         AuronPlayerController auronPlayer = collision.GetComponentInParent<AuronPlayerController>();
-        if(auronPlayer != null)
+        if (auronPlayer != null)
         {
             int damage = Mathf.RoundToInt(auronPlayer.maxHealth * 0.2f);
             auronPlayer.TakeDamage(damage);
@@ -20,4 +20,3 @@ public class AttackColliderTrigger : MonoBehaviour
         }
     }
 }
-
