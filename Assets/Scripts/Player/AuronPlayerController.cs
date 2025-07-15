@@ -62,6 +62,7 @@ public class AuronPlayerController : MonoBehaviour
     public PolygonCollider2D normalCollider;
     public PolygonCollider2D slideCollider;
 
+    public GameResultUI losePanelUI;
     void Start()
     {
         groundLayer = LayerMask.GetMask("Ground", "Tilemap");
@@ -97,6 +98,8 @@ public class AuronPlayerController : MonoBehaviour
         MPBar.SetMP(currentMP);
         MPBar.gameObject.SetActive(true);
 
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartCountingTime();
     }
 
     void Update()
@@ -326,7 +329,17 @@ public class AuronPlayerController : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Static;
         }
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
 
+        if (losePanelUI != null)
+        {
+            losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
         Invoke("RestartScene", 2f);
     }
 
