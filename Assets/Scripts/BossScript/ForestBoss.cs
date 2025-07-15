@@ -58,6 +58,7 @@ public class ForestBoss : MonoBehaviour
     [Header("References")]
     public Transform player;
     public GameObject projectilePrefab;
+    public Player1 player1;
 
     [Header("Health")]
     public int maxHealth = 100;
@@ -97,9 +98,17 @@ public class ForestBoss : MonoBehaviour
 
         if (player == null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+                player1 = player.GetComponent<Player1>();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
+            }
+
         }
     }
 
@@ -133,7 +142,12 @@ public class ForestBoss : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-        GameManager.Instance.OnBossDefeated();
+
+        if(player != null)
+        {
+            player1.Win();
+        }
+
         Destroy(gameObject, 2f);
     }
 

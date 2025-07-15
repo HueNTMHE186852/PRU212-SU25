@@ -55,7 +55,7 @@ public class BossAI : MonoBehaviour
     public Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     public Transform player;
-
+    public Player1 player1;
     private float cachedHorizontalDistance;
     private float cachedVerticalDistance;
     private bool canAttackNow;
@@ -90,7 +90,11 @@ public class BossAI : MonoBehaviour
         originMaterial = spriteRenderer.material;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj) player = playerObj.transform;
+        if (playerObj)
+        {
+            player = playerObj.transform;
+            player1 = player.GetComponent<Player1>();
+        }
 
         // Cache colliders & their original offsets/points for proper flipping
         CacheColliders();
@@ -388,7 +392,10 @@ public class BossAI : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-
+        if(player1 != null)
+        {
+            player1.Win();
+        }
         StartCoroutine(WaitAndDie());
     }
 
