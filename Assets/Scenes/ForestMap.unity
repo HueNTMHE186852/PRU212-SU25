@@ -639,7 +639,7 @@ Transform:
   m_GameObject: {fileID: 279825272}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.17, y: -0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -683,8 +683,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -584176697
-  m_SortingLayer: 3
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -8417,7 +8417,7 @@ Transform:
   m_GameObject: {fileID: 335167383}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.16, y: -0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21188,6 +21188,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 507643454710105784, guid: 024350999448e8f46a50257e0a7ed413, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1061320829798587862, guid: 024350999448e8f46a50257e0a7ed413, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.3
@@ -21198,11 +21202,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2383411400558473272, guid: 024350999448e8f46a50257e0a7ed413, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -121.4498
+      value: -121.7
       objectReference: {fileID: 0}
     - target: {fileID: 2383411400558473272, guid: 024350999448e8f46a50257e0a7ed413, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -163.7
+      value: -163.4
       objectReference: {fileID: 0}
     - target: {fileID: 2383411400558473272, guid: 024350999448e8f46a50257e0a7ed413, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22665,7 +22669,7 @@ Transform:
   m_GameObject: {fileID: 1347427496}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.2, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45980,43 +45984,43 @@ MonoBehaviour:
     area: {fileID: 1428891700}
     enemyTypes:
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
     spawnCount: 2
   - zoneName: 
     area: {fileID: 214869712}
     enemyTypes:
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
     spawnCount: 2
   - zoneName: 
     area: {fileID: 176647551}
     enemyTypes:
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
     spawnCount: 2
   - zoneName: 
     area: {fileID: 1240356138}
     enemyTypes:
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
     spawnCount: 2
   - zoneName: 
     area: {fileID: 1611456542}
     enemyTypes:
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
     spawnCount: 2
   - zoneName: 
     area: {fileID: 532872040}
     enemyTypes:
     - {fileID: 214402698212760498, guid: e660d138589287f4abcbcb0a8d83985d, type: 3}
-    - {fileID: 7094701096496898474, guid: 9d11ba5dd07f37646b3cc237322275f3, type: 3}
-    - {fileID: 3993085923104986160, guid: 3f48c777309dc084b8acd105cf93f237, type: 3}
+    - {fileID: 8083587103930390502, guid: 54c612466a1761e4f9acad0f809b1548, type: 3}
+    - {fileID: 2876707876383334507, guid: beee6e136d43671438dea951cc6eba49, type: 3}
     spawnCount: 2
   zonesToSpawn: 8
   minDistance: 8
