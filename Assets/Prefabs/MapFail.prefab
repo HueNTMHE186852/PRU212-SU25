@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 7198882177523605035}
   - component: {fileID: 3603410452432595498}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7198882177523605035}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6731579720184207397, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2016323195540555824
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +788,7 @@ GameObject:
   - component: {fileID: 4664981371695583525}
   - component: {fileID: 8601193960510121632}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,7 +894,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4664981371695583525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6731579720184207397, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4009563186256034009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,8 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce804e04489dc0340bf1cc8cd7a9a2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultType: 0
-  panel: {fileID: 0}
+  resultType: 1
   timeText: {fileID: 1097860790879042816}
   coinText: {fileID: 7755651629114430373}
   continueButton: {fileID: 0}

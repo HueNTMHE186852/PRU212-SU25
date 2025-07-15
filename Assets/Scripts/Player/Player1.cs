@@ -164,7 +164,7 @@ public class Player1 : MonoBehaviour
         coinManager.AddCoin(totalCoins);
         if (winPanelUI != null)
         {
-            losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+            winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
         }
         else
         {

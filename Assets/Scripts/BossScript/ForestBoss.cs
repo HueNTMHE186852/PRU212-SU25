@@ -142,10 +142,12 @@ public class ForestBoss : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
+
         if(player != null)
         {
             player1.Win();
         }
+
         Destroy(gameObject, 2f);
     }
 
