@@ -38,7 +38,7 @@ public class GameResultUI : MonoBehaviour
         rect.anchoredPosition = hiddenPos;
         gameObject.SetActive(false); // Ẩn khi bắt đầu
 
-        continueButton.onClick.AddListener(OnContinue);
+        //continueButton.onClick.AddListener(OnContinue);
         retryButton.onClick.AddListener(OnRetry);
         menuButton.onClick.AddListener(OnMenu);
     }
@@ -66,13 +66,14 @@ public class GameResultUI : MonoBehaviour
 
     public void Show(float playTime, int coins)
     {
-        gameObject.SetActive(true);           // Bắt đầu hiển thị
+        Debug.Log($"GameResultUI.Show called: {resultType}, time={playTime}, coins={coins}");
+        gameObject.SetActive(true);
         isVisible = true;
         isAnimating = true;
 
         timeText.text = $"{playTime:F1}s";
         coinText.text = $"{coins}";
-        continueButton.gameObject.SetActive(resultType == ResultType.Win);
+        //continueButton.gameObject.SetActive(resultType == ResultType.Win);
 
         Time.timeScale = 0f;
     }
@@ -100,6 +101,6 @@ public class GameResultUI : MonoBehaviour
     void OnMenu()
     {
         Hide();
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameScene");
     }
 }

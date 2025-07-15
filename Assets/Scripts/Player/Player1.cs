@@ -63,6 +63,8 @@ public class Player1 : MonoBehaviour
     public Description instructionPanelController;
     public FinalPlayerStats finalStats = new FinalPlayerStats();
     public BasePlayerStats baseStats;
+    public GameResultUI losePanelUI;
+    public GameResultUI winPanelUI;
 
     void Start()
     {
@@ -96,6 +98,9 @@ public class Player1 : MonoBehaviour
         MPBar.SetMaxMP();
         MPBar.SetMP(currentMP);
         MPBar.gameObject.SetActive(true);
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartCountingTime();
     }
 
     public void TakeDamage(int damage)
@@ -139,14 +144,35 @@ public class Player1 : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Static; // Freeze position
         }
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
 
-        Invoke("RestartScene", 2f);
+        if (losePanelUI != null)
+        {
+            losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
     }
 
-    void RestartScene()
+    public void Win()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
+        coinManager.AddCoin(totalCoins);
+        if (winPanelUI != null)
+        {
+            losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
     }
+
+
 
     void Update()
     {
@@ -175,8 +201,7 @@ public class Player1 : MonoBehaviour
         animator.SetBool("isFalling", isFalling);
         if (Input.GetKeyDown(KeyCode.Tab) && instructionPanelController != null)
         {
-            //instructionPanelController.TogglePanel();
-            GameManager.Instance.OnBossDefeated();
+            instructionPanelController.TogglePanel();
         }
         // Rolling
         if (Input.GetKeyDown(KeyCode.LeftShift))

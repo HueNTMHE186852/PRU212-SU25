@@ -25,7 +25,7 @@ public class ForestBoss : MonoBehaviour
     private float nextTornadoTime = 0f;
 
     [Header("Tornado Damage Settings")]
-    public int tornadoDamage = 20;
+    public int tornadoDamage = 10;
     public float tornadoDamageInterval = 0.5f;
     private Dictionary<Collider2D, float> nextDamageTimeMap = new Dictionary<Collider2D, float>();
 
@@ -38,7 +38,7 @@ public class ForestBoss : MonoBehaviour
     public float tornadoSpeed = 30f;
     public float tornadoDuration = 3f;
     private float lastTornadoTime = -6f;
-    public float tornadoCooldown = 6f; 
+    public float tornadoCooldown = 6f;
 
     private bool isInTornadoMode = false;
     private Vector3 tornadoPointA;
@@ -58,6 +58,7 @@ public class ForestBoss : MonoBehaviour
     [Header("References")]
     public Transform player;
     public GameObject projectilePrefab;
+    public Player1 player1;
 
     [Header("Health")]
     public int maxHealth = 100;
@@ -97,9 +98,17 @@ public class ForestBoss : MonoBehaviour
 
         if (player == null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+                player1 = player.GetComponent<Player1>();
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
+            }
+
         }
     }
 
@@ -133,7 +142,10 @@ public class ForestBoss : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-        GameManager.Instance.OnBossDefeated();
+        if(player != null)
+        {
+            player1.Win();
+        }
         Destroy(gameObject, 2f);
     }
 
@@ -145,6 +157,11 @@ public class ForestBoss : MonoBehaviour
 
         if (cachedHorizontalDistance > detectionRange)
         {
+            if (isInTornadoMode)
+            {
+                Debug.Log("🌀 Player đã ra khỏi vùng — dừng lốc xoáy!");
+                EndTornadoSkill();
+            }
             rb.velocity = Vector2.zero;
             animator.SetBool("IsRunning", false);
             isChasing = false;
@@ -222,7 +239,7 @@ public class ForestBoss : MonoBehaviour
             {
                 float randomChance = Random.Range(0f, 1f); // 0 → 1
 
-                if (randomChance < 0.3f) // 20% khả năng thi triển skill mỗi lần check
+                if (randomChance < 0.2f) // 20% khả năng thi triển skill mỗi lần check
                 {
                     nextTornadoTime = Time.time + tornadoInterval;
                     StartCoroutine(StartTornadoSkill());
@@ -238,11 +255,12 @@ public class ForestBoss : MonoBehaviour
             PerformTornadoMovement();
             return;
         }
-  
+
 
     }
     IEnumerator StartTornadoSkill()
     {
+        rb.gravityScale = 0f;
 
         isAttacking = true;
         isFlyDashing = false;
@@ -329,6 +347,8 @@ public class ForestBoss : MonoBehaviour
 
     void EndTornadoSkill()
     {
+        rb.gravityScale = 1f; // hoặc giá trị cũ bạn đang dùng
+
         isInTornadoMode = false;
         isAttacking = false;
         rb.velocity = Vector2.zero;
@@ -420,7 +440,23 @@ public class ForestBoss : MonoBehaviour
         {
             StopFlyDashImmediately();
         }
+
+        // ✅ Nếu đang lốc xoáy và đụng bất kỳ thứ gì thì dừng
+        if (isInTornadoMode)
+        {
+            Debug.Log("💥 Boss va chạm trong khi đang lốc xoáy, dừng skill!");
+            EndTornadoSkill();
+        }
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isInTornadoMode && !collision.CompareTag("Player"))
+        {
+            Debug.Log("💥 Boss lốc xoáy va chạm Trigger với: " + collision.name);
+            EndTornadoSkill();
+        }
+    }
+
 
     void MoveTowardsPlayer()
     {

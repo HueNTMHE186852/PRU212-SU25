@@ -47,7 +47,8 @@ public class PotionPickup : MonoBehaviour
             case PotionType.Coin:
                 if (player.coinManager != null)
                 {
-                    player.coinManager.AddCoin(1);
+                    player.coinManager.AddCoinOnCollect();
+;
                 }
                 else
                 {
@@ -76,7 +77,7 @@ public class PotionPickup : MonoBehaviour
             case PotionType.Coin:
                 if (player.coinManager != null)
                 {
-                    player.coinManager.AddCoin(1);
+                    player.coinManager.AddCoinOnCollect();
                 }
                 else
                 {
