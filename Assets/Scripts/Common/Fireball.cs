@@ -1,22 +1,27 @@
 using UnityEngine;
 
-public class IceSpike : MonoBehaviour
+public class Fireball : MonoBehaviour
 {
-    public int damage = 80;
+    public int damage = 60;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             Player1 player = collision.GetComponentInParent<Player1>();
-            player.TakeDamage(damage);
-            if (CameraShake.Instance != null)
+            if (player != null)
             {
-                StartCoroutine(CameraShake.Instance.Shake(0.15f, 0.05f));
+                player.TakeDamage(damage);
+                if (CameraShake.Instance != null)
+                {
+                    StartCoroutine(CameraShake.Instance.Shake(0.2f, 0.07f));
+                }
+                Debug.Log("🔥 Player trúng đòn Fireball, trừ 60 damage");
             }
-            Debug.Log("💥 Player trúng đòn special attack trừ 80 dame ");
         }
     }
-    public void Launch(float launchForce, float lifetime)
+
+    public void Launch(Vector2 velocity, float lifetime)
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb == null)
@@ -24,7 +29,7 @@ public class IceSpike : MonoBehaviour
 
         rb.isKinematic = false;
         rb.gravityScale = 0;
-        rb.velocity = Vector2.up * launchForce * 1.5f;
+        rb.velocity = velocity;
 
         Destroy(gameObject, lifetime);
     }

@@ -27,9 +27,14 @@ public class Player1Coin : MonoBehaviour
         Debug.Log($"+{amount} coin (Level: {currentLevel}) - Session total: {sessionCoin}");
     }
 
+    public void AddCoin(int coin)
+    {
+        SharedPlayerStats.GameStats.sharedStats.Coins += coin;
+    }
+
     public void CommitSessionToTotal()
     {
-        int total = PlayerPrefs.GetInt("TotalCoins", 0);
+        int total = SharedPlayerStats.GameStats.sharedStats.Coins;
         total += sessionCoin;
         PlayerPrefs.SetInt("TotalCoins", total);
         PlayerPrefs.Save();
@@ -49,7 +54,7 @@ public class Player1Coin : MonoBehaviour
 
     private void UpdateCoinUI()
     {
-        int total = PlayerPrefs.GetInt("TotalCoins", 0);
+        int total = SharedPlayerStats.GameStats.sharedStats.Coins;
 
         if (totalCoinText != null)
             totalCoinText.text = $"{total}";
@@ -72,7 +77,7 @@ public class Player1Coin : MonoBehaviour
 
     public int GetTotalCoin()
     {
-        return PlayerPrefs.GetInt("TotalCoins", 0);
+        return SharedPlayerStats.GameStats.sharedStats.Coins;
     }
 
     public int GetSessionCoin()
