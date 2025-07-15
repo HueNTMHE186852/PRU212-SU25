@@ -15,8 +15,10 @@
         public float detectionRange = 10f;
         public float attackCooldown = 2f;
         public float attackDuration = 1f;
+    public float wallHeightThreshold = 2.5f;   // Nếu player cao hơn ngưỡng này thì kéo dài tường
+    public float extendedWallHeight = 6f;      // Chiều cao kéo dài
 
-        [Header("Attack Collider")]
+    [Header("Attack Collider")]
         public BoxCollider2D attackCollider;
 
         [Header("References")]
@@ -26,7 +28,13 @@
         public int maxHealth = 100;
         public HealthBar healthBar;
 
-        private Animator animator;
+    [Header("Ultimate Skill")]
+    public GameObject wallPrefab;
+    public Transform lightningSpawnY; // Empty ở trên trời để lấy Y cho tia sét
+    public float wallOffsetX = 4f;
+    public float ultimateDelay = 1.5f;
+
+    private Animator animator;
         private Rigidbody2D rb;
         private int currentHealth;
         private float lastMeleeAttackTime = -10f;
@@ -94,7 +102,7 @@
             }
 
             // Lightning skill logic
-            if (!isAttacking && Vector2.Distance(transform.position, player.position) < 8f && Random.value < 0.2f)
+            if (!isAttacking && Vector2.Distance(transform.position, player.position) < 8f && Random.value < 0.5f)
             {
                 StartCoroutine(CastLightningStrike());
             }
@@ -102,8 +110,17 @@
             if (Input.GetKeyDown(KeyCode.L))
             {
                 StartCoroutine(CastLightningStrike());
-            }
         }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(50);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            StartCoroutine(UltimateSkill());
+        }
+
+    }
 
     IEnumerator CastLightningStrike()
     {
@@ -142,6 +159,84 @@
             animator.SetBool("IsRunning", true);  // Run
 
         isAttacking = false;
+    }
+    IEnumerator UltimateSkill()
+    {
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+        animator.SetTrigger("CastLightning"); // Hoặc animation ultimate riêng
+
+        Vector3 playerPos = player.position;
+
+        // 1. Tạo 2 bức tường hai bên player với khoảng cách xa hơn
+        Vector3 leftWallPos = new Vector3(playerPos.x - wallOffsetX, playerPos.y, 0f);
+        Vector3 rightWallPos = new Vector3(playerPos.x + wallOffsetX, playerPos.y, 0f);
+
+        GameObject leftWall = null;
+        GameObject rightWall = null;
+
+        if (wallPrefab != null)
+        {
+            float baseWallHeight = wallPrefab.transform.localScale.y;
+            Vector3 scale = wallPrefab.transform.localScale;
+            Vector3 offset = Vector3.zero;
+
+            // Nếu player cao hơn ngưỡng thì tự động tăng chiều cao tường
+            if (player.position.y > wallHeightThreshold)
+            {
+                float extraHeight = player.position.y - wallHeightThreshold + 2f; // +2f là khoảng đệm
+                float newHeight = baseWallHeight + extraHeight;
+
+                // Giới hạn nếu muốn
+                newHeight = Mathf.Min(newHeight, 15f);
+
+                scale.y = newHeight;
+                offset = new Vector3(0f, -(newHeight - baseWallHeight) / 2f, 0f); // Dời xuống giữ đáy chạm đất
+            }
+
+
+            leftWall = Instantiate(wallPrefab, leftWallPos + offset, Quaternion.identity);
+            leftWall.transform.localScale = scale;
+
+            rightWall = Instantiate(wallPrefab, rightWallPos + offset, Quaternion.identity);
+            rightWall.transform.localScale = scale;
+        }
+
+        // 2. Đợi 1.5 giây (hiệu ứng + căng thẳng)
+        yield return new WaitForSeconds(ultimateDelay);
+
+        // 3. Gọi 5 tia sét rơi xuống player
+        float startX = playerPos.x - 2f;
+        float spacing = 1f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            float lightningY = Mathf.Max(lightningSpawnY.position.y, player.position.y - 2.5f);
+            Vector3 strikePos = new Vector3(startX + i * spacing, lightningY, 0f);
+
+            if (lightningPrefab != null)
+            {
+                GameObject lightning = Instantiate(lightningPrefab, strikePos, Quaternion.identity);
+                LightningStrike strike = lightning.GetComponent<LightningStrike>();
+                if (strike != null) strike.damage = lightningDamage;
+            }
+        }
+
+        // 4. Đợi 2 giây trước khi phá tường và kết thúc ultimate
+        yield return new WaitForSeconds(2f);
+
+        // Phá tường nếu còn tồn tại
+        if (leftWall != null) Destroy(leftWall);
+        if (rightWall != null) Destroy(rightWall);
+
+        // Đảm bảo animation và velocity reset
+        rb.velocity = Vector2.zero;
+        animator.SetBool("IsRunning", false);
+        animator.SetBool("IsAttacking", false);
+
+        // 5. Trở về trạng thái hoạt động
+        isAttacking = false;
+
     }
 
 

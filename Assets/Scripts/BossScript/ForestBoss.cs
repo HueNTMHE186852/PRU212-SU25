@@ -56,7 +56,7 @@ public class ForestBoss : MonoBehaviour
     public BoxCollider2D attackCollider;
 
     [Header("References")]
-    public Transform player;
+    private Transform player;
     public GameObject projectilePrefab;
 
     [Header("Health")]
@@ -95,12 +95,18 @@ public class ForestBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        if (player == null)
+    if (player == null)
+    {
+        GameObject found = GameObject.FindGameObjectWithTag("Player");
+        if (found != null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            player = found.transform;
         }
+        else
+        {
+            Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
+        }
+    }
     }
 
     public void TakeDamage(int damage)
