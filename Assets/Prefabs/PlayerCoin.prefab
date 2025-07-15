@@ -281,9 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0e69909e4d864193e50f28eef8f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCoinText: {fileID: 3232074730219567161}
-  sessionCoinText: {fileID: 5606416498493623102}
-  currentLevel: 0
+  totalCoinText: {fileID: 5606416498493623102}
+  sessionCoinText: {fileID: 3232074730219567161}
+  currentLevel: 1
 --- !u!1 &4707462554162363963
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 1231968173651728099}
   - component: {fileID: 3232074730219567161}
   m_Layer: 5
-  m_Name: TotalCoin
+  m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 6026389424524457690}
   - component: {fileID: 5606416498493623102}
   m_Layer: 5
-  m_Name: Coin
+  m_Name: TotalCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -48,14 +48,14 @@ public class BossAI : MonoBehaviour
     public Transform laserSpawnPoint;
     public float laserLifetime = 0.5f;
 
-    [Header("Ice Spike (Phase 2)")]
-    public IceSpikeManager iceSpikeManager;
+   
+    public FireballManager fireballManager;
 
     private Animator animator;
     public Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     public Transform player;
-
+    public Player1 player1;
     private float cachedHorizontalDistance;
     private float cachedVerticalDistance;
     private bool canAttackNow;
@@ -90,7 +90,11 @@ public class BossAI : MonoBehaviour
         originMaterial = spriteRenderer.material;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj) player = playerObj.transform;
+        if (playerObj)
+        {
+            player = playerObj.transform;
+            player1 = player.GetComponent<Player1>();
+        }
 
         // Cache colliders & their original offsets/points for proper flipping
         CacheColliders();
@@ -125,7 +129,10 @@ public class BossAI : MonoBehaviour
             return;
         }
 
-        UpdateDistances();
+        if (animator.GetBool("isRunning"))
+        {
+            UpdateDistances();
+        }
 
         bool shouldChase = (cachedVerticalDistance <= verticalTolerance) && (cachedHorizontalDistance <= detectionRange);
         if (!shouldChase && forceChase && currentHealth < maxHealth) shouldChase = true; // chase if already aggroed
@@ -295,13 +302,13 @@ public class BossAI : MonoBehaviour
 
     public void SummonIceSpikes()
     {
-        if (iceSpikeManager) iceSpikeManager.StartSpikeAttack();
+        if (fireballManager) fireballManager.StartFireballSequence();
     }
 
     public void LaunchIceSpikes()
     {
-        if (!iceSpikeManager) return;
-        iceSpikeManager.LaunchAllSpikes();
+        if (!fireballManager) return;
+        fireballManager.LaunchAllFireballs();
     }
 
     // ———————————————————————————————————————————————————————————
@@ -317,7 +324,7 @@ public class BossAI : MonoBehaviour
         if (healthBar) healthBar.SetHealth(currentHealth);
         Flash();
         Vector2 knockDir = (transform.position - player.position).normalized;
-        float knockForce = 1.9f; // Có thể tùy chỉnh
+        float knockForce = 1.9f;
         ApplyKnockback(knockDir * knockForce);
 
         float pct = (float)currentHealth / maxHealth;
@@ -385,7 +392,10 @@ public class BossAI : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-
+        if(player1 != null)
+        {
+            player1.Win();
+        }
         StartCoroutine(WaitAndDie());
     }
 

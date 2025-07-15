@@ -64,6 +64,7 @@ public class Player1 : MonoBehaviour
     public FinalPlayerStats finalStats = new FinalPlayerStats();
     public BasePlayerStats baseStats;
     public GameResultUI losePanelUI;
+    public GameResultUI winPanelUI;
 
     void Start()
     {
@@ -154,14 +155,24 @@ public class Player1 : MonoBehaviour
         {
             Debug.LogError("losePanelUI is null in Player1.Die()");
         }
-
-        Invoke("RestartScene", 2f);
     }
 
-    void RestartScene()
+    public void Win()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
+        coinManager.AddCoin(totalCoins);
+        if (winPanelUI != null)
+        {
+            winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
     }
+
+
 
     void Update()
     {

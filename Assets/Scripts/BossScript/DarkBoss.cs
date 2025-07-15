@@ -1,6 +1,7 @@
 ﻿    // DarkBoss.cs - Sửa theo ForestBoss logic
     using System.Collections;
     using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
     public class DarkBoss : MonoBehaviour
     {
@@ -21,8 +22,9 @@
 
         [Header("References")]
         public Transform player;
+        public Player1 player1;
 
-        [Header("Health")]
+    [Header("Health")]
         public int maxHealth = 100;
         public HealthBar healthBar;
 
@@ -34,23 +36,25 @@
         private bool facingRight = true;
         private bool hasHealthBarAppeared = false;
 
-        void Start()
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
+
+        if (healthBar != null)
         {
-            rb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.gameObject.SetActive(false);
+        }
 
-            if (healthBar != null)
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
             {
-                healthBar.SetMaxHealth(maxHealth);
-                healthBar.gameObject.SetActive(false);
-            }
-
-            if (player == null)
-            {
-                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-                if (playerObj != null)
-                    player = playerObj.transform;
+                player = playerObj.transform;
+                player1 = player.GetComponent<Player1>();
             }
         }
 
@@ -105,47 +109,47 @@
             }
         }
 
-    IEnumerator CastLightningStrike()
-    {
-        isAttacking = true;
-        rb.velocity = Vector2.zero;
-
-        // 1. Trigger animation giơ tay
-        animator.SetTrigger("CastLightning");
-
-        // 👉 GHI NHỚ vị trí player ngay lúc bắt đầu animation
-        Vector3 targetPos = new Vector3(player.position.x, player.position.y - 4f, 0f);
-
-        // 2. Đợi anim charge
-        yield return new WaitForSeconds(lightningDelay);
-
-        // 3. Tạo prefab tia sét tại vị trí đã ghi nhớ
-        if (lightningPrefab != null)
+        IEnumerator CastLightningStrike()
         {
-            GameObject lightning = Instantiate(lightningPrefab, targetPos, Quaternion.identity);
+            isAttacking = true;
+            rb.velocity = Vector2.zero;
 
-            LightningStrike strike = lightning.GetComponent<LightningStrike>();
-            if (strike != null)
+            // 1. Trigger animation giơ tay
+            animator.SetTrigger("CastLightning");
+
+            // 👉 GHI NHỚ vị trí player ngay lúc bắt đầu animation
+            Vector3 targetPos = new Vector3(player.position.x, player.position.y - 4f, 0f);
+
+            // 2. Đợi anim charge
+            yield return new WaitForSeconds(lightningDelay);
+
+            // 3. Tạo prefab tia sét tại vị trí đã ghi nhớ
+            if (lightningPrefab != null)
             {
-                strike.damage = lightningDamage;
+                GameObject lightning = Instantiate(lightningPrefab, targetPos, Quaternion.identity);
+
+                LightningStrike strike = lightning.GetComponent<LightningStrike>();
+                if (strike != null)
+                {
+                    strike.damage = lightningDamage;
+                }
             }
+
+            // 4. Delay trước khi kết thúc skill
+            yield return new WaitForSeconds(1f);
+
+            // 5. Trở lại trạng thái bình thường
+            float dist = Mathf.Abs(transform.position.x - player.position.x);
+            if (dist <= attackRange)
+                animator.SetBool("IsRunning", false); // Idle
+            else
+                animator.SetBool("IsRunning", true);  // Run
+
+            isAttacking = false;
         }
 
-        // 4. Delay trước khi kết thúc skill
-        yield return new WaitForSeconds(1f);
 
-        // 5. Trở lại trạng thái bình thường
-        float dist = Mathf.Abs(transform.position.x - player.position.x);
-        if (dist <= attackRange)
-            animator.SetBool("IsRunning", false); // Idle
-        else
-            animator.SetBool("IsRunning", true);  // Run
-
-        isAttacking = false;
-    }
-
-
-    void MoveTowardsPlayer()
+        void MoveTowardsPlayer()
         {
             Vector2 direction = (player.position - transform.position).normalized;
             rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
@@ -166,6 +170,7 @@
             animator.SetBool("IsAttacking", false);
             isAttacking = false;
         }
+    }
 
         public void TakeDamage(int damage)
         {
@@ -199,7 +204,11 @@
             Collider2D col = GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
 
-            Destroy(gameObject, 2f);
+            if (player != null)
+            {
+                player1.Win();
+            }
+             Destroy(gameObject, 2f);
         }
 
         void FlipSprite()
