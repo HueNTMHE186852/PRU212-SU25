@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedDamage: 30
 --- !u!61 &4304527135394998625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -196,8 +197,8 @@ Transform:
   m_GameObject: {fileID: 7094701096496898474}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0069780634, y: -0.0145419175, z: 0.000052785133, w: 0.99986994}
-  m_LocalPosition: {x: -52.5, y: 19.6, z: 0}
-  m_LocalScale: {x: 1.8381722, y: 1.680815, z: 1}
+  m_LocalPosition: {x: -50.5195, y: 17.8958, z: 0}
+  m_LocalScale: {x: 1.1703641, y: 1.0713514, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5742236384404788139}
@@ -320,7 +321,7 @@ MonoBehaviour:
   damage: 10
   speed: 3.5
   verticalTolerance: 20
-  attackRange: 6.5
+  attackRange: 5
   detectionRange: 25
   attackCooldown: 0.1
   attackDuration: 1
