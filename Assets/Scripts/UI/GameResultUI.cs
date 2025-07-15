@@ -73,7 +73,7 @@ public class GameResultUI : MonoBehaviour
 
         timeText.text = $"{playTime:F1}s";
         coinText.text = $"{coins}";
-        continueButton.gameObject.SetActive(resultType == ResultType.Win);
+        //continueButton.gameObject.SetActive(resultType == ResultType.Win);
 
         Time.timeScale = 0f;
     }
@@ -101,6 +101,6 @@ public class GameResultUI : MonoBehaviour
     void OnMenu()
     {
         Hide();
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameScene");
     }
 }
