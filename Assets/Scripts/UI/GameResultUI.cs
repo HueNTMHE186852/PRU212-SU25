@@ -66,7 +66,8 @@ public class GameResultUI : MonoBehaviour
 
     public void Show(float playTime, int coins)
     {
-        gameObject.SetActive(true);           // Bắt đầu hiển thị
+        Debug.Log($"GameResultUI.Show called: {resultType}, time={playTime}, coins={coins}");
+        gameObject.SetActive(true);
         isVisible = true;
         isAnimating = true;
 

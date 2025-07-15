@@ -58,8 +58,14 @@ public class GameManager : MonoBehaviour
 
     public void ShowLose()
     {
+        //StopCountingTime();
+        //losePanel.Show(PlayTimeSeconds, 0);
+        Debug.Log("ShowLose called");
         StopCountingTime();
-        losePanel.Show(PlayTimeSeconds, 0);
+        if (losePanel == null)
+            Debug.LogError("losePanel is null in ShowLose()");
+        else
+            losePanel.Show(PlayTimeSeconds, 0);
     }
     public void OnBossDefeated()
     {
