@@ -386,21 +386,77 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForestRemake
       objectReference: {fileID: 0}
+    - target: {fileID: 1373079562704013898, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.3876881
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373079562704013898, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.95870465
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373079562704013898, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -13.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373079562704013898, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.1048
+      objectReference: {fileID: 0}
     - target: {fileID: 1487495188242611443, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 89.5047
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1487495188242611443, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5.4164
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1487495188242611443, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1077.4912
+      value: -1085.8
       objectReference: {fileID: 0}
     - target: {fileID: 1487495188242611443, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -691.9118
+      value: -688.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523145181816713500, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_fontSize
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523145181816713500, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_margin.w
+      value: 46.91755
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523145181816713500, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_margin.z
+      value: 174.34967
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523145181816713500, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763709095125961298, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 5.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763709095125961298, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 5.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763709095125961298, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -9.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763709095125961298, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718565560814921938, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718565560814921938, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.54
       objectReference: {fileID: 0}
     - target: {fileID: 7085081534662457828, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_AnchorMax.x
@@ -409,6 +465,18 @@ PrefabInstance:
     - target: {fileID: 7085081534662457828, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085081534662457828, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.0099666
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085081534662457828, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085081534662457828, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.545
       objectReference: {fileID: 0}
     - target: {fileID: 7369167970664166409, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_LocalScale.x
@@ -458,6 +526,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8237057436054693064, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b062107301d9cc44a932a4107a36f58c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -896,9 +968,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -584176697
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -21716,7 +21788,7 @@ Transform:
   m_GameObject: {fileID: 715392611}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.5406, y: 49.1163, z: 0.001729711}
+  m_LocalPosition: {x: 18.9, y: 45.4, z: 0.001729711}
   m_LocalScale: {x: 171.61812, y: 149.77965, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48678,7 +48750,7 @@ Transform:
   m_GameObject: {fileID: 1930873022}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 158.5424, y: -127.4752, z: 0.001729711}
+  m_LocalPosition: {x: 158.2, y: -129, z: 0.001729711}
   m_LocalScale: {x: 47.49436, y: 35.920197, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
