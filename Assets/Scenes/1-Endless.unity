@@ -11824,11 +11824,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!4 &79510147 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
-  m_PrefabInstance: {fileID: 1625063056}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &132095732
 GameObject:
   m_ObjectHideFlags: 0
@@ -13009,55 +13004,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4806b93540909dc4cbcbd085601c92ef, type: 3}
---- !u!1 &1312316308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1312316309}
-  - component: {fileID: 1312316310}
-  m_Layer: 8
-  m_Name: FireballManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1312316309
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312316308}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 79510147}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1312316310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312316308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610a19f1d56bf2b448f4d42d4f8ff91f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 1499671749114246729, guid: 3e0043f53011bb24294ddd7ebcedf591, type: 3}
-  fireballCount: 10
-  spawnRadius: 20
-  launchForce: 10
-  fireballLifetime: 2
 --- !u!1 &1422070219
 GameObject:
   m_ObjectHideFlags: 0
@@ -23884,20 +23830,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9164127162841577666, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
-      propertyPath: duration
-      value: 0.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 9164127162841577666, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
-      propertyPath: fireballManager
-      value: 
-      objectReference: {fileID: 1312316310}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1899008077864704880, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1312316309}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bcbb97d066489245a284caeef3ddcab, type: 3}
 --- !u!1 &1645566371
