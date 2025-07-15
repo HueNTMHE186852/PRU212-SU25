@@ -4,13 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class SharedPlayerStats
 {
-    public int Coins = 1000;
-    public float DamageMultiplier = 1f;
+    public int Coins;
+    public float DamageMultiplier;
 
-    public int HpLevel = 0;
-    public int DamageLevel = 0;
-    public int ManaLevel = 0;
-    public int MoveSpeedLevel = 0;
+    public int HpLevel;
+    public int DamageLevel;
+    public int ManaLevel;
+    public int MoveSpeedLevel;
 
     // 🔁 Đường dẫn lưu file JSON
     private static string SavePath => Path.Combine(Application.persistentDataPath, "player_stats.json");
@@ -88,6 +88,7 @@ public class SharedPlayerStats
         }
 
         Coins -= cost;
+        SaveToJson();
         return true;
     }
 

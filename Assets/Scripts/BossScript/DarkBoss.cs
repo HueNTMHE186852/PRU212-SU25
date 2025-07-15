@@ -1,6 +1,7 @@
 ﻿    // DarkBoss.cs - Sửa theo ForestBoss logic
     using System.Collections;
     using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
     public class DarkBoss : MonoBehaviour
     {
@@ -21,8 +22,9 @@
 
         [Header("References")]
         public Transform player;
+        public Player1 player1;
 
-        [Header("Health")]
+    [Header("Health")]
         public int maxHealth = 100;
         public HealthBar healthBar;
 
@@ -50,8 +52,10 @@
             {
                 GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
                 if (playerObj != null)
+                {
                     player = playerObj.transform;
-            }
+                    player1 = player.GetComponent<Player1>();
+                }
         }
 
         void Update()
@@ -199,7 +203,11 @@
             Collider2D col = GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
 
-            Destroy(gameObject, 2f);
+            if (player != null)
+            {
+                player1.Win();
+            }
+        Destroy(gameObject, 2f);
         }
 
         void FlipSprite()
