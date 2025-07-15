@@ -64,7 +64,6 @@ public class Player1 : MonoBehaviour
     public FinalPlayerStats finalStats = new FinalPlayerStats();
     public BasePlayerStats baseStats;
     public GameResultUI losePanelUI;
-    private float playTimeSeconds = 0f;
 
     void Start()
     {
@@ -145,7 +144,7 @@ public class Player1 : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static; // Freeze position
         }
         float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
-        int totalCoins = coinManager != null ? coinManager.GetCoinCount() : 0;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
 
         if (losePanelUI != null)
         {

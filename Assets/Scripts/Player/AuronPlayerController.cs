@@ -330,7 +330,7 @@ public class AuronPlayerController : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static;
         }
         float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
-        int totalCoins = coinManager != null ? coinManager.GetCoinCount() : 0;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
 
         if (losePanelUI != null)
         {
