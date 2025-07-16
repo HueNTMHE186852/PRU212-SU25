@@ -28,7 +28,7 @@ public class MeleeAttackTrigger : MonoBehaviour
 
             // Apply damage
             player.TakeDamage(damage);
-         
+            Debug.LogWarning("Gây 1 dame cho player");
             if (CameraShake.Instance != null)
             {
                 StartCoroutine(CameraShake.Instance.Shake(0.1f, 0.05f));

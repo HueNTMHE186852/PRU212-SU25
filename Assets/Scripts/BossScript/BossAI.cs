@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossAI : MonoBehaviour
 {
+    [SerializeField] private Material flashMaterial;
+    [SerializeField] private float duration;
+
+    private Material originMaterial;
+    private Coroutine flashRoutine;
 
     [Header("Stats")]
     public int maxHealth = 100;
@@ -43,14 +48,14 @@ public class BossAI : MonoBehaviour
     public Transform laserSpawnPoint;
     public float laserLifetime = 0.5f;
 
-    [Header("Ice Spike (Phase 2)")]
-    public IceSpikeManager iceSpikeManager;
+   
+    public FireballManager fireballManager;
 
     private Animator animator;
     public Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     public Transform player;
-
+    public Player1 player1;
     private float cachedHorizontalDistance;
     private float cachedVerticalDistance;
     private bool canAttackNow;
@@ -77,15 +82,19 @@ public class BossAI : MonoBehaviour
     private Vector2 originalAttackColliderOffset;
     private Vector2[] originalPolygonPoints;
 
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originMaterial = spriteRenderer.material;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj) player = playerObj.transform;
+        if (playerObj)
+        {
+            player = playerObj.transform;
+            player1 = player.GetComponent<Player1>();
+        }
 
         // Cache colliders & their original offsets/points for proper flipping
         CacheColliders();
@@ -112,7 +121,6 @@ public class BossAI : MonoBehaviour
 
         if (isAttacking)
         {
-            Debug.Log("⛔ Boss đang tấn công. Bỏ qua update.");
             if (Time.time >= lastAttackTime + attackDuration)
             {
                 Debug.Log("⏱️ Đã hết thời gian tấn công, gọi EndAttack()");
@@ -121,7 +129,10 @@ public class BossAI : MonoBehaviour
             return;
         }
 
-        UpdateDistances();
+        if (animator.GetBool("isRunning"))
+        {
+            UpdateDistances();
+        }
 
         bool shouldChase = (cachedVerticalDistance <= verticalTolerance) && (cachedHorizontalDistance <= detectionRange);
         if (!shouldChase && forceChase && currentHealth < maxHealth) shouldChase = true; // chase if already aggroed
@@ -291,13 +302,13 @@ public class BossAI : MonoBehaviour
 
     public void SummonIceSpikes()
     {
-        if (iceSpikeManager) iceSpikeManager.StartSpikeAttack();
+        if (fireballManager) fireballManager.StartFireballSequence();
     }
 
     public void LaunchIceSpikes()
     {
-        if (!iceSpikeManager) return;
-        iceSpikeManager.LaunchAllSpikes();
+        if (!fireballManager) return;
+        fireballManager.LaunchAllFireballs();
     }
 
     // ———————————————————————————————————————————————————————————
@@ -308,52 +319,61 @@ public class BossAI : MonoBehaviour
         if (isDead) return;
 
         ShowDamage(amount.ToString());
-
-        float pct = (float)currentHealth / maxHealth;
-
-        // Giảm sát thương dựa trên phase
-        if (hasTriggered30)
-        {
-            amount = Mathf.RoundToInt(amount * 0.3f); // phase 3: nhận 30% damage
-        }
-        else if (hasTriggered70)
-        {
-            amount = Mathf.RoundToInt(amount * 0.5f); // phase 2: nhận 50% damage
-        }
-
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
         if (healthBar) healthBar.SetHealth(currentHealth);
+        Flash();
+        Vector2 knockDir = (transform.position - player.position).normalized;
+        float knockForce = 1.9f;
+        ApplyKnockback(knockDir * knockForce);
 
-        pct = (float)currentHealth / maxHealth; // cập nhật lại sau khi trừ máu
-
-        // Phase 2 (≤ 70%)
+        float pct = (float)currentHealth / maxHealth;
         if (!hasTriggered70 && pct <= 0.7f)
         {
             hasTriggered70 = true;
-
+            damage = Mathf.RoundToInt(damage * 0.8f);
+            speed += 1.2f;
             animator.SetTrigger("bossHit");
-            speed *= 1.5f; // tăng 50% tốc độ
-
             float len = GetAnimationClipLength("BossHit");
-            if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, 0.15f));
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(len, 0.15f));
+            }
         }
-
-        // Phase 3 (≤ 30%)
         if (!hasTriggered30 && pct <= 0.3f)
         {
             hasTriggered30 = true;
-
+            damage = Mathf.RoundToInt(damage * 0.6f);
+            speed += 1.5f;
             animator.SetTrigger("bossHit");
-            speed *= 1.5f; // tăng thêm 50% nữa, tổng cộng x2.25 tốc độ gốc
-
             float len = GetAnimationClipLength("BossHit");
-            if (CameraShake.Instance) StartCoroutine(CameraShake.Instance.Shake(len, 0.2f));
+            if (CameraShake.Instance != null)
+            {
+                StartCoroutine(CameraShake.Instance.Shake(len, 0.2f));
+            }
         }
 
         if (currentHealth <= 0) Die();
     }
 
+    public void Flash()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashRoutine());
+    }
+
+    private IEnumerator FlashRoutine()
+    {
+        spriteRenderer.material = flashMaterial;
+
+        yield return new WaitForSeconds(duration);
+
+        spriteRenderer.material = originMaterial;
+        flashRoutine = null;
+    }
 
     private float GetAnimationClipLength(string clipName)
     {
@@ -365,13 +385,27 @@ public class BossAI : MonoBehaviour
     private void Die()
     {
         if (isDead) return;
+
         isDead = true;
         animator.SetTrigger("die");
+
+        healthBar.gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-        this.enabled = false;
-        GameManager.Instance.OnBossDefeated();
-        Destroy(gameObject, 2.5f);
+        if(player1 != null)
+        {
+            player1.Win();
+        }
+        StartCoroutine(WaitAndDie());
+    }
+
+    private IEnumerator WaitAndDie()
+    {
+        float len = GetAnimationClipLength("BossDie");
+        yield return new WaitForSeconds(len);
+
+        //win scene or next wave
+        Destroy(gameObject);
     }
 
     // ———————————————————————————————————————————————————————————

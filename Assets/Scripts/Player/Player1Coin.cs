@@ -7,29 +7,38 @@ public class Player1Coin : MonoBehaviour
     public Text totalCoinText;
     public Text sessionCoinText;
 
-    [Header("Map")]
-    public MapLevel currentLevel = MapLevel.Forest;
+    [Header("Map (Selected via PlayerPrefs)")]
+    [HideInInspector]
+    public MapLevel currentLevel;
 
     private int sessionCoin = 0;
 
     void Start()
     {
+        // 🌍 Load map từ PlayerPrefs
         currentLevel = (MapLevel)PlayerPrefs.GetInt("SelectedMap", 0);
         sessionCoin = 0;
         UpdateCoinUI();
+
+        Debug.Log("🎮 Current Map: " + currentLevel);
     }
 
     public void AddCoinOnCollect()
     {
-        int amount = GetCoinAmountByLevel(currentLevel);
+        int amount = GetCoinAmountByLevel();
         sessionCoin += amount;
         UpdateCoinUI();
         Debug.Log($"+{amount} coin (Level: {currentLevel}) - Session total: {sessionCoin}");
     }
 
+    public void AddCoin(int coin)
+    {
+        SharedPlayerStats.GameStats.sharedStats.Coins += coin;
+    }
+
     public void CommitSessionToTotal()
     {
-        int total = PlayerPrefs.GetInt("TotalCoins", 0);
+        int total = SharedPlayerStats.GameStats.sharedStats.Coins;
         total += sessionCoin;
         PlayerPrefs.SetInt("TotalCoins", total);
         PlayerPrefs.Save();
@@ -49,7 +58,7 @@ public class Player1Coin : MonoBehaviour
 
     private void UpdateCoinUI()
     {
-        int total = PlayerPrefs.GetInt("TotalCoins", 0);
+        int total = SharedPlayerStats.GameStats.sharedStats.Coins;
 
         if (totalCoinText != null)
             totalCoinText.text = $"{total}";
@@ -58,9 +67,9 @@ public class Player1Coin : MonoBehaviour
             sessionCoinText.text = $"{sessionCoin}";
     }
 
-    private int GetCoinAmountByLevel(MapLevel level)
+    private int GetCoinAmountByLevel()
     {
-        switch (level)
+        switch (currentLevel)
         {
             case MapLevel.Forest: return 15;
             case MapLevel.Maya: return 20;
@@ -72,7 +81,7 @@ public class Player1Coin : MonoBehaviour
 
     public int GetTotalCoin()
     {
-        return PlayerPrefs.GetInt("TotalCoins", 0);
+        return SharedPlayerStats.GameStats.sharedStats.Coins;
     }
 
     public int GetSessionCoin()
