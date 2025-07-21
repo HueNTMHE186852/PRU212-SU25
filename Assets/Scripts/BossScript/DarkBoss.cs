@@ -34,6 +34,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
     public int maxHealth = 100;
     public HealthBar healthBar;
     public Player1 player1;
+    public AuronPlayerController player2; 
 
     [Header("Ultimate Skill")]
     public GameObject wallPrefab;
@@ -71,23 +72,41 @@ using static UnityEditor.Experimental.GraphView.GraphView;
     }
     IEnumerator FindPlayerAfterDelay()
     {
-        while (player == null)
+        while (player == null || (player1 == null && player2 == null))
         {
             GameObject found = GameObject.FindGameObjectWithTag("Player");
             if (found != null)
             {
                 player = found.transform;
-                player1 = player.GetComponent<Player1>();
-                Debug.Log("✅ Player found and assigned.");
-                yield break;
-            }
 
-            yield return null; // chờ 1 frame rồi thử lại
+                if (player1 == null)
+                {
+                    player1 = player.GetComponent<Player1>();
+                    if (player1 == null)
+                        player1 = player.GetComponentInChildren<Player1>();
+                }
+
+                if (player2 == null)
+                {
+                    player2 = player.GetComponent<AuronPlayerController>();
+                    if (player2 == null)
+                        player2 = player.GetComponentInChildren<AuronPlayerController>();
+                }
+
+                // If either player1 or player2 is found, break
+                if (player1 != null || player2 != null)
+                {
+                    Debug.Log("✅ Player found and assigned.");
+                    yield break;
+                }
+            }
+            yield return null;
         }
     }
 
     void Update()
     {
+        StartCoroutine(FindPlayerAfterDelay());
         if (player == null || currentHealth <= 0) return;
 
         float distanceToPlayer = Mathf.Abs(transform.position.x - player.position.x);
@@ -339,9 +358,12 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-        if (player1 != null)
+        if (player != null)
         {
-            player1.Win();
+            if (player1 != null)
+                player1.Win();
+            if (player2 != null)
+                player2.Win();
             GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
         }
         Destroy(gameObject, 2f);
