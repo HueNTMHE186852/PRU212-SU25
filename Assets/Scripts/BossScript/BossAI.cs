@@ -406,7 +406,14 @@ public class BossAI : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-        if(player1 != null)
+        StartCoroutine(WaitAndDie());
+    }
+
+    private IEnumerator WaitAndDie()
+    {
+        float len = GetAnimationClipLength("BossDie");
+        yield return new WaitForSeconds(len);
+        if (player1 != null)
         {
             player1.Win();
             GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
@@ -416,14 +423,6 @@ public class BossAI : MonoBehaviour
             player2.Win();
             GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
         }
-        StartCoroutine(WaitAndDie());
-    }
-
-    private IEnumerator WaitAndDie()
-    {
-        float len = GetAnimationClipLength("BossDie");
-        yield return new WaitForSeconds(len);
-
         //win scene or next wave
         Destroy(gameObject);
     }
