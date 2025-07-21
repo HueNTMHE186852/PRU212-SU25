@@ -44,13 +44,13 @@ public class PlayerAttackCollider : MonoBehaviour
         }
 
         ForestBoss forestBoss = other.GetComponentInParent<ForestBoss>();
-        if (boss != null)
+        if (forestBoss != null)
         {
             forestBoss.TakeDamage(damage);
             Debug.Log($"🔥 Gây {damage} damage cho boss: {forestBoss.name} bằng skill {skillType}");
         }
         DarkBoss darkBoss = other.GetComponentInParent<DarkBoss>();
-        if (boss != null)
+        if (darkBoss != null)
         {
             darkBoss.TakeDamage(damage);
             Debug.Log($"🔥 Gây {damage} damage cho boss: {forestBoss.name} bằng skill {skillType}");
