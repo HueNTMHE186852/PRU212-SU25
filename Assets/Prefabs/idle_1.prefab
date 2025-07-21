@@ -1744,6 +1744,7 @@ MonoBehaviour:
   normalCollider: {fileID: 312385207967832482}
   slideCollider: {fileID: 4463451761699575666}
   losePanelUI: {fileID: 6158148488426355264}
+  winPanelUI: {fileID: 4081257323375264207}
 --- !u!1 &3940323441126098472
 GameObject:
   m_ObjectHideFlags: 0
@@ -3904,7 +3905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2337172638526179602, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7837318379720035946, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
       propertyPath: m_Pivot.x
@@ -3996,6 +3997,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7837318379720035946, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
   m_PrefabInstance: {fileID: 7916197289301878638}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4081257323375264207 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6158798486180538017, guid: 130725fa52812ee4b9874b099de9aa41, type: 3}
+  m_PrefabInstance: {fileID: 7916197289301878638}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce804e04489dc0340bf1cc8cd7a9a2fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8997437220675239279
 PrefabInstance:
   m_ObjectHideFlags: 0

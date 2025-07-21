@@ -63,6 +63,7 @@ public class AuronPlayerController : MonoBehaviour
     public PolygonCollider2D slideCollider;
 
     public GameResultUI losePanelUI;
+    public GameResultUI winPanelUI;
     void Start()
     {
         groundLayer = LayerMask.GetMask("Ground", "Tilemap");
@@ -341,7 +342,20 @@ public class AuronPlayerController : MonoBehaviour
         }
         Invoke("RestartScene", 2f);
     }
-
+    public void Win()
+    {
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
+        coinManager.AddCoin(totalCoins);
+        if (winPanelUI != null)
+        {
+            winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
+    }
     void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
