@@ -56,8 +56,9 @@ public class ForestBoss : MonoBehaviour
     public BoxCollider2D attackCollider;
 
     [Header("References")]
-    private Transform player;
+    public Transform player;
     public GameObject projectilePrefab;
+    public Player1 player1;
 
     [Header("Health")]
     public int maxHealth = 100;
@@ -95,17 +96,23 @@ public class ForestBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        if (player == null)
+        StartCoroutine(FindPlayerAfterDelay());
+    }
+
+    IEnumerator FindPlayerAfterDelay()
+    {
+        while (player == null)
         {
             GameObject found = GameObject.FindGameObjectWithTag("Player");
             if (found != null)
             {
                 player = found.transform;
+                player1 = player.GetComponent<Player1>();
+                Debug.Log("✅ Player found and assigned.");
+                yield break;
             }
-            else
-            {
-                Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
-            }
+
+            yield return null; // chờ 1 frame rồi thử lại
         }
     }
 
@@ -139,12 +146,19 @@ public class ForestBoss : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-        GameManager.Instance.OnBossDefeated();
+
+        if (player != null)
+        {
+            player1.Win();
+            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+        }
+
         Destroy(gameObject, 2f);
     }
 
     void Update()
     {
+        if (currentHealth <= 0) return;
         if (player == null)
         {
             GameObject found = GameObject.FindGameObjectWithTag("Player");
@@ -157,7 +171,6 @@ public class ForestBoss : MonoBehaviour
                 return; // chưa có player thì tạm thời không làm gì
             }
         }
-        if (player == null || currentHealth <= 0) return;
 
         cachedHorizontalDistance = Mathf.Abs(transform.position.x - player.position.x);
 
@@ -245,7 +258,7 @@ public class ForestBoss : MonoBehaviour
             {
                 float randomChance = Random.Range(0f, 1f); // 0 → 1
 
-                if (randomChance < 0.2f) // 20% khả năng thi triển skill mỗi lần check
+                if (randomChance < 0.8f) // 20% khả năng thi triển skill mỗi lần check
                 {
                     nextTornadoTime = Time.time + tornadoInterval;
                     StartCoroutine(StartTornadoSkill());

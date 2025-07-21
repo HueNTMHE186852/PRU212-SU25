@@ -1,6 +1,7 @@
 ﻿
     using System.Collections;
     using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
     public class DarkBoss : MonoBehaviour
 {
@@ -32,7 +33,7 @@
     [Header("Health")]
     public int maxHealth = 100;
     public HealthBar healthBar;
-
+    public Player1 player1;
     [Header("Ultimate Skill")]
     public GameObject wallPrefab;
     public Transform lightningSpawnY; // Empty ở trên trời để lấy Y cho tia sét
@@ -60,11 +61,22 @@
             healthBar.gameObject.SetActive(false);
         }
 
-        if (player == null)
+        StartCoroutine(FindPlayerAfterDelay());
+    }
+    IEnumerator FindPlayerAfterDelay()
+    {
+        while (player == null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+                player1 = player.GetComponent<Player1>();
+                Debug.Log("✅ Player found and assigned.");
+                yield break;
+            }
+
+            yield return null; // chờ 1 frame rồi thử lại
         }
     }
 
