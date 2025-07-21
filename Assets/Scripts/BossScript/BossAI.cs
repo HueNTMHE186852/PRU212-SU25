@@ -89,15 +89,27 @@ public class BossAI : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originMaterial = spriteRenderer.material;
 
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj)
-        {
-            player = playerObj.transform;
-            player1 = player.GetComponent<Player1>();
-        }
-
-        // Cache colliders & their original offsets/points for proper flipping
+       
         CacheColliders();
+
+        StartCoroutine(FindPlayerAfterDelay());
+    }
+
+    IEnumerator FindPlayerAfterDelay()
+    {
+        while (player == null)
+        {
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+                player1 = player.GetComponent<Player1>();
+                Debug.Log("✅ Player found and assigned.");
+                yield break;
+            }
+
+            yield return null; 
+        }
     }
 
     private void Start()
@@ -395,6 +407,7 @@ public class BossAI : MonoBehaviour
         if(player1 != null)
         {
             player1.Win();
+            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
         }
         StartCoroutine(WaitAndDie());
     }
