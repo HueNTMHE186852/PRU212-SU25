@@ -451,7 +451,7 @@ public class BossAI : MonoBehaviour
         if (player1 != null)
         {
             player1.Win();
-            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
+            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
         }
         if (player2 != null)
         {
