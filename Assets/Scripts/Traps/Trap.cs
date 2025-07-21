@@ -2,13 +2,14 @@
 
 public class Trap : MonoBehaviour
 {
-    public int damage = 50; // Sát thương trap gây ra
+    public int damage = 10; // Sát thương trap gây ra
     private GameObject playerObj = null;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") || (other.transform.parent != null && other.transform.parent.CompareTag("Player")))
         {
             playerObj = other.gameObject;
+            DealDamageToPlayer();
         }
     }
 
@@ -17,6 +18,7 @@ public class Trap : MonoBehaviour
         if (playerObj == other.gameObject)
         {
             playerObj = null;
+            
         }
     }
 
