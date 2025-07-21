@@ -2411,6 +2411,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicVolume: 0.5
   sfxVolume: 0.5
+  sfxClips:
+  - id: SettingButtonSFX
+    clip: {fileID: 8300000, guid: 7a1b20adcc2791545a3486477aa9c444, type: 3}
+  - id: DragonBreath
+    clip: {fileID: 8300000, guid: 9e305b4a523df3a4987ccbb89c45af15, type: 3}
+  - id: EnemyNormalAttack
+    clip: {fileID: 8300000, guid: 389ea15e0b9389442a682de93f7c3249, type: 3}
 --- !u!4 &462875416
 Transform:
   m_ObjectHideFlags: 0
@@ -9822,63 +9829,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fb6534067b681c4d8af517b6a638d88, type: 3}
---- !u!1001 &7804343587447909465
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900081135239078239, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6347415228455642236, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
-      propertyPath: m_Name
-      value: SFXController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -9891,7 +9841,6 @@ SceneRoots:
   - {fileID: 789091806}
   - {fileID: 738737808}
   - {fileID: 2701451606742627521}
-  - {fileID: 7804343587447909465}
   - {fileID: 128169431}
   - {fileID: 462875416}
   - {fileID: 1781146321}

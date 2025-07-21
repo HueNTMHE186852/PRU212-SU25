@@ -339,7 +339,11 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-
+        if (player1 != null)
+        {
+            player1.Win();
+            GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
+        }
         Destroy(gameObject, 2f);
     }
 

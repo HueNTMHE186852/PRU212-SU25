@@ -231,7 +231,7 @@ public class EnemyRun : MonoBehaviour
     {
         isAttacking = true;
         lastAttackTime = Time.time;
-
+        AudioManager.Instance.PlaySFX("EnemyNormalAttack"); // Gọi âm thanh tấn công
         if (animator != null)
         {
             animator.ResetTrigger("Attack");
