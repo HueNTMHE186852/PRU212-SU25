@@ -16,18 +16,26 @@ public class MeleeAttackTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Player1 player = collision.GetComponentInParent<Player1>();
-            if (player == null)
+            AuronPlayerController auronPlayer = collision.GetComponentInParent<AuronPlayerController>();
+
+            if(player  == null && auronPlayer == null)
             {
                 return;
             }
 
-            if (player.isDefending)
+            if (player != null && player.isDefending)
             {
                 return;
             }
-
-            // Apply damage
-            player.TakeDamage(damage);
+            if (auronPlayer != null)
+            {
+                auronPlayer.TakeDamage(damage);
+            }
+            else
+            {
+                player.TakeDamage(damage);
+            }
+              
             Debug.LogWarning("Gây 1 dame cho player");
             if (CameraShake.Instance != null)
             {

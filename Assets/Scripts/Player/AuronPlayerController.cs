@@ -581,7 +581,8 @@ public class AuronPlayerController : MonoBehaviour
 
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.Euler(0, 0, angle));
         Arrow arrowScript = arrow.GetComponent<Arrow>();
-        arrowScript.damage = 15;
+        arrowScript.damage = Mathf.RoundToInt(damage * 1.4f); // Q mạnh hơn 1.5 lần
+
         arrowScript.explosionEffectPrefab = explosionEffectPrefab; // Gán hiệu ứng nổ
         arrowScript.isQSkillArrow = true; // Đánh dấu là mũi tên Q
 
