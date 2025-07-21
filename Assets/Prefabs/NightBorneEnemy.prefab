@@ -120,8 +120,8 @@ Transform:
   m_GameObject: {fileID: 3862462211974818158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -144, y: 49, z: 0}
-  m_LocalScale: {x: 12.040511, y: 13.027484, z: 1}
+  m_LocalPosition: {x: -146.4318, y: 52.2845, z: 0}
+  m_LocalScale: {x: 25.93537, y: 35.679558, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8710873048271172226}
@@ -217,8 +217,8 @@ MonoBehaviour:
   damage: 30
   speed: 3.5
   verticalTolerance: 20
-  attackRange: 6
-  detectionRange: 25
+  attackRange: 10
+  detectionRange: 30
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 1855772343871260047}

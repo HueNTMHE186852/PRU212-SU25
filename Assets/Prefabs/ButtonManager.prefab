@@ -327,13 +327,25 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1471028306436539461, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5049902470493044281, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5776951447154327899, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6359619241269523634, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
       propertyPath: m_Name
       value: PausePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911632689565011317, guid: e625942aaf50e0142a3fe1a23bb97cae, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -207,6 +207,11 @@ MonoBehaviour:
   flyDashStopDistance: 2.5
   flyDashCooldown: 5
   flyDashPrepareTime: 0.5
+  audioSource: {fileID: 0}
+  hurtClip: {fileID: 0}
+  dieClip: {fileID: 0}
+  meleeAttackClip: {fileID: 0}
+  tornadoClip: {fileID: 0}
   tornadoInterval: 8
   tornadoDamage: 7
   tornadoDamageInterval: 0.5
