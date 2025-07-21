@@ -38,7 +38,7 @@ public class GameResultUI : MonoBehaviour
         rect.anchoredPosition = hiddenPos;
         gameObject.SetActive(false); // Ẩn khi bắt đầu
 
-        //continueButton.onClick.AddListener(OnContinue);
+        continueButton.onClick.AddListener(OnContinue);
         retryButton.onClick.AddListener(OnRetry);
         menuButton.onClick.AddListener(OnMenu);
     }
@@ -88,8 +88,12 @@ public class GameResultUI : MonoBehaviour
     void OnContinue()
     {
         Hide();
-        Debug.Log("➡️ Continue to next level");
-        // TODO: Load màn tiếp theo
+        int level = GameProgress.Current.currentLevel;
+        ++level;
+        string sceneName = $"Level{level}";
+        Debug.Log($"Loading scene: {sceneName}");
+        SceneManager.LoadScene(sceneName);
+
     }
 
     void OnRetry()

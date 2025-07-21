@@ -48,6 +48,11 @@ public static class DamageManager
             Debug.Log("✅ BossForest found");
             forestBoss.TakeDamage(finalDamage);
         }
+        else if (target.GetComponentInParent<DarkBoss>() is DarkBoss darkBoss)
+        {
+            Debug.Log("✅ DarkBoss found via parent");
+            darkBoss.TakeDamage(finalDamage);
+        }
         else
         {
             Debug.LogWarning($"❌ No damageable component found on {target.name}");
