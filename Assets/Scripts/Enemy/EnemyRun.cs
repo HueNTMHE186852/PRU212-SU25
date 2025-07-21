@@ -269,6 +269,7 @@ public class EnemyRun : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Static; // Hoặc FreezeAll
         }
+        AudioManager.Instance.PlaySFX("EnemyDead"); // Gọi âm thanh chết
 
         // Tùy chọn tắt collider tấn công
         if (attackBoxCollider != null) attackBoxCollider.enabled = false;
@@ -281,7 +282,7 @@ public class EnemyRun : MonoBehaviour
         // 🎯 Spawn bowl ngẫu nhiên (máu hoặc mana)
         // 🎯 Tỉ lệ rơi vật phẩm khi enemy chết
         float dropChance = Random.Range(0f, 1f);
-
+        
         if (dropChance < 0.33f)
         {
             // 33% rơi máu
@@ -299,7 +300,6 @@ public class EnemyRun : MonoBehaviour
             // 33% rơi coin
             Instantiate(coin, transform.position, Quaternion.identity);
         }
-
 
         // Delay hủy
         Destroy(gameObject, 1f);
@@ -420,7 +420,7 @@ public class EnemyRun : MonoBehaviour
         isAttacking = false;
         currentHeatlh -= amount;
         Debug.Log("💔 Enemy bị đánh, máu còn: " + currentHeatlh);
-
+        AudioManager.Instance.PlaySFX("EnemyGetHurt"); // Gọi âm thanh bị đánh
         if (currentHeatlh <= 0)
         {
             Die();
