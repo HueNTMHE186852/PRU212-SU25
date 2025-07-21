@@ -48,7 +48,7 @@ public class BossAI : MonoBehaviour
     public Transform laserSpawnPoint;
     public float laserLifetime = 0.5f;
 
-   
+
     public FireballManager fireballManager;
 
     private Animator animator;
@@ -89,7 +89,7 @@ public class BossAI : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originMaterial = spriteRenderer.material;
 
-       
+
         CacheColliders();
 
         StartCoroutine(FindPlayerAfterDelay());
@@ -108,7 +108,7 @@ public class BossAI : MonoBehaviour
                 yield break;
             }
 
-            yield return null; 
+            yield return null;
         }
     }
 
@@ -193,7 +193,7 @@ public class BossAI : MonoBehaviour
     {
         if (canAttackNow)
         {
-            int rand = Random.Range(0, 2); 
+            int rand = Random.Range(0, 2);
             if (rand == 0)
             {
                 StartAttack();
@@ -252,7 +252,7 @@ public class BossAI : MonoBehaviour
 
         animator.SetBool("isRunning", true);
     }
-    
+
     private void StartAttack()
     {
         isAttacking = true;
@@ -308,7 +308,7 @@ public class BossAI : MonoBehaviour
     public void EndLaserAttack()
     {
         isAttacking = false;
-        animator.SetBool("isCharging", false); 
+        animator.SetBool("isCharging", false);
         animator.SetBool("isRunning", false);
     }
 
@@ -404,11 +404,7 @@ public class BossAI : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-        if(player1 != null)
-        {
-            player1.Win();
-            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
-        }
+      
         StartCoroutine(WaitAndDie());
     }
 
@@ -416,7 +412,11 @@ public class BossAI : MonoBehaviour
     {
         float len = GetAnimationClipLength("BossDie");
         yield return new WaitForSeconds(len);
-
+        if (player1 != null)
+        {
+            player1.Win();
+            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
+        }
         //win scene or next wave
         Destroy(gameObject);
     }
@@ -460,7 +460,7 @@ public class BossAI : MonoBehaviour
         {
             rb.velocity = new Vector2(force.x, rb.velocity.y);
         }
-    }   
+    }
 
     private void UpdateColliderFlip(bool flipped)
     {
