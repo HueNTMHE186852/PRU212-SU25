@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da802326763bb240b69b5d73e316800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   attackRange: 10
   detectionRange: 50
   attackCooldown: 2
@@ -208,7 +208,7 @@ MonoBehaviour:
   flyDashCooldown: 5
   flyDashPrepareTime: 0.5
   tornadoInterval: 8
-  tornadoDamage: 10
+  tornadoDamage: 7
   tornadoDamageInterval: 0.5
   healthBar: {fileID: 6645303793024569747}
   tornadoSpeed: 30
@@ -219,8 +219,10 @@ MonoBehaviour:
   rainWidth: 5
   rainHeight: 10
   attackCollider: {fileID: 6369462455824372553}
+  player: {fileID: 0}
   projectilePrefab: {fileID: 6810144171844116639, guid: b2389b69bdf897f4eb9f2a703ed75ca5, type: 3}
-  maxHealth: 100
+  player1: {fileID: 0}
+  maxHealth: 700
 --- !u!114 &4842850174057312881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixedDamage: 30
+  fixedDamage: 4
 --- !u!1 &7896839736782150738
 GameObject:
   m_ObjectHideFlags: 0

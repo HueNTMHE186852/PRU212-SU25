@@ -135,7 +135,7 @@ MonoBehaviour:
   floatingText: {fileID: 2427611322882296992, guid: 28462f1a4bfe32947ad93143f0236a1f, type: 3}
   patrolDistance: 5
   currentHeatlh: 0
-  maxHealth: 50
+  maxHealth: 150
   forceChase: 1
   ignoreVerticalForAttack: 1
   hpBowlPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
@@ -348,3 +348,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedDamage: 30
