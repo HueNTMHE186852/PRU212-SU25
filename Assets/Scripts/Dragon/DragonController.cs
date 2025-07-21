@@ -12,7 +12,7 @@ public class DragonController : MonoBehaviour
 
     [Header("Colliders")]
     [SerializeField] private GameObject attackColliderObj;
-    [SerializeField] private GameObject fireZoneColliderObj;
+    [SerializeField] public GameObject fireZoneColliderObj;
 
     [Header("Stats")]
     public float attackRange = 10f;
