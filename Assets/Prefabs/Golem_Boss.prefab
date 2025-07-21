@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2915324644239663017}
   - component: {fileID: 4193132446702150955}
   - component: {fileID: 9164127162841577666}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Golem_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -33,11 +33,11 @@ Transform:
   m_LocalScale: {x: 6.888625, y: 6.00353, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6283652609085401678}
   - {fileID: 5729056796262394839}
   - {fileID: 4955734532091086246}
   - {fileID: 8096162625264740684}
   - {fileID: 52061089623111658}
+  - {fileID: 9141691924719251677}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8173241469782308617
@@ -167,7 +167,7 @@ MonoBehaviour:
   forceChase: 1
   usePatrol: 1
   patrolDistance: 5
-  healthBar: {fileID: 5538887908303170261}
+  healthBar: {fileID: 0}
   floatingText: {fileID: 0}
   laserPrefab: {fileID: 7511585153905116974, guid: c1f67ca9f3677fe4fa1083b4f6f88a2c, type: 3}
   laserSpawnPoint: {fileID: 5729056796262394839}
@@ -175,6 +175,8 @@ MonoBehaviour:
   fireballManager: {fileID: 530084370638199358}
   rb: {fileID: 0}
   player: {fileID: 0}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
   colliderHolder: {fileID: 4955734532091086246}
   attackCollider: {fileID: 8096162625264740684}
 --- !u!1 &3505713904091029206
@@ -187,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 52061089623111658}
   - component: {fileID: 530084370638199358}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FireballManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,9 +238,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4955734532091086246}
   - component: {fileID: 1738564104846132553}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ColliderHolder
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5729056796262394839}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LazerSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +347,7 @@ GameObject:
   - component: {fileID: 8096162625264740684}
   - component: {fileID: 1349060291306702780}
   - component: {fileID: 6472248275588575612}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 405666539696292002, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_MaxValue
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783894009898066333, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883426717307597825, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Pivot.x
@@ -569,6 +575,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.56
       objectReference: {fileID: 0}
+    - target: {fileID: 2147333716273165987, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2971827113716342807, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.37725797
@@ -637,6 +647,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ba72c5264cf219643af1fd2da2700e63, type: 3}
+    - target: {fileID: 6298314475337715370, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6369041551544390585, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -665,6 +679,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7032925707964308511, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482925107584575033, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8596599642431594312, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Name
       value: GolemHealthBar
@@ -677,24 +699,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.91
       objectReference: {fileID: 0}
+    - target: {fileID: 8996926886608977543, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
---- !u!114 &5538887908303170261 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 128730183392392346, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
-  m_PrefabInstance: {fileID: 5554981643957345871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084816733d39ec14cac1df98c73df7bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &6283652609085401678 stripped
+--- !u!224 &9141691924719251677 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1883426717307597825, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
   m_PrefabInstance: {fileID: 5554981643957345871}
   m_PrefabAsset: {fileID: 0}

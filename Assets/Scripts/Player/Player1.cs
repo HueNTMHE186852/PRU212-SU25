@@ -107,7 +107,7 @@ public class Player1 : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
+        AudioManager.Instance.PlaySFX("PlayerHurt");
         if (healthBar != null)
         {
             healthBar.SetHealth((float)currentHealth / maxHealth);
@@ -136,7 +136,7 @@ public class Player1 : MonoBehaviour
         // Stop attacking
         isAttacking = false;
         animator.SetTrigger("Die");
-
+        AudioManager.Instance.PlaySFX("PlayerDead");
         // Stop physics motion and freeze the player
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -190,6 +190,7 @@ public class Player1 : MonoBehaviour
         // Jump input
         if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
         {
+            AudioManager.Instance.PlaySFX("PlayerJump");
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount++;
         }
@@ -206,6 +207,7 @@ public class Player1 : MonoBehaviour
         // Rolling
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            AudioManager.Instance.PlaySFX("PlayerJump");
             isRolling = true;
             animator.SetBool("isRolling", true);
             rb.velocity = new Vector2(movement.x * rollForce, rb.velocity.y);
@@ -224,6 +226,7 @@ public class Player1 : MonoBehaviour
                 currentAttack = 1;
 
             animator.SetTrigger("Attack" + currentAttack);
+            AudioManager.Instance.PlaySFX("PlayerAttack" + currentAttack);
             timeSinceAttack = 0.0f;
             StartCoroutine(ResetAttackLock(0.4f));
         }
@@ -232,7 +235,7 @@ public class Player1 : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !isRolling && !isAttacking)
         {
             animator.SetTrigger("Defend");
-
+            AudioManager.Instance.PlaySFX("PlayerDefend");
             isDefending = true;                // ✅ Start defending
             EnableDefendCollider();            // ✅ Activate hitbox
 
@@ -243,6 +246,7 @@ public class Player1 : MonoBehaviour
         // Skill E (slow move)
         if (Input.GetKeyDown(KeyCode.E) && !isRolling && !isAttacking && currentMP >= eSkillMPCost)
         {
+            AudioManager.Instance.PlaySFX("PlayerSkillE");
             animator.SetTrigger("Attack4");
             isUsingESkill = true;
             eSkillTimer = eSkillDuration;
@@ -254,6 +258,7 @@ public class Player1 : MonoBehaviour
         // Skill Q
         if (Input.GetKeyDown(KeyCode.Q) && !isRolling && !isAttacking && currentMP >= qSkillMPCost)
         {
+            AudioManager.Instance.PlaySFX("PlayerSkillQ");
             animator.SetTrigger("Attack5");
             currentMP -= qSkillMPCost;
             MPBar.SetMP((float)currentMP / maxMP);

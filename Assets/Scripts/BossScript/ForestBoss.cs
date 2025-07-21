@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -112,6 +112,8 @@ public class ForestBoss : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         StartCoroutine(FindPlayerAfterDelay());
+
+
     }
 
     IEnumerator FindPlayerAfterDelay()
