@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 0}
-  damage: 10
+  damage: 20
   speed: 3.5
   verticalTolerance: 20
   attackRange: 7
@@ -162,7 +162,7 @@ MonoBehaviour:
   floatingText: {fileID: 0}
   patrolDistance: 5
   currentHeatlh: 0
-  maxHealth: 50
+  maxHealth: 200
   forceChase: 1
   ignoreVerticalForAttack: 1
   hpBowlPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
