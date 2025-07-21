@@ -34,11 +34,17 @@ using static UnityEditor.Experimental.GraphView.GraphView;
     public int maxHealth = 100;
     public HealthBar healthBar;
     public Player1 player1;
+
     [Header("Ultimate Skill")]
     public GameObject wallPrefab;
     public Transform lightningSpawnY; // Empty ở trên trời để lấy Y cho tia sét
     public float wallOffsetX = 4f;
     public float ultimateDelay = 1.5f;
+
+    [Header("Random Ulti")]
+    [Range(0, 100)] public float ultimateChancePercent = 10f; // Tỷ lệ thi triển ultimate
+    public float ultimateCheckInterval = 6f; // Khoảng thời gian giữa các lần kiểm tra
+    private float lastUltimateCheckTime = -10f;
 
     private Animator animator;
     private Rigidbody2D rb;
@@ -129,6 +135,18 @@ using static UnityEditor.Experimental.GraphView.GraphView;
             {
                 StartCoroutine(CastLightningStrike());
                 return; // Ưu tiên skill, không xử lý gì thêm frame này
+            }
+        }
+        // 👉 Kiểm tra random Ultimate Skill mỗi X giây
+        if (!isAttacking && !isCastingUltimate && Time.time >= lastUltimateCheckTime + ultimateCheckInterval)
+        {
+            lastUltimateCheckTime = Time.time;
+
+            float roll = Random.Range(0f, 100f);
+            if (roll < ultimateChancePercent)
+            {
+                StartCoroutine(UltimateSkill());
+                return; // Ưu tiên thi triển skill
             }
         }
 
