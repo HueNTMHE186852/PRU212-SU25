@@ -9874,6 +9874,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SFXController
       objectReference: {fileID: 0}
+    - target: {fileID: 7583630601802243461, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
+      propertyPath: clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583630601802243461, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
+      propertyPath: clips.Array.data[0].id
+      value: SettingButtonSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583630601802243461, guid: 94286222de218484a9ce0cbcb23975c8, type: 3}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a1b20adcc2791545a3486477aa9c444, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

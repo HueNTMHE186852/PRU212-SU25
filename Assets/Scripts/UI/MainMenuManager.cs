@@ -77,6 +77,8 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OpenSettings()
     {
+        SFXController.Instance.Play("SettingButtonSFX"); // Phát trước
+
         if (SettingsPanel != null)
             SettingsPanel.SetActive(true);
     }
