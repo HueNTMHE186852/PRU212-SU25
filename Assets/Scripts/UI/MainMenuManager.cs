@@ -77,6 +77,8 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OpenSettings()
     {
+        AudioManager.Instance.PlaySFX("SettingButtonSFX");
+
         if (SettingsPanel != null)
             SettingsPanel.SetActive(true);
     }
