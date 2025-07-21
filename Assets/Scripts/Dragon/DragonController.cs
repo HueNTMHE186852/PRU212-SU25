@@ -4,6 +4,7 @@ public class DragonController : MonoBehaviour
 {
     [Header("References")]
     public Animator animator;
+    [HideInInspector]
     public Transform player;
     public ParticleSystem incinerationEffect;
     [SerializeField] private Transform model;
@@ -39,6 +40,8 @@ public class DragonController : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         // Init FSM
         idleState = new IdleState(this);
         walkingState = new WalkingState(this);
@@ -144,6 +147,12 @@ public class DragonController : MonoBehaviour
             isDead = true;
             if (healthBar != null)
                 healthBar.gameObject.SetActive(false);
+
+            if (animator != null)
+                animator.enabled = false;
+
+            if (model != null)
+                model.gameObject.SetActive(false);
 
             TransitionToState(dyingState);
         }
