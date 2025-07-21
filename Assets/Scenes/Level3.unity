@@ -209933,6 +209933,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: detectionRange
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
       propertyPath: ultimateChancePercent
       value: 25
       objectReference: {fileID: 0}
