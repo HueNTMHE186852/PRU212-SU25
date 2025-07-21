@@ -2422,8 +2422,26 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 48634219ef15d9d42aab5f3235f42784, type: 3}
   - id: EnemyDead
     clip: {fileID: 8300000, guid: f5da7466f82cf8149812483ad8518858, type: 3}
-  - id: EnemyItemDrop
+  - id: PickUpItem
     clip: {fileID: 8300000, guid: c68aac824c7bb18429c5d74a1001157f, type: 3}
+  - id: PlayerAttack1
+    clip: {fileID: 8300000, guid: e964d77e6453bad4ab91d70ec5e69b0f, type: 3}
+  - id: PlayerAttack2
+    clip: {fileID: 8300000, guid: 09d2d98f6bafe7e459f0819154e714d9, type: 3}
+  - id: PlayerAttack3
+    clip: {fileID: 8300000, guid: 88c8d1b13df1f6b4fa6aaeb2d7e34d2f, type: 3}
+  - id: PlayerHurt
+    clip: {fileID: 8300000, guid: 2c91f55359951234c97875705cf45112, type: 3}
+  - id: PlayerDead
+    clip: {fileID: 8300000, guid: 30ad8b06287fb064198819b590160cc5, type: 3}
+  - id: PlayerJump
+    clip: {fileID: 8300000, guid: 9ed099a3900fe98448eb8384701ff4cf, type: 3}
+  - id: PlayerDefend
+    clip: {fileID: 8300000, guid: 5753dcb793da7d844af0b5ed37eb42b9, type: 3}
+  - id: PlayerSkillE
+    clip: {fileID: 8300000, guid: a48a6ab749de5f94194dbf99995547e1, type: 3}
+  - id: PlayerSkillQ
+    clip: {fileID: 8300000, guid: 5f526370b28188a4d89a9014c8c075a3, type: 3}
 --- !u!4 &462875416
 Transform:
   m_ObjectHideFlags: 0
