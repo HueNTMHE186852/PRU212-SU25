@@ -151,6 +151,7 @@ public class AuronPlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("SetTrigger BowShoot");
+            AudioManager.Instance.PlaySFX("PlayerBowAttack");
             animator.SetTrigger("BowShoot");
 
         }
@@ -160,6 +161,7 @@ public class AuronPlayerController : MonoBehaviour
             if (MPBar != null)
                 MPBar.SetMP((float)currentMP / maxMP);
             Debug.Log("SetTrigger SkillAttack");
+            AudioManager.Instance.PlaySFX("PlayerBowSkillE");
             animator.SetTrigger("IsAttacking2");
         }
         if (Input.GetKeyDown(KeyCode.Q) && currentMP >= qSkillMPCost)
@@ -167,6 +169,7 @@ public class AuronPlayerController : MonoBehaviour
             currentMP -= qSkillMPCost;
             if (MPBar != null)
                 MPBar.SetMP((float)currentMP / maxMP);
+            AudioManager.Instance.PlaySFX("PlayerBowAttack");
             animator.SetTrigger("BowShootQ");
         }
 
@@ -187,6 +190,7 @@ public class AuronPlayerController : MonoBehaviour
         // Slide input (LeftShift)
         if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded && !isSliding)
         {
+            AudioManager.Instance.PlaySFX("PlayerJump");
             isSliding = true;
             slideTimer = 0f;
             animator.SetTrigger("Slide");
@@ -195,6 +199,7 @@ public class AuronPlayerController : MonoBehaviour
         // Roll input (phím C)
         if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded && !isRolling && !isSliding)
         {
+            AudioManager.Instance.PlaySFX("PlayerJump");
             isRolling = true;
             rollTimer = 0f;
             animator.SetTrigger("Roll");
@@ -252,6 +257,7 @@ public class AuronPlayerController : MonoBehaviour
         // Handle jump input
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
         {
+            AudioManager.Instance.PlaySFX("PlayerJump");
             rb.velocity = new Vector2(rb.velocity.x, 0f); // Reset vertical velocity for consistent jump
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumpCount++;
@@ -301,6 +307,7 @@ public class AuronPlayerController : MonoBehaviour
             Debug.Log("Blocked damage while defending!");
             return;
         }
+        AudioManager.Instance.PlaySFX("PlayerBowHurt");
         animator.SetTrigger("Hit"); // Gọi animation nhận damage
 
         currentHealth -= damage;
@@ -323,6 +330,7 @@ public class AuronPlayerController : MonoBehaviour
         animator.speed = 0.7f;
         animator.SetTrigger("Die");
         isAttacking = false;
+        AudioManager.Instance.PlaySFX("PlayerBowDead");
 
         if (rb != null)
         {
@@ -334,6 +342,7 @@ public class AuronPlayerController : MonoBehaviour
 
         if (losePanelUI != null)
         {
+            AudioManager.Instance.PlaySFX("LoseMusic");
             losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
         }
         else
@@ -349,6 +358,7 @@ public class AuronPlayerController : MonoBehaviour
         coinManager.AddCoin(totalCoins);
         if (winPanelUI != null)
         {
+            AudioManager.Instance.PlaySFX("WinMusic");
             winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
         }
         else

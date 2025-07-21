@@ -149,6 +149,7 @@ public class Player1 : MonoBehaviour
 
         if (losePanelUI != null)
         {
+            AudioManager.Instance.PlaySFX("LoseMusic");
             losePanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
         }
         else
@@ -164,6 +165,7 @@ public class Player1 : MonoBehaviour
         coinManager.AddCoin(totalCoins);
         if (winPanelUI != null)
         {
+            AudioManager.Instance.PlaySFX("WinMusic");
             winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
         }
         else
