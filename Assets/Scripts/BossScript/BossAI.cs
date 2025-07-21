@@ -56,6 +56,7 @@ public class BossAI : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Transform player;
     public Player1 player1;
+    public AuronPlayerController player2;
     private float cachedHorizontalDistance;
     private float cachedVerticalDistance;
     private bool canAttackNow;
@@ -104,6 +105,7 @@ public class BossAI : MonoBehaviour
             {
                 player = found.transform;
                 player1 = player.GetComponent<Player1>();
+                player2 = player.GetComponent<AuronPlayerController>();
                 Debug.Log("✅ Player found and assigned.");
                 yield break;
             }
@@ -407,6 +409,11 @@ public class BossAI : MonoBehaviour
         if(player1 != null)
         {
             player1.Win();
+            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
+        }
+        if (player2 != null)
+        {
+            player2.Win();
             GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
         }
         StartCoroutine(WaitAndDie());
