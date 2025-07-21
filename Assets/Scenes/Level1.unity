@@ -459,6 +459,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 586759f82c3655a40a81e3bce46ede62, type: 3}
     - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: maxHealth
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: flyDashClip
       value: 
       objectReference: {fileID: 0}
@@ -466,6 +470,14 @@ PrefabInstance:
       propertyPath: tornadoClip
       value: 
       objectReference: {fileID: 8300000, guid: 19f81ef0f9412624a923fd2e8d1059ae, type: 3}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: flyDashSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: detectionRange
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: meleeAttackClip
       value: 
