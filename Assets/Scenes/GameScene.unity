@@ -2418,6 +2418,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9e305b4a523df3a4987ccbb89c45af15, type: 3}
   - id: EnemyNormalAttack
     clip: {fileID: 8300000, guid: 389ea15e0b9389442a682de93f7c3249, type: 3}
+  - id: EnemyGetHurt
+    clip: {fileID: 8300000, guid: 48634219ef15d9d42aab5f3235f42784, type: 3}
+  - id: EnemyDead
+    clip: {fileID: 8300000, guid: f5da7466f82cf8149812483ad8518858, type: 3}
+  - id: EnemyItemDrop
+    clip: {fileID: 8300000, guid: c68aac824c7bb18429c5d74a1001157f, type: 3}
 --- !u!4 &462875416
 Transform:
   m_ObjectHideFlags: 0
