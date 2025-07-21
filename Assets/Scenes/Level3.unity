@@ -16191,11 +16191,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3827259956348717332, guid: a485fe92b8766e240ab0c49a6caa61ad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -95.4
+      value: -90.7
       objectReference: {fileID: 0}
     - target: {fileID: 3827259956348717332, guid: a485fe92b8766e240ab0c49a6caa61ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.3
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 4796188704654564779, guid: a485fe92b8766e240ab0c49a6caa61ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -210081,6 +210081,18 @@ PrefabInstance:
     - target: {fileID: 1604710358276329375, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
       propertyPath: m_Name
       value: DarkBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: ultimateChancePercent
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: lightningChancePercent
+      value: 46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
