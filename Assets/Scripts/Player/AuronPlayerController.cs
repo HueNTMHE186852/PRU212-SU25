@@ -63,6 +63,7 @@ public class AuronPlayerController : MonoBehaviour
     public PolygonCollider2D slideCollider;
 
     public GameResultUI losePanelUI;
+    public GameResultUI winPanelUI;
     void Start()
     {
         groundLayer = LayerMask.GetMask("Ground", "Tilemap");
@@ -160,7 +161,6 @@ public class AuronPlayerController : MonoBehaviour
                 MPBar.SetMP((float)currentMP / maxMP);
             Debug.Log("SetTrigger SkillAttack");
             animator.SetTrigger("IsAttacking2");
-
         }
         if (Input.GetKeyDown(KeyCode.Q) && currentMP >= qSkillMPCost)
         {
@@ -342,7 +342,20 @@ public class AuronPlayerController : MonoBehaviour
         }
         Invoke("RestartScene", 2f);
     }
-
+    public void Win()
+    {
+        float totalTime = GameManager.Instance != null ? GameManager.Instance.PlayTimeSeconds : 0f;
+        int totalCoins = coinManager != null ? coinManager.GetSessionCoin() : 0;
+        coinManager.AddCoin(totalCoins);
+        if (winPanelUI != null)
+        {
+            winPanelUI.Show(totalTime, totalCoins); // Truyền thời gian và số coin nếu muốn
+        }
+        else
+        {
+            Debug.LogError("losePanelUI is null in Player1.Die()");
+        }
+    }
     void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -498,17 +511,52 @@ public class AuronPlayerController : MonoBehaviour
                 HashSet<EnemyRun> damagedEnemies = new HashSet<EnemyRun>();
                 foreach (var col in enemies)
                 {
+                    // EnemyRun
                     EnemyRun enemy = col.GetComponent<EnemyRun>();
                     if (enemy == null)
                         enemy = col.GetComponentInParent<EnemyRun>();
-
                     if (enemy != null && enemy.gameObject.CompareTag("Enemy") && !damagedEnemies.Contains(enemy))
                     {
                         Debug.Log("ArrowFallEffect gây damage lên: " + enemy.gameObject.name);
                         enemy.TakeDamage(fallDamage);
                         damagedEnemies.Add(enemy);
+                        continue;
+                    }
+
+                    // BossAI
+                    BossAI bossAI = col.GetComponent<BossAI>();
+                    if (bossAI == null)
+                        bossAI = col.GetComponentInParent<BossAI>();
+                    if (bossAI != null && bossAI.gameObject.CompareTag("Enemy"))
+                    {
+                        Debug.Log("ArrowFallEffect gây damage lên BossAI: " + bossAI.gameObject.name);
+                        bossAI.TakeDamage(fallDamage);
+                        continue;
+                    }
+
+                    // ForestBoss
+                    ForestBoss forestBoss = col.GetComponent<ForestBoss>();
+                    if (forestBoss == null)
+                        forestBoss = col.GetComponentInParent<ForestBoss>();
+                    if (forestBoss != null && forestBoss.gameObject.CompareTag("Enemy"))
+                    {
+                        Debug.Log("ArrowFallEffect gây damage lên ForestBoss: " + forestBoss.gameObject.name);
+                        forestBoss.TakeDamage(fallDamage);
+                        continue;
+                    }
+
+                    // DarkBoss
+                    DarkBoss darkBoss = col.GetComponent<DarkBoss>();
+                    if (darkBoss == null)
+                        darkBoss = col.GetComponentInParent<DarkBoss>();
+                    if (darkBoss != null && darkBoss.gameObject.CompareTag("Enemy"))
+                    {
+                        Debug.Log("ArrowFallEffect gây damage lên DarkBoss: " + darkBoss.gameObject.name);
+                        darkBoss.TakeDamage(fallDamage);
+                        continue;
                     }
                 }
+
             }
         }
     }
