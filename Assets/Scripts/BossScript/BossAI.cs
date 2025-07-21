@@ -98,19 +98,35 @@ public class BossAI : MonoBehaviour
 
     IEnumerator FindPlayerAfterDelay()
     {
-        while (player == null)
+        while (player == null || (player1 == null && player2 == null))
         {
             GameObject found = GameObject.FindGameObjectWithTag("Player");
             if (found != null)
             {
                 player = found.transform;
-                player1 = player.GetComponent<Player1>();
-                player2 = player.GetComponent<AuronPlayerController>();
-                Debug.Log("✅ Player found and assigned.");
-                yield break;
-            }
 
-            yield return null; 
+                if (player1 == null)
+                {
+                    player1 = player.GetComponent<Player1>();
+                    if (player1 == null)
+                        player1 = player.GetComponentInChildren<Player1>();
+                }
+
+                if (player2 == null)
+                {
+                    player2 = player.GetComponent<AuronPlayerController>();
+                    if (player2 == null)
+                        player2 = player.GetComponentInChildren<AuronPlayerController>();
+                }
+
+                // If either player1 or player2 is found, break
+                if (player1 != null || player2 != null)
+                {
+                    Debug.Log("✅ Player found and assigned.");
+                    yield break;
+                }
+            }
+            yield return null;
         }
     }
 
@@ -124,6 +140,7 @@ public class BossAI : MonoBehaviour
 
     private void Update()
     {
+        StartCoroutine(FindPlayerAfterDelay());
         if (!player || isDead) return;
 
         // Healthbar appears when boss detected
@@ -400,13 +417,38 @@ public class BossAI : MonoBehaviour
     {
         if (isDead) return;
 
+        Debug.Log("💀 Boss đã chết!");
         isDead = true;
         animator.SetTrigger("die");
 
-        healthBar.gameObject.SetActive(false);
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(false);
+
+        isAttacking = true;
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-        if(player1 != null)
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        if (player != null)
+        {
+            if (player1 != null)
+                player1.Win();
+            if (player2 != null)
+                player2.Win();
+            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
+        }
+
+        Destroy(gameObject, 2f);
+    }
+
+
+    private IEnumerator WaitAndDie()
+    {
+        float len = GetAnimationClipLength("BossDie");
+        yield return new WaitForSeconds(len);
+        if (player1 != null)
         {
             player1.Win();
             GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
@@ -416,14 +458,6 @@ public class BossAI : MonoBehaviour
             player2.Win();
             GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
         }
-        StartCoroutine(WaitAndDie());
-    }
-
-    private IEnumerator WaitAndDie()
-    {
-        float len = GetAnimationClipLength("BossDie");
-        yield return new WaitForSeconds(len);
-
         //win scene or next wave
         Destroy(gameObject);
     }
