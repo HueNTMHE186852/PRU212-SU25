@@ -112,6 +112,8 @@ public class ForestBoss : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         StartCoroutine(FindPlayerAfterDelay());
+
+
     }
 
     IEnumerator FindPlayerAfterDelay()
@@ -174,7 +176,11 @@ public class ForestBoss : MonoBehaviour
                 player1.Win();
                 GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
             }
-
+            else
+            {
+                player2.Win();
+                GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+            }
         }
 
         Destroy(gameObject, 2f);
