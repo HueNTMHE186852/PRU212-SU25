@@ -19,7 +19,7 @@ public class Arrow : MonoBehaviour
     {
         if (hasHit) return;
 
-        // Va chạm với Enemy
+        // Va chạm với Enemy hoặc Boss
         if (collision.gameObject.CompareTag("Enemy"))
         {
             hasHit = true;
@@ -49,19 +49,36 @@ public class Arrow : MonoBehaviour
             }
 
             transform.parent = collision.transform;
-            BossAI boss = collision.gameObject.GetComponent<BossAI>();
-            EnemyRun enemy = collision.gameObject.GetComponent<EnemyRun>();
-            if (boss != null)
+
+            // Gây dame cho các loại boss và enemy
+            BossAI bossAI = collision.gameObject.GetComponent<BossAI>();
+            if (bossAI != null)
             {
                 float direction = collision.transform.position.x > transform.position.x ? 1f : -1f;
                 float knockbackForce = 5f;
                 Vector2 knockback = new Vector2(direction * knockbackForce, 0f);
-                boss.ApplyKnockback(knockback);
+                bossAI.ApplyKnockback(knockback);
+                bossAI.TakeDamage(damage);
             }
-            if (enemy != null)
+
+            EnemyRun enemyRun = collision.gameObject.GetComponent<EnemyRun>();
+            if (enemyRun != null)
             {
-                enemy.TakeDamage(damage);
+                enemyRun.TakeDamage(damage);
             }
+
+            ForestBoss forestBoss = collision.gameObject.GetComponent<ForestBoss>();
+            if (forestBoss != null)
+            {
+                forestBoss.TakeDamage(damage);
+            }
+
+            DarkBoss darkBoss = collision.gameObject.GetComponent<DarkBoss>();
+            if (darkBoss != null)
+            {
+                darkBoss.TakeDamage(damage);
+            }
+
             GetComponent<Collider2D>().enabled = false;
             Destroy(gameObject, 1f);
             return;
@@ -92,5 +109,6 @@ public class Arrow : MonoBehaviour
             return;
         }
     }
+
 
 }
