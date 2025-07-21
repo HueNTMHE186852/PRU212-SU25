@@ -18,6 +18,7 @@ public class Arrow : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (hasHit) return;
+        AudioManager.Instance.PlaySFX("PlayerArrowHit");
 
         // Va chạm với Enemy hoặc Boss
         if (collision.gameObject.CompareTag("Enemy"))
