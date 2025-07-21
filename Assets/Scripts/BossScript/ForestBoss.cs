@@ -59,6 +59,7 @@ public class ForestBoss : MonoBehaviour
     public Transform player;
     public GameObject projectilePrefab;
     public Player1 player1;
+    public AuronPlayerController player2;
 
     [Header("Health")]
     public int maxHealth = 100;
@@ -108,6 +109,7 @@ public class ForestBoss : MonoBehaviour
             {
                 player = found.transform;
                 player1 = player.GetComponent<Player1>();
+                player2 = player.GetComponent<AuronPlayerController>();
                 Debug.Log("✅ Player found and assigned.");
                 yield break;
             }
@@ -149,8 +151,12 @@ public class ForestBoss : MonoBehaviour
 
         if (player != null)
         {
-            player1.Win();
-            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+            if (player1 != null)
+            {
+                player1.Win();
+                GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+            }
+
         }
 
         Destroy(gameObject, 2f);
