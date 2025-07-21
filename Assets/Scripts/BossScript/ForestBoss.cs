@@ -95,18 +95,18 @@ public class ForestBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-    if (player == null)
-    {
-        GameObject found = GameObject.FindGameObjectWithTag("Player");
-        if (found != null)
+        if (player == null)
         {
-            player = found.transform;
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
+            }
         }
-        else
-        {
-            Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
-        }
-    }
     }
 
     public void TakeDamage(int damage)
@@ -145,6 +145,18 @@ public class ForestBoss : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
+            }
+            else
+            {
+                return; // chưa có player thì tạm thời không làm gì
+            }
+        }
         if (player == null || currentHealth <= 0) return;
 
         cachedHorizontalDistance = Mathf.Abs(transform.position.x - player.position.x);

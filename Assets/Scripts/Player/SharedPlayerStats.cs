@@ -5,7 +5,7 @@ using UnityEngine;
 public class SharedPlayerStats
 {
     public int Coins;
-    public float DamageMultiplier;
+    public float DamageMultiplier = 1f;
 
     public int HpLevel;
     public int DamageLevel;

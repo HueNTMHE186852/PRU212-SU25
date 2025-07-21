@@ -1,32 +1,37 @@
-﻿    // DarkBoss.cs - Sửa theo ForestBoss logic
+﻿
     using System.Collections;
     using UnityEngine;
 
     public class DarkBoss : MonoBehaviour
-    {
-        [Header("Lightning Skill")]
-        public GameObject lightningPrefab;
-        public float lightningDelay = 1f;
-        public float lightningDamage = 20f;
+{
+    [Header("Lightning Skill")]
+    public GameObject lightningPrefab;
+    public float lightningDelay = 1f;
+    public float lightningDamage = 20f;
+    [Header("Lightning Skill Settings")]
+    [Range(0, 100)] public float lightningChancePercent = 20f; // Cơ hội % dùng skill
+    public float lightningCheckInterval = 3f; // Thời gian giữa các lần kiểm tra
+    private float lastLightningCheckTime = -10f; // Thời gian lần kiểm tra trước
 
-        [Header("Boss Settings")]
-        public float moveSpeed = 3f;
-        public float attackRange = 2f;
-        public float detectionRange = 10f;
-        public float attackCooldown = 2f;
-        public float attackDuration = 1f;
+    [Header("Boss Settings")]
+    public float moveSpeed = 3f;
+    public float attackRange = 2f;
+    public float detectionRange = 10f;
+    public float attackCooldown = 2f;
+    public float attackDuration = 1f;
     public float wallHeightThreshold = 2.5f;   // Nếu player cao hơn ngưỡng này thì kéo dài tường
     public float extendedWallHeight = 6f;      // Chiều cao kéo dài
 
     [Header("Attack Collider")]
-        public BoxCollider2D attackCollider;
+    public BoxCollider2D attackCollider;
 
-        [Header("References")]
-        public Transform player;
+    [Header("References")]
+    public Transform player;
+    private bool isCastingUltimate = false;
 
-        [Header("Health")]
-        public int maxHealth = 100;
-        public HealthBar healthBar;
+    [Header("Health")]
+    public int maxHealth = 100;
+    public HealthBar healthBar;
 
     [Header("Ultimate Skill")]
     public GameObject wallPrefab;
@@ -35,81 +40,91 @@
     public float ultimateDelay = 1.5f;
 
     private Animator animator;
-        private Rigidbody2D rb;
-        private int currentHealth;
-        private float lastMeleeAttackTime = -10f;
-        public bool isAttacking = false; // 👈 PUBLIC để AttackColliderTrigger có thể truy cập
-        private bool facingRight = true;
-        private bool hasHealthBarAppeared = false;
+    private Rigidbody2D rb;
+    private int currentHealth;
+    private float lastMeleeAttackTime = -10f;
+    public bool isAttacking = false; // 👈 PUBLIC để AttackColliderTrigger có thể truy cập
+    private bool facingRight = true;
+    private bool hasHealthBarAppeared = false;
 
-        void Start()
+    void Start()
+    {
+
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
+
+        if (healthBar != null)
         {
-            rb = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.gameObject.SetActive(false);
+        }
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
+    }
+
+    void Update()
+    {
+        if (player == null || currentHealth <= 0) return;
+
+        float distanceToPlayer = Mathf.Abs(transform.position.x - player.position.x);
+
+        // 👉 Nếu Player ra xa thì ẩn thanh máu như ForestBoss
+        if (distanceToPlayer > detectionRange)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("IsRunning", false);
 
             if (healthBar != null)
-            {
-                healthBar.SetMaxHealth(maxHealth);
                 healthBar.gameObject.SetActive(false);
-            }
+            hasHealthBarAppeared = false;
+            return;
+        }
 
-            if (player == null)
+        FlipSprite();
+
+        // 👉 Hiển thị thanh máu khi Player vào tầm
+        if (!hasHealthBarAppeared && healthBar != null)
+        {
+            healthBar.gameObject.SetActive(true);
+            hasHealthBarAppeared = true;
+        }
+
+        if (!isAttacking || isCastingUltimate)
+        {
+            if (distanceToPlayer <= attackRange && Time.time >= lastMeleeAttackTime + attackCooldown)
             {
-                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-                if (playerObj != null)
-                    player = playerObj.transform;
+                StartCoroutine(MeleeAttack());
+            }
+            else if (distanceToPlayer > attackRange)
+            {
+                MoveTowardsPlayer();
             }
         }
 
-        void Update()
+        // 👉 Kiểm tra random Lightning Strike mỗi X giây
+        if (!isAttacking && !isCastingUltimate && Time.time >= lastLightningCheckTime + lightningCheckInterval)
         {
-            if (player == null || currentHealth <= 0) return;
+            lastLightningCheckTime = Time.time;
 
-            float distanceToPlayer = Mathf.Abs(transform.position.x - player.position.x);
-
-            // 👉 Nếu Player ra xa thì ẩn thanh máu như ForestBoss
-            if (distanceToPlayer > detectionRange)
-            {
-                rb.velocity = Vector2.zero;
-                animator.SetBool("IsRunning", false);
-
-                if (healthBar != null)
-                    healthBar.gameObject.SetActive(false);
-                hasHealthBarAppeared = false;
-                return;
-            }
-
-            FlipSprite();
-
-            // 👉 Hiển thị thanh máu khi Player vào tầm
-            if (!hasHealthBarAppeared && healthBar != null)
-            {
-                healthBar.gameObject.SetActive(true);
-                hasHealthBarAppeared = true;
-            }
-
-            if (!isAttacking)
-            {
-                if (distanceToPlayer <= attackRange && Time.time >= lastMeleeAttackTime + attackCooldown)
-                {
-                    StartCoroutine(MeleeAttack());
-                }
-                else if (distanceToPlayer > attackRange)
-                {
-                    MoveTowardsPlayer();
-                }
-            }
-
-            // Lightning skill logic
-            if (!isAttacking && Vector2.Distance(transform.position, player.position) < 8f && Random.value < 0.5f)
+            float roll = Random.Range(0f, 100f);
+            if (roll < lightningChancePercent)
             {
                 StartCoroutine(CastLightningStrike());
+                return; // Ưu tiên skill, không xử lý gì thêm frame này
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                StartCoroutine(CastLightningStrike());
+
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartCoroutine(CastLightningStrike());
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -162,38 +177,38 @@
     }
     IEnumerator UltimateSkill()
     {
-        isAttacking = true;
+        isCastingUltimate = true;
+
         rb.velocity = Vector2.zero;
         animator.SetTrigger("CastLightning"); // Hoặc animation ultimate riêng
 
         Vector3 playerPos = player.position;
 
         // 1. Tạo 2 bức tường hai bên player với khoảng cách xa hơn
-        Vector3 leftWallPos = new Vector3(playerPos.x - wallOffsetX, playerPos.y, 0f);
-        Vector3 rightWallPos = new Vector3(playerPos.x + wallOffsetX, playerPos.y, 0f);
+        float wallLowerOffsetY = 2f; // 👈 thêm dòng này để hạ thấp tường
+
+        Vector3 leftWallPos = new Vector3(playerPos.x - wallOffsetX, playerPos.y - wallLowerOffsetY, 0f);
+        Vector3 rightWallPos = new Vector3(playerPos.x + wallOffsetX, playerPos.y - wallLowerOffsetY, 0f);
+
 
         GameObject leftWall = null;
         GameObject rightWall = null;
 
         if (wallPrefab != null)
         {
-            float baseWallHeight = wallPrefab.transform.localScale.y;
+            float currentWallHeight = wallPrefab.transform.localScale.y;
+            bool shouldExtend = player.position.y > wallHeightThreshold;
+
             Vector3 scale = wallPrefab.transform.localScale;
             Vector3 offset = Vector3.zero;
 
-            // Nếu player cao hơn ngưỡng thì tự động tăng chiều cao tường
-            if (player.position.y > wallHeightThreshold)
+            if (shouldExtend)
             {
-                float extraHeight = player.position.y - wallHeightThreshold + 2f; // +2f là khoảng đệm
-                float newHeight = baseWallHeight + extraHeight;
+                scale.y = extendedWallHeight;
 
-                // Giới hạn nếu muốn
-                newHeight = Mathf.Min(newHeight, 15f);
-
-                scale.y = newHeight;
-                offset = new Vector3(0f, -(newHeight - baseWallHeight) / 2f, 0f); // Dời xuống giữ đáy chạm đất
+                float extraHeight = extendedWallHeight - currentWallHeight;
+                offset = new Vector3(0f, -extraHeight / 2f, 0f); // Dời xuống 1 nửa để vẫn chạm đất
             }
-
 
             leftWall = Instantiate(wallPrefab, leftWallPos + offset, Quaternion.identity);
             leftWall.transform.localScale = scale;
@@ -211,7 +226,7 @@
 
         for (int i = 0; i < 5; i++)
         {
-            float lightningY = Mathf.Max(lightningSpawnY.position.y, player.position.y - 2.5f);
+            float lightningY = Mathf.Max(lightningSpawnY.position.y, player.position.y - 10f);
             Vector3 strikePos = new Vector3(startX + i * spacing, lightningY, 0f);
 
             if (lightningPrefab != null)
@@ -235,103 +250,104 @@
         animator.SetBool("IsAttacking", false);
 
         // 5. Trở về trạng thái hoạt động
-        isAttacking = false;
+        isCastingUltimate = false;
+
 
     }
 
 
     void MoveTowardsPlayer()
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+        animator.SetBool("IsRunning", true);
+    }
+
+    IEnumerator MeleeAttack()
+    {
+        isAttacking = true;
+        lastMeleeAttackTime = Time.time;
+
+        rb.velocity = Vector2.zero;
+        animator.SetBool("IsRunning", false);
+        animator.SetBool("IsAttacking", true);
+
+        yield return new WaitForSeconds(attackDuration);
+
+        animator.SetBool("IsAttacking", false);
+        isAttacking = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (currentHealth <= 0) return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(0, currentHealth);
+
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+
+        animator.SetTrigger("Hurt");
+        Debug.Log("DarkBoss nhận sát thương: " + damage + ". Máu còn: " + currentHealth);
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Debug.Log("💀 DarkBoss đã chết!");
+        animator.SetTrigger("Die");
+
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(false);
+
+        isAttacking = true; // Ngừng mọi hành động
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        Destroy(gameObject, 2f);
+    }
+
+    void FlipSprite()
+    {
+        bool shouldFaceRight = player.position.x > transform.position.x;
+        if (shouldFaceRight != facingRight)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
-            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
-            animator.SetBool("IsRunning", true);
-        }
+            facingRight = shouldFaceRight;
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null) sr.flipX = !facingRight;
 
-        IEnumerator MeleeAttack()
-        {
-            isAttacking = true;
-            lastMeleeAttackTime = Time.time;
-
-            rb.velocity = Vector2.zero;
-            animator.SetBool("IsRunning", false);
-            animator.SetBool("IsAttacking", true);
-
-            yield return new WaitForSeconds(attackDuration);
-
-            animator.SetBool("IsAttacking", false);
-            isAttacking = false;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            if (currentHealth <= 0) return;
-
-            currentHealth -= damage;
-            currentHealth = Mathf.Max(0, currentHealth);
-
-            if (healthBar != null)
-                healthBar.SetHealth(currentHealth);
-
-            animator.SetTrigger("Hurt");
-            Debug.Log("DarkBoss nhận sát thương: " + damage + ". Máu còn: " + currentHealth);
-
-            if (currentHealth <= 0)
-                Die();
-        }
-
-        void Die()
-        {
-            Debug.Log("💀 DarkBoss đã chết!");
-            animator.SetTrigger("Die");
-
-            if (healthBar != null)
-                healthBar.gameObject.SetActive(false);
-
-            isAttacking = true; // Ngừng mọi hành động
-            rb.velocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Static;
-
-            Collider2D col = GetComponent<Collider2D>();
-            if (col != null) col.enabled = false;
-
-            Destroy(gameObject, 2f);
-        }
-
-        void FlipSprite()
-        {
-            bool shouldFaceRight = player.position.x > transform.position.x;
-            if (shouldFaceRight != facingRight)
-            {
-                facingRight = shouldFaceRight;
-                SpriteRenderer sr = GetComponent<SpriteRenderer>();
-                if (sr != null) sr.flipX = !facingRight;
-
-                if (attackCollider != null)
-                {
-                    Vector2 offset = attackCollider.offset;
-                    offset.x *= -1;
-                    attackCollider.offset = offset;
-                }
-            }
-        }
-
-        void OnDrawGizmosSelected()
-        {
-            // Vẽ vòng tròn phạm vi tấn công
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
-
-            // Vẽ vòng tròn phạm vi phát hiện
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, detectionRange);
-
-            // Vẽ BoxCollider2D
             if (attackCollider != null)
             {
-                Gizmos.color = Color.cyan;
-                Vector3 colliderCenter = attackCollider.bounds.center;
-                Vector3 colliderSize = attackCollider.bounds.size;
-                Gizmos.DrawWireCube(colliderCenter, colliderSize);
+                Vector2 offset = attackCollider.offset;
+                offset.x *= -1;
+                attackCollider.offset = offset;
             }
         }
     }
+
+    void OnDrawGizmosSelected()
+    {
+        // Vẽ vòng tròn phạm vi tấn công
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        // Vẽ vòng tròn phạm vi phát hiện
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        // Vẽ BoxCollider2D
+        if (attackCollider != null)
+        {
+            Gizmos.color = Color.cyan;
+            Vector3 colliderCenter = attackCollider.bounds.center;
+            Vector3 colliderSize = attackCollider.bounds.size;
+            Gizmos.DrawWireCube(colliderCenter, colliderSize);
+        }
+    }
+}
