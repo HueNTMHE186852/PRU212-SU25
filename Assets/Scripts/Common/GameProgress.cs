@@ -23,7 +23,7 @@ public class GameProgress
         }
 
         var progress = new GameProgress();
-        progress.InitializeLevels(100); // ví dụ: 100 màn
+        progress.InitializeLevels(4); // ví dụ: 100 màn
         return progress;
     }
 

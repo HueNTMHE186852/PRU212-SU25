@@ -96,19 +96,23 @@ public class ForestBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        if (player == null)
+        StartCoroutine(FindPlayerAfterDelay());
+    }
+
+    IEnumerator FindPlayerAfterDelay()
+    {
+        while (player == null)
         {
             GameObject found = GameObject.FindGameObjectWithTag("Player");
             if (found != null)
             {
                 player = found.transform;
                 player1 = player.GetComponent<Player1>();
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ Không tìm thấy đối tượng có Tag 'Player'");
+                Debug.Log("✅ Player found and assigned.");
+                yield break;
             }
 
+            yield return null; // chờ 1 frame rồi thử lại
         }
     }
 
@@ -146,6 +150,7 @@ public class ForestBoss : MonoBehaviour
         if(player != null)
         {
             player1.Win();
+            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
         }
 
         Destroy(gameObject, 2f);
