@@ -20,6 +20,16 @@ public class ForestBoss : MonoBehaviour
     private Collider2D bossCollider;
     private bool originalIsTrigger;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip hurtClip;
+    public AudioClip dieClip;
+    public AudioClip meleeAttackClip;
+
+    public AudioClip tornadoClip;
+ 
+
+
     [Header("Tornado Random Settings")]
     public float tornadoInterval = 8f; // thời gian giữa 2 lần tornado tối thiểu
     private float nextTornadoTime = 0f;
@@ -95,7 +105,11 @@ public class ForestBoss : MonoBehaviour
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         StartCoroutine(FindPlayerAfterDelay());
     }
 
@@ -125,6 +139,8 @@ public class ForestBoss : MonoBehaviour
 
         if (healthBar != null)
             healthBar.SetHealth(currentHealth); // ✅ gọi sau khi trừ
+        if (hurtClip != null)
+            audioSource.PlayOneShot(hurtClip);
 
         Debug.Log("💥 Boss nhận " + damage + " sát thương. Máu còn: " + currentHealth);
         animator.SetTrigger("Hurt");
@@ -143,6 +159,8 @@ public class ForestBoss : MonoBehaviour
         isAttacking = true;
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
+        if (dieClip != null)
+            audioSource.PlayOneShot(dieClip);
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
@@ -285,6 +303,8 @@ public class ForestBoss : MonoBehaviour
         isFlyDashing = false;
         isPreparingFlyDash = false;
         rb.velocity = Vector2.zero;
+        if (tornadoClip != null)
+            audioSource.PlayOneShot(tornadoClip);
 
         Vector3 bossPos = transform.position;
         Vector3 toPlayer = player.position - bossPos;
@@ -386,6 +406,8 @@ public class ForestBoss : MonoBehaviour
 
     bool ShouldFlyDash()
     {
+    
+
         return isChasing &&
                (Time.time - chaseStartTime) >= chaseDurationBeforeDash &&
                (Time.time - lastFlyDashTime) >= flyDashCooldown &&
@@ -510,6 +532,8 @@ public class ForestBoss : MonoBehaviour
     {
         isAttacking = true;
         lastMeleeAttackTime = Time.time;
+        if (meleeAttackClip != null)
+            audioSource.PlayOneShot(meleeAttackClip);
 
         rb.velocity = Vector2.zero;
         animator.SetBool("IsRunning", false);
@@ -530,6 +554,7 @@ public class ForestBoss : MonoBehaviour
         float centerX = player.position.x;
         float startX = centerX - rainWidth / 2f;
         float ySpawn = transform.position.y + rainHeight;
+   
 
         for (int i = 0; i < rainProjectileCount; i++)
         {

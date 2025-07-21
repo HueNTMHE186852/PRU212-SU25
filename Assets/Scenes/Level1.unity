@@ -450,6 +450,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: dieClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6770b32817c35dd43b82b4e27a5950c4, type: 3}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: hurtClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 586759f82c3655a40a81e3bce46ede62, type: 3}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: flyDashClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: tornadoClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 19f81ef0f9412624a923fd2e8d1059ae, type: 3}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: meleeAttackClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e858e999c1a6b8f4bbaee0f804cce1a0, type: 3}
+    - target: {fileID: 2422157831821733665, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
+      propertyPath: rangedAttackClip
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2763709095125961298, guid: 927fca3409bb10b4dafbb83167cb6785, type: 3}
       propertyPath: m_SizeDelta.x
       value: 5.4
