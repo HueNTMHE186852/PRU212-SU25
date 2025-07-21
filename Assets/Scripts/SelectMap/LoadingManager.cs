@@ -17,26 +17,37 @@ public class LoadingManager : MonoBehaviour
 
     private void Awake()
     {
+        // Nếu đã có Instance, nhưng đang ở chính LoadingScene → chấp nhận cái mới
         if (Instance != null)
         {
-            Destroy(gameObject);
-            return;
+            if (SceneManager.GetActiveScene().name == "LoadingScene")
+            {
+                Debug.Log("[LoadingManager] Replacing old instance in LoadingScene.");
+                Destroy(Instance.gameObject); // Xoá bản cũ
+            }
+            else
+            {
+                Destroy(gameObject); // Giữ lại bản đã tồn tại
+                return;
+            }
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
         if (canvasRoot != null)
-        {
             DontDestroyOnLoad(canvasRoot);
-        }
 
         canvasRoot?.SetActive(false);
     }
 
+
     private void Start()
     {
-        LoadScene(LoadingBridge.SceneToLoad, LoadingBridge.BackgroundImage);
+        if (!string.IsNullOrEmpty(LoadingBridge.SceneToLoad))
+        {
+            LoadScene(LoadingBridge.SceneToLoad, LoadingBridge.BackgroundImage);
+        }
     }
 
     public void LoadScene(string sceneName, Sprite background)
