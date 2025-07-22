@@ -2655,12 +2655,14 @@ MonoBehaviour:
   attackRange: 15
   detectionRange: 27
   attackCooldown: 1
-  maxHealth: 100
+  maxHealth: 1500
   incinerationEvery: 3
   currentHealth: 0
   normalAttackCount: 0
   lastAttackTime: 0
   isDead: 0
+  player1: {fileID: 0}
+  player2: {fileID: 0}
 --- !u!1 &1879381493418178
 GameObject:
   m_ObjectHideFlags: 0
