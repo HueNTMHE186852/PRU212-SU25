@@ -11824,6 +11824,83 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &78080018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 78080020}
+  - component: {fileID: 78080019}
+  m_Layer: 0
+  m_Name: PotionSpawnZone (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &78080019
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78080018}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -11.51693, y: 1.9659653}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 61.250656, y: 4.9319305}
+  m_EdgeRadius: 0
+--- !u!4 &78080020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78080018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -107.1, y: -157.9, z: -0.3768734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &132095732
 GameObject:
   m_ObjectHideFlags: 0
@@ -12137,7 +12214,6 @@ GameObject:
   m_Component:
   - component: {fileID: 262659133}
   - component: {fileID: 262659132}
-  - component: {fileID: 262659131}
   m_Layer: 0
   m_Name: PotionSpawnZone (2)
   m_TagString: Untagged
@@ -12145,21 +12221,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &262659131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262659130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726f619cdf5d41c4d8d73e83f8a273a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPotionPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
-  manaPotionPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
-  spawnInterval: 7
 --- !u!61 &262659132
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12447,7 +12508,6 @@ GameObject:
   m_Component:
   - component: {fileID: 454727768}
   - component: {fileID: 454727767}
-  - component: {fileID: 454727766}
   m_Layer: 0
   m_Name: PotionSpawnZone (1)
   m_TagString: Untagged
@@ -12455,21 +12515,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &454727766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454727765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726f619cdf5d41c4d8d73e83f8a273a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPotionPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
-  manaPotionPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
-  spawnInterval: 7
 --- !u!61 &454727767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13235,7 +13280,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1235220462}
   - component: {fileID: 1235220461}
-  - component: {fileID: 1235220460}
   m_Layer: 0
   m_Name: PotionSpawnZone (3)
   m_TagString: Untagged
@@ -13243,21 +13287,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1235220460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235220459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726f619cdf5d41c4d8d73e83f8a273a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPotionPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
-  manaPotionPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
-  spawnInterval: 7
 --- !u!61 &1235220461
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24147,7 +24176,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPotionPrefab: {fileID: 4629058383374005044, guid: bf11cc2817c07c047abd05cf27e92dab, type: 3}
   manaPotionPrefab: {fileID: 7208459130744822244, guid: 9f3f5bc44e5ec1848acb1625f7a8f501, type: 3}
-  spawnInterval: 12
+  spawnInterval: 7
+  spawnZones:
+  - {fileID: 454727767}
+  - {fileID: 262659132}
+  - {fileID: 1235220461}
+  - {fileID: 78080019}
+  - {fileID: 1542107096}
 --- !u!61 &1542107096
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33090,3 +33125,4 @@ SceneRoots:
   - {fileID: 454727768}
   - {fileID: 262659133}
   - {fileID: 1235220462}
+  - {fileID: 78080020}
