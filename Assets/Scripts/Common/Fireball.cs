@@ -9,17 +9,19 @@ public class Fireball : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Player1 player = collision.GetComponentInParent<Player1>();
+            AuronPlayerController auronPlayer = collision.GetComponentInParent<AuronPlayerController>();
+
             if (player != null)
             {
                 player.TakeDamage(damage);
-                if (CameraShake.Instance != null)
-                {
-                    StartCoroutine(CameraShake.Instance.Shake(0.2f, 0.07f));
-                }
-                Debug.Log("🔥 Player trúng đòn Fireball, trừ 60 damage");
+            }
+            else if (auronPlayer != null)
+            {
+                auronPlayer.TakeDamage(damage);
             }
         }
     }
+
 
     public void Launch(Vector2 velocity, float lifetime)
     {

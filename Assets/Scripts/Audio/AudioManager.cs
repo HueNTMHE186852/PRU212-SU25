@@ -95,6 +95,10 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"SFX ID '{id}' not found!");
         }
     }
+    public void StopSFX(string id)
+    {
+        sfxSource.Stop();
+    }
 
     public void SetSFXVolume(float volume)
     {

@@ -105,6 +105,7 @@ public class DragonController : MonoBehaviour
             yield return null;
         }
     }
+
     void Update()
     {
         StartCoroutine(FindPlayerAfterDelay());
@@ -115,7 +116,6 @@ public class DragonController : MonoBehaviour
             if (healthBar != null)
                 healthBar.gameObject.SetActive(true);
         }
-
     }
 
     public void TransitionToState(IDragonState newState)
@@ -171,6 +171,14 @@ public class DragonController : MonoBehaviour
         {
             var shape = incinerationEffect.shape;
             shape.rotation = new Vector3(0f, shouldFaceLeft ? 180f : 0f, 0f);
+        }
+
+        // 👉 Prevent HealthBar from flipping
+        if (healthBar != null)
+        {
+            Vector3 healthBarScale = healthBar.transform.localScale;
+            healthBarScale.x = Mathf.Abs(healthBarScale.x);
+            healthBar.transform.localScale = healthBarScale;
         }
     }
 
