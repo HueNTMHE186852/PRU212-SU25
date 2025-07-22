@@ -386,8 +386,9 @@ public class DarkBoss : MonoBehaviour
                     player2.Win();
                     player2.coinManager.AddCoin(300);
                 }
-                GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
+                
             }
+            GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
         }
         Destroy(gameObject, 2f);
     }

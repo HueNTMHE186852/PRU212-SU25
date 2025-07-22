@@ -217,8 +217,9 @@ public class ForestBoss : MonoBehaviour
                     player2.Win();
                     player2.coinManager.AddCoin(100);
                 }
-                GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
-            }
+               
+            } 
+            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
         }
         Destroy(gameObject, 2f);
     }
