@@ -185,14 +185,16 @@ public class ForestBoss : MonoBehaviour
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-
-        if (player != null)
+        if (GameProgress.Current.currentLevel != 4)
         {
-            if (player1 != null)
-                player1.Win();
-            if (player2 != null)
-                player2.Win();
-            GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+            if (player != null)
+            {
+                if (player1 != null)
+                    player1.Win();
+                if (player2 != null)
+                    player2.Win();
+                GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
+            }
         }
 
 

@@ -20,9 +20,9 @@ public class PlayerAttackTrigger : MonoBehaviour
             case SkillType.BasicAttack:
                 return 10;
             case SkillType.HeavySlash:
-                return 50;
+                return 35;
             case SkillType.FireSlash:
-                return 50;
+                return 30;
             default:
                 return 0;
         }

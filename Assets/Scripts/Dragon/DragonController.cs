@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DragonController : MonoBehaviour
 {
@@ -29,6 +31,9 @@ public class DragonController : MonoBehaviour
     [HideInInspector] public bool isDead = false;
 
     private bool isFacingLeft = false;
+
+    public Player1 player1;
+    public AuronPlayerController player2;
 
     // FSM
     private IDragonState currentState;
@@ -67,9 +72,42 @@ public class DragonController : MonoBehaviour
 
         TransitionToState(idleState);
     }
+    IEnumerator FindPlayerAfterDelay()
+    {
+        while (player == null || (player1 == null && player2 == null))
+        {
+            GameObject found = GameObject.FindGameObjectWithTag("Player");
+            if (found != null)
+            {
+                player = found.transform;
 
+                if (player1 == null)
+                {
+                    player1 = player.GetComponent<Player1>();
+                    if (player1 == null)
+                        player1 = player.GetComponentInChildren<Player1>();
+                }
+
+                if (player2 == null)
+                {
+                    player2 = player.GetComponent<AuronPlayerController>();
+                    if (player2 == null)
+                        player2 = player.GetComponentInChildren<AuronPlayerController>();
+                }
+
+                // If either player1 or player2 is found, break
+                if (player1 != null || player2 != null)
+                {
+                    Debug.Log("✅ Player found and assigned.");
+                    yield break;
+                }
+            }
+            yield return null;
+        }
+    }
     void Update()
     {
+        StartCoroutine(FindPlayerAfterDelay());
         currentState?.Update();
         if (!hasHealthBarAppeared && CanSeePlayer())
         {
@@ -84,19 +122,22 @@ public class DragonController : MonoBehaviour
     {
         currentState?.Exit();
         currentState = newState;
-        currentState.Enter();
+        currentState.Enter(player1, player2);
     }
 
     public bool CanAttack()
     {
+        if (player == null) return false;
         return Time.time >= lastAttackTime + attackCooldown &&
                Vector2.Distance(transform.position, player.position) <= attackRange;
     }
 
     public bool CanSeePlayer()
     {
+        if (player == null) return false;
         return Vector2.Distance(transform.position, player.position) <= detectionRange;
     }
+
 
     public void OnAttackEnd()
     {
