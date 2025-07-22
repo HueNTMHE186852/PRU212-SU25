@@ -166,12 +166,20 @@ public class DragonController : MonoBehaviour
         scale.x = Mathf.Abs(scale.x) * (shouldFaceLeft ? -1f : 1f);
         transform.localScale = scale;
 
+        if (healthBar != null)
+        {
+            Vector3 hbScale = healthBar.transform.localScale;
+            hbScale.x = -Mathf.Abs(hbScale.x); // đảm bảo x luôn dương
+            healthBar.transform.localScale = hbScale;
+        }
+
         // 👉 Flip particle shape nếu cần
         if (incinerationEffect != null)
         {
             var shape = incinerationEffect.shape;
             shape.rotation = new Vector3(0f, shouldFaceLeft ? 180f : 0f, 0f);
         }
+
     }
 
     public void TakeDamage(int amount)
