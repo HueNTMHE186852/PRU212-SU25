@@ -89,14 +89,17 @@ public class DragonController : MonoBehaviour
 
     public bool CanAttack()
     {
+        if (player == null) return false;
         return Time.time >= lastAttackTime + attackCooldown &&
                Vector2.Distance(transform.position, player.position) <= attackRange;
     }
 
     public bool CanSeePlayer()
     {
+        if (player == null) return false;
         return Vector2.Distance(transform.position, player.position) <= detectionRange;
     }
+
 
     public void OnAttackEnd()
     {

@@ -2570,7 +2570,7 @@ Transform:
   - {fileID: 6333626239412066021}
   - {fileID: 7639874267136591963}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!50 &50250286634040153
 Rigidbody2D:
   serializedVersion: 4
@@ -5276,6 +5276,18 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_LocalScale.x
       value: 99.507355
@@ -5427,6 +5439,14 @@ PrefabInstance:
     - target: {fileID: 6473916251061138527, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7113574845387500242, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7113574845387500242, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8596599642431594312, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Name
