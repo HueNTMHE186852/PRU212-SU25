@@ -296613,6 +296613,18 @@ PrefabInstance:
       value: Infernax
       objectReference: {fileID: 0}
     - target: {fileID: 4356747448985136, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.17279334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356747448985136, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.17279334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356747448985136, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.17279334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356747448985136, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.4
       objectReference: {fileID: 0}
@@ -296652,11 +296664,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 474957280661476005, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+    - target: {fileID: 4344984128612494286, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 474957280661476005, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+    - target: {fileID: 4344984128612494286, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -296664,6 +296676,22 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 915538957}
+    - target: {fileID: 6907417483204034900, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9249582
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907417483204034900, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_Size.y
+      value: 1.1797409
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907417483204034900, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_Offset.x
+      value: 10.179083
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907417483204034900, guid: 44729866c74549d4a9269aa6cad9472a, type: 3}
+      propertyPath: m_Offset.y
+      value: 11.470753
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
