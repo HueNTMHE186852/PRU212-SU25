@@ -122,7 +122,7 @@ public class DragonController : MonoBehaviour
     {
         currentState?.Exit();
         currentState = newState;
-        currentState.Enter(player1, player2);
+        currentState.Enter();
     }
 
     public bool CanAttack()
