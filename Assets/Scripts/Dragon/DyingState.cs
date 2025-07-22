@@ -6,21 +6,18 @@ public class DyingState : IDragonState
 
     public DyingState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter()
+    public void Enter(Player1 player1, AuronPlayerController player2)
     {
         controller.animator.SetTrigger("Death");
 
-        //// Rơi item
-        //float r = Random.Range(0f, 1f);
-        //if (r < controller.dropItemChance)
-        //{
-        //    GameObject prefab = (r < controller.dropItemChance / 2f)
-        //        ? controller.hpBowlPrefab
-        //        : controller.manaBowlPrefab;
+        if (GameProgress.Current.currentLevel != 4)
+        {
+                if (player1 != null)
+                    player1.Win();
+                if (player2 != null)
+                    player2.Win();
+        }
 
-        //    GameObject.Instantiate(prefab, controller.transform.position, Quaternion.identity);
-        //}
-        GameManager.Instance.OnBossDefeated();
         GameObject.Destroy(controller.gameObject, 1.5f);
     }
 

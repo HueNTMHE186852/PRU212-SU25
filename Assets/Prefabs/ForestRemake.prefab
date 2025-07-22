@@ -199,19 +199,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   attackRange: 10
-  detectionRange: 50
+  detectionRange: 80
   attackCooldown: 2
   attackDuration: 1
   chaseDurationBeforeDash: 3
-  flyDashSpeed: 15
+  flyDashSpeed: 25
   flyDashStopDistance: 2.5
   flyDashCooldown: 5
   flyDashPrepareTime: 0.5
   audioSource: {fileID: 0}
-  hurtClip: {fileID: 0}
-  dieClip: {fileID: 0}
-  meleeAttackClip: {fileID: 0}
-  tornadoClip: {fileID: 0}
+  hurtClip: {fileID: 8300000, guid: 586759f82c3655a40a81e3bce46ede62, type: 3}
+  dieClip: {fileID: 8300000, guid: 6770b32817c35dd43b82b4e27a5950c4, type: 3}
+  meleeAttackClip: {fileID: 8300000, guid: e858e999c1a6b8f4bbaee0f804cce1a0, type: 3}
+  tornadoClip: {fileID: 8300000, guid: 19f81ef0f9412624a923fd2e8d1059ae, type: 3}
   tornadoInterval: 8
   tornadoDamage: 7
   tornadoDamageInterval: 0.5
@@ -227,7 +227,8 @@ MonoBehaviour:
   player: {fileID: 0}
   projectilePrefab: {fileID: 6810144171844116639, guid: b2389b69bdf897f4eb9f2a703ed75ca5, type: 3}
   player1: {fileID: 0}
-  maxHealth: 700
+  player2: {fileID: 0}
+  maxHealth: 400
 --- !u!114 &4842850174057312881
 MonoBehaviour:
   m_ObjectHideFlags: 0
