@@ -79,6 +79,11 @@ public class Arrow : MonoBehaviour
             {
                 darkBoss.TakeDamage(damage);
             }
+            DragonController dragonController = collision.gameObject.GetComponent<DragonController>();
+            if (dragonController != null)
+            {
+                dragonController.TakeDamage(damage);
+            }
 
             GetComponent<Collider2D>().enabled = false;
             Destroy(gameObject, 1f);
