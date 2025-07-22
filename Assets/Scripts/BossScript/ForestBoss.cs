@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ForestBoss : MonoBehaviour
 {
     [Header("Boss Settings")]
@@ -111,6 +111,25 @@ public class ForestBoss : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+        if (SceneManager.GetActiveScene().name == "Level4")
+        {
+            Debug.Log("🔥 Level 4 — ForestBoss được tăng sức mạnh!");
+
+            maxHealth = Mathf.RoundToInt(maxHealth * 1.3f); 
+            moveSpeed *= 1.3f;
+            detectionRange *= 1.3f;
+            tornadoDamage = Mathf.RoundToInt(tornadoDamage * 1.5f); // tăng damage lốc xoáy
+            flyDashSpeed *= 1.3f; // tăng tốc dash
+            rainProjectileCount += 1; // tăng số đạn mưa
+            rangedAttackInterval *= 0.8f; // giảm thời gian hồi đòn mưa
+
+            if (healthBar != null)
+            {
+                healthBar.SetMaxHealth(maxHealth);
+            }
+            currentHealth = maxHealth;
+        }
+
         StartCoroutine(FindPlayerAfterDelay());
 
 
@@ -595,7 +614,7 @@ public class ForestBoss : MonoBehaviour
     }
     bool IsSameLevelAsPlayer()
     {
-        return Mathf.Abs(transform.position.y - player.position.y) <= 10f;
+        return Mathf.Abs(transform.position.y - player.position.y) <= 15f;
     }
 
     void OnDrawGizmosSelected()

@@ -1,10 +1,13 @@
 ﻿
     using System.Collections;
     using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using static UnityEditor.Experimental.GraphView.GraphView;
 
     public class DarkBoss : MonoBehaviour
 {
+    public GameObject attackColliderTrigger;
     [Header("Lightning Skill")]
     public GameObject lightningPrefab;
     public float lightningDelay = 1f;
@@ -15,9 +18,9 @@ using static UnityEditor.Experimental.GraphView.GraphView;
     private float lastLightningCheckTime = -10f; // Thời gian lần kiểm tra trước
 
     [Header("Boss Settings")]
-    public float moveSpeed = 3f;
+    public float moveSpeed = 8f;
     public float attackRange = 2f;
-    public float detectionRange = 10f;
+    public float detectionRange = 50f;
     public float attackCooldown = 2f;
     public float attackDuration = 1f;
     public float wallHeightThreshold = 2.5f;   // Nếu player cao hơn ngưỡng này thì kéo dài tường
@@ -31,7 +34,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
     private bool isCastingUltimate = false;
 
     [Header("Health")]
-    public int maxHealth = 100;
+    public int maxHealth = 700;
     public HealthBar healthBar;
     public Player1 player1;
     public AuronPlayerController player2; 
@@ -67,7 +70,20 @@ using static UnityEditor.Experimental.GraphView.GraphView;
             healthBar.SetMaxHealth(maxHealth);
             healthBar.gameObject.SetActive(false);
         }
+        if (SceneManager.GetActiveScene().name == "Level4")
+        {
+            Debug.Log("🔥 Buff chỉ số cho Boss vì đang ở Scene Level4");
 
+            // Buff máu, speed, skill...
+            maxHealth = Mathf.RoundToInt(maxHealth * 1.5f);
+            moveSpeed *= 1.3f;
+            detectionRange *= 1.5f;
+            lightningDamage = Mathf.RoundToInt(lightningDamage * 1.3f);
+
+            currentHealth = maxHealth;
+            if (healthBar != null)
+                healthBar.SetMaxHealth(maxHealth);
+        }
         StartCoroutine(FindPlayerAfterDelay());
     }
     IEnumerator FindPlayerAfterDelay()
