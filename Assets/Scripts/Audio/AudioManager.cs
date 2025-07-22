@@ -96,6 +96,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopSFX(string id)
+    {
+        if (sfxDict.TryGetValue(id, out AudioClip clip) && sfxSource.clip == clip)
+        {
+            sfxSource.Stop();
+        }
+    }
     public void SetSFXVolume(float volume)
     {
         sfxVolume = volume;

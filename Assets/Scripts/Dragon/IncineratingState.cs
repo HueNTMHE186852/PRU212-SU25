@@ -11,6 +11,7 @@ public class IncineratingState : IDragonState
     public void Enter()
     {
         controller.animator.Play("Cast", 0, 0f);
+        AudioManager.Instance.PlaySFX("DragonIncineration");
         loopRoutine = controller.StartCoroutine(LoopFrame5To6());
     }
 
@@ -21,6 +22,7 @@ public class IncineratingState : IDragonState
         if (loopRoutine != null)
             controller.StopCoroutine(loopRoutine);
 
+        AudioManager.Instance.StopSFX("DragonIncineration");
         controller.incinerationEffect?.Stop();
         controller.DisableFireZoneCollider();
     }
@@ -32,12 +34,11 @@ public class IncineratingState : IDragonState
 
         yield return new WaitForSeconds(frameTime * 5);
 
-        float loopDuration = 8f;
+        float loopDuration = 6f;
         float elapsed = 0f;
 
         // 🔊 Phát SFX lửa
-        SFXController.Instance?.Play("FireBreath");
-        Debug.Log("Playing FireBreath SFX");
+
         while (elapsed < loopDuration)
         {
             controller.incinerationEffect?.Play();
