@@ -191,23 +191,23 @@ public class ForestBoss : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("💀 Boss đã chết!");
+        Debug.Log("💀 DarkBoss đã chết!");
         animator.SetTrigger("Die");
+
         if (healthBar != null)
             healthBar.gameObject.SetActive(false);
 
-        isAttacking = true;
+        isAttacking = true; // Ngừng mọi hành động
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
-        if (dieClip != null)
-            audioSource.PlayOneShot(dieClip);
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
         if (GameProgress.Current.currentLevel != 4)
         {
-            if (player1 != null)
+            if (player != null)
             {
+                if (player1 != null)
                 {
                     player1.Win();
                     player1.coinManager.AddCoin(100);
@@ -220,8 +220,6 @@ public class ForestBoss : MonoBehaviour
                 GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
             }
         }
-
-
         Destroy(gameObject, 2f);
     }
 
