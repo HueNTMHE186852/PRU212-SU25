@@ -565,6 +565,14 @@ public class AuronPlayerController : MonoBehaviour
                         darkBoss.TakeDamage(fallDamage);
                         continue;
                     }
+                    DragonController dragon = col.GetComponent<DragonController>();
+                    if(dragon == null)
+                        dragon = col.GetComponentInParent<DragonController>();
+                    if (dragon != null && dragon.gameObject.CompareTag("Enemy"))
+                    {
+                        dragon.TakeDamage(fallDamage);
+                        continue;
+                    }
                 }
 
             }
