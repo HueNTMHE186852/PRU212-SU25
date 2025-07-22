@@ -105,6 +105,9 @@ public class DragonController : MonoBehaviour
             yield return null;
         }
     }
+    private float sfxTimer = 0f;
+    private float sfxInterval = 5f;
+
     void Update()
     {
         StartCoroutine(FindPlayerAfterDelay());
@@ -116,6 +119,19 @@ public class DragonController : MonoBehaviour
                 healthBar.gameObject.SetActive(true);
         }
 
+        // Play SFX every 5 seconds
+        sfxTimer += Time.deltaTime;
+        if (sfxTimer >= sfxInterval)
+        {
+            sfxTimer = 0f;
+            PlayDragonGrowlSFX();
+        }
+    }
+
+    private void PlayDragonGrowlSFX()
+    {
+        AudioManager.Instance.PlaySFX("DragonGrowl");
+        Debug.Log("DragonGrowl SFX played");
     }
 
     public void TransitionToState(IDragonState newState)
