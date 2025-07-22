@@ -147,7 +147,7 @@ Transform:
   - {fileID: 4799687271330569116}
   - {fileID: 7897418455448072618}
   - {fileID: 5623202681133096065}
-  - {fileID: 8057578276844546904}
+  - {fileID: 5060797347998888395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1238934794217579083
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da802326763bb240b69b5d73e316800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 10
   attackRange: 15
   detectionRange: 40
   attackCooldown: 2
@@ -317,10 +317,15 @@ MonoBehaviour:
   flyDashStopDistance: 2.5
   flyDashCooldown: 5
   flyDashPrepareTime: 0.5
+  audioSource: {fileID: 0}
+  hurtClip: {fileID: 0}
+  dieClip: {fileID: 0}
+  meleeAttackClip: {fileID: 0}
+  tornadoClip: {fileID: 0}
   tornadoInterval: 8
   tornadoDamage: 10
   tornadoDamageInterval: 0.5
-  healthBar: {fileID: 8374537196779678659}
+  healthBar: {fileID: 0}
   tornadoSpeed: 30
   tornadoDuration: 3
   tornadoCooldown: 6
@@ -331,6 +336,8 @@ MonoBehaviour:
   attackCollider: {fileID: 5716758395722344364}
   player: {fileID: 0}
   projectilePrefab: {fileID: 6810144171844116639, guid: b2389b69bdf897f4eb9f2a703ed75ca5, type: 3}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
   maxHealth: 100
 --- !u!114 &3359328610919323071
 MonoBehaviour:
@@ -344,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0555bfdb456b946ab0c42220d9b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedDamage: 30
 --- !u!1 &6907464795020685610
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,19 +665,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
---- !u!224 &8057578276844546904 stripped
+--- !u!224 &5060797347998888395 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1883426717307597825, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
   m_PrefabInstance: {fileID: 8498576577269882713}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8374537196779678659 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 128730183392392346, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
-  m_PrefabInstance: {fileID: 8498576577269882713}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084816733d39ec14cac1df98c73df7bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

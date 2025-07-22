@@ -6,7 +6,7 @@ public class IdleState : IDragonState
 
     public IdleState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter() => controller.animator.Play("Idle");
+    public void Enter(Player1 player1, AuronPlayerController player2) => controller.animator.Play("Idle");
 
     public void Update()
     {
