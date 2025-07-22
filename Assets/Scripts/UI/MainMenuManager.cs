@@ -39,10 +39,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void PlayWithIntro()
     {
-        if (!hasPlayedIntro)
+        if (SharedPlayerStats.GameStats.sharedStats.IsFirstTime == true)
         {
-            hasPlayedIntro = true;
-            introVideoManager?.PlayIntro(); // Gọi trực tiếp
+            SharedPlayerStats.GameStats.sharedStats.IsFirstTime = false;
+            SharedPlayerStats.GameStats.sharedStats.SaveToJson();
+            introVideoManager?.PlayIntro(); 
         }
         else
         {

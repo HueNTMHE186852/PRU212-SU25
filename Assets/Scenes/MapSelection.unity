@@ -537,7 +537,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4. Endless map
+  m_text: 4. Challenge map
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9388759b0761650419840da7ce008a65, type: 2}
   m_sharedMaterial: {fileID: 5398880204462688675, guid: 9388759b0761650419840da7ce008a65, type: 2}
@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 382800660}
   - component: {fileID: 382800662}
   m_Layer: 5
-  m_Name: EndlessMap
+  m_Name: ChallengeMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

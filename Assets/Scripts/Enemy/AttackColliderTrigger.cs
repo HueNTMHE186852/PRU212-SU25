@@ -12,7 +12,7 @@ public class AttackColliderTrigger : MonoBehaviour
         {
             fixedDamage = 30; 
         }
-        // Nếu đang ở Scene tên là "Level4", tăng damage lên
+        // Nếu đang ở Scene tên là "Level4", giảm
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             fixedDamage = 6;

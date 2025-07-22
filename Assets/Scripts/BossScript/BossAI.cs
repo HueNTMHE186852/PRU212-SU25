@@ -442,8 +442,9 @@ public class BossAI : MonoBehaviour
                 }
                 if (player2 != null)
                     player2.Win();
-                GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
+                
             }
+            GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
         }
 
         Destroy(gameObject, 2f);

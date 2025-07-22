@@ -2414,8 +2414,8 @@ MonoBehaviour:
   sfxClips:
   - id: SettingButtonSFX
     clip: {fileID: 8300000, guid: 7a1b20adcc2791545a3486477aa9c444, type: 3}
-  - id: DragonBreath
-    clip: {fileID: 8300000, guid: 9e305b4a523df3a4987ccbb89c45af15, type: 3}
+  - id: DragonIncineration
+    clip: {fileID: 8300000, guid: f0f6c4c79fd68fc4c8056464dd02314c, type: 3}
   - id: EnemyNormalAttack
     clip: {fileID: 8300000, guid: 389ea15e0b9389442a682de93f7c3249, type: 3}
   - id: EnemyGetHurt
@@ -2445,7 +2445,9 @@ MonoBehaviour:
   - id: PlayerBowAttack
     clip: {fileID: 8300000, guid: ea05fc8e121c6f4478520e573c16cf4a, type: 3}
   - id: PlayerBowSkillE
-    clip: {fileID: 8300000, guid: 84b6e46b00dd87842a45e33bea31e8ef, type: 3}
+    clip: {fileID: 8300000, guid: 5ebf07c305184484f8792e2822ff8943, type: 3}
+  - id: DragonGrowl
+    clip: {fileID: 8300000, guid: c50d02afd45ced54186305bd9c6a40b0, type: 3}
 --- !u!4 &462875416
 Transform:
   m_ObjectHideFlags: 0

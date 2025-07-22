@@ -44,7 +44,7 @@ public class WalkingState : IDragonState
 
         Vector3 dir = (controller.player.position - controller.transform.position).normalized;
         controller.FaceDirection(dir);
-        controller.transform.position += dir * Time.deltaTime * 2f;
+        controller.transform.position += dir * Time.deltaTime * 5f;
     }
 
     public void Exit()

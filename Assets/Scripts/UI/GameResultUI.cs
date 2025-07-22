@@ -89,7 +89,10 @@ public class GameResultUI : MonoBehaviour
     {
         Hide();
         int level = GameProgress.Current.currentLevel;
-        ++level;
+        if (level != 4)
+        {
+            ++level;
+        }
         string sceneName = $"Level{level}";
         Debug.Log($"Loading scene: {sceneName}");
         SceneManager.LoadScene(sceneName);

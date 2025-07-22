@@ -1,11 +1,9 @@
 ﻿
-    using System.Collections;
-    using UnityEngine;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using static UnityEditor.Experimental.GraphView.GraphView;
-
-    public class DarkBoss : MonoBehaviour
+public class DarkBoss : MonoBehaviour
 {
     public GameObject attackColliderTrigger;
     [Header("Lightning Skill")]
@@ -388,8 +386,9 @@ using static UnityEditor.Experimental.GraphView.GraphView;
                     player2.Win();
                     player2.coinManager.AddCoin(300);
                 }
-                GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
+                
             }
+            GameProgress.Current.CompleteLevel(3, GameManager.Instance.PlayTimeSeconds);
         }
         Destroy(gameObject, 2f);
     }
