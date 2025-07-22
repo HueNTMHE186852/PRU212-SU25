@@ -7,6 +7,7 @@ public class SharedPlayerStats
     public int Coins;
     public float DamageMultiplier = 1f;
 
+    public bool IsFirstTime = true;
     public int HpLevel;
     public int DamageLevel;
     public int ManaLevel;

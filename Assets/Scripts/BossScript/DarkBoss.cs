@@ -1,11 +1,9 @@
 ﻿
-    using System.Collections;
-    using UnityEngine;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using static UnityEditor.Experimental.GraphView.GraphView;
-
-    public class DarkBoss : MonoBehaviour
+public class DarkBoss : MonoBehaviour
 {
     public GameObject attackColliderTrigger;
     [Header("Lightning Skill")]

@@ -13,13 +13,14 @@ public class DyingState : IDragonState
         if (player1 != null)
         {
             player1.Win();
-            player1.coinManager.AddCoin(300);
+            player1.coinManager.AddCoin(500);
         }
         if (player2 != null)
         {
             player2.Win();
-            player2.coinManager.AddCoin(300);
+            player2.coinManager.AddCoin(500);
         }
+        GameProgress.Current.CompleteLevel(4, GameManager.Instance.PlayTimeSeconds);
         GameObject.Destroy(controller.gameObject, 1.5f);
     }
 
