@@ -54,7 +54,7 @@ public class SharedPlayerStats
             "MoveSpeed" => MoveSpeedLevel,
             _ => 0
         };
-        return 10 + level * 5;
+        return 20 + level * 5;
     }
 
     // ⬆️ Thử nâng cấp chỉ số
