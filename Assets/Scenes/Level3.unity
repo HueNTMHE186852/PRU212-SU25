@@ -210083,12 +210083,20 @@ PrefabInstance:
       value: DarkBoss
       objectReference: {fileID: 0}
     - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: maxHealth
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
       propertyPath: moveSpeed
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
       propertyPath: detectionRange
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: lightningDamage
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3810358003749334266, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
       propertyPath: ultimateChancePercent
@@ -210098,8 +210106,13 @@ PrefabInstance:
       propertyPath: lightningChancePercent
       value: 46
       objectReference: {fileID: 0}
+    - target: {fileID: 6582515043138429475, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
+      propertyPath: fixedDamage
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3340777934968029524, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3f1f0f8be2e4884ab2a9acaea517ef5, type: 3}

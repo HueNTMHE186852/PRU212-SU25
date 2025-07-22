@@ -588,7 +588,7 @@ public class ForestBoss : MonoBehaviour
     }
     bool IsSameLevelAsPlayer()
     {
-        return Mathf.Abs(transform.position.y - player.position.y) <= 10f;
+        return Mathf.Abs(transform.position.y - player.position.y) <= 15f;
     }
 
     void OnDrawGizmosSelected()
