@@ -468,12 +468,14 @@ public class AuronPlayerController : MonoBehaviour
 
             if (hits.Length > 0)
             {
+                // Tìm ground gần nhất phía dưới chuột, không giới hạn bởi vị trí player
+                float minDistance = float.MaxValue;
                 foreach (var h in hits)
                 {
-                    // Chỉ lấy ground dưới hoặc ngang chân player
-                    if (h.point.y <= groundCheckPoint.position.y && h.point.y > maxY)
+                    float dist = Mathf.Abs(mouseWorldPos.y - h.point.y);
+                    if (dist < minDistance)
                     {
-                        maxY = h.point.y;
+                        minDistance = dist;
                         spawnPos = h.point;
                         foundGroundBelow = true;
                     }
@@ -484,6 +486,7 @@ public class AuronPlayerController : MonoBehaviour
                     spawnPos.y += 0.6f;
                 }
             }
+
 
             if (!foundGroundBelow)
             {
@@ -498,9 +501,9 @@ public class AuronPlayerController : MonoBehaviour
                 }
                 else
                 {
-                    // Nếu chuột xa player, spawn ở vị trí chuột nhưng không cao hơn chân player
-                    spawnPos.y = Mathf.Min(mouseWorldPos.y, groundCheckPoint.position.y + 0.6f);
+                    spawnPos = mouseWorldPos;
                     spawnPos.z = 0f;
+
                 }
             }
 
