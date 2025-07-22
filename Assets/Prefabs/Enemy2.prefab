@@ -123,11 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 0}
-  damage: 10
+  damage: 25
   speed: 3
   verticalTolerance: 20
   attackRange: 10
-  detectionRange: 80
+  detectionRange: 60
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 5576874729815399559}
