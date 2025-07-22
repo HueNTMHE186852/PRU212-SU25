@@ -2652,8 +2652,8 @@ MonoBehaviour:
   healthBar: {fileID: 4962637685573268758}
   attackColliderObj: {fileID: 8876631040621123717}
   fireZoneColliderObj: {fileID: 7111366147348517043}
-  attackRange: 15
-  detectionRange: 27
+  attackRange: 30
+  detectionRange: 150
   attackCooldown: 1
   maxHealth: 1500
   incinerationEvery: 3

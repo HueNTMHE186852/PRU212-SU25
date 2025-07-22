@@ -7,7 +7,7 @@ public class WalkingState : IDragonState
 
     public WalkingState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter()
+    public void Enter(Player1 player1, AuronPlayerController player2)
     {
         controller.animator.SetBool("IsWalking", true);
         hasStartedMoving = false;

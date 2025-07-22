@@ -6,7 +6,7 @@ public class AttackingState : IDragonState
 
     public AttackingState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter()
+    public void Enter(Player1 player1, AuronPlayerController player2)
     {
         controller.lastAttackTime = Time.time;
         controller.animator.ResetTrigger("Attack");

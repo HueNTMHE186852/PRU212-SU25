@@ -416,16 +416,16 @@ MonoBehaviour:
   lightningDamage: 20
   lightningChancePercent: 46
   lightningCheckInterval: 3
-  moveSpeed: 8
-  attackRange: 13
-  detectionRange: 50
+  moveSpeed: 15
+  attackRange: 17
+  detectionRange: 100
   attackCooldown: 2
   attackDuration: 1
   wallHeightThreshold: 2.5
   extendedWallHeight: 6
   attackCollider: {fileID: 3616070518186309242}
   player: {fileID: 0}
-  maxHealth: 700
+  maxHealth: 900
   healthBar: {fileID: 8853045153548671973}
   player1: {fileID: 0}
   player2: {fileID: 0}

@@ -8,7 +8,7 @@ public class IncineratingState : IDragonState
 
     public IncineratingState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter()
+    public void Enter(Player1 player1, AuronPlayerController player2)
     {
         controller.animator.Play("Cast", 0, 0f);
         loopRoutine = controller.StartCoroutine(LoopFrame5To6());

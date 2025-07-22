@@ -6,10 +6,20 @@ public class DyingState : IDragonState
 
     public DyingState(DragonController ctrl) => controller = ctrl;
 
-    public void Enter()
+    public void Enter(Player1 player1, AuronPlayerController player2)
     {
         controller.animator.SetTrigger("Death");
 
+        if (player1 != null)
+        {
+            player1.Win();
+            player1.coinManager.AddCoin(300);
+        }
+        if (player2 != null)
+        {
+            player2.Win();
+            player2.coinManager.AddCoin(300);
+        }
         GameObject.Destroy(controller.gameObject, 1.5f);
     }
 
