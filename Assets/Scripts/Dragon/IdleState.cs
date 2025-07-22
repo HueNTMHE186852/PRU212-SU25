@@ -13,15 +13,23 @@ public class IdleState : IDragonState
         if (controller.isDead)
         {
             controller.TransitionToState(controller.dyingState);
+            return;
         }
-        else if (controller.CanAttack())
+
+        if (controller.CanAttack())
         {
             controller.TransitionToState(controller.attackingState);
+            return;
         }
-        else if (controller.CanSeePlayer())
+
+        if (controller.CanSeePlayer())
         {
             controller.TransitionToState(controller.walkingState);
+            return;
         }
+
+        if (controller.player == null) return; 
+
         Vector3 dir = (controller.player.position - controller.transform.position).normalized;
         controller.FaceDirection(dir);
     }

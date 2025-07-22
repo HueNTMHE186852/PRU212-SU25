@@ -2570,7 +2570,7 @@ Transform:
   - {fileID: 6333626239412066021}
   - {fileID: 7639874267136591963}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
 --- !u!50 &50250286634040153
 Rigidbody2D:
   serializedVersion: 4
@@ -2649,7 +2649,7 @@ MonoBehaviour:
   player: {fileID: 0}
   incinerationEffect: {fileID: 198038880130168577}
   model: {fileID: 4174250820281130}
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 4962637685573268758}
   attackColliderObj: {fileID: 8876631040621123717}
   fireZoneColliderObj: {fileID: 7111366147348517043}
   attackRange: 15
@@ -5226,7 +5226,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 10.30822, y: 11.470753}
+  m_Offset: {x: 10.179083, y: 11.470753}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5237,7 +5237,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.66668224, y: 1.1797409}
+  m_Size: {x: 0.9249582, y: 1.1797409}
   m_EdgeRadius: 0
 --- !u!114 &28018211309538808
 MonoBehaviour:
@@ -5275,6 +5275,38 @@ PrefabInstance:
     - target: {fileID: 405666539696292002, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 856620181251491664, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 99.507355
+      objectReference: {fileID: 0}
+    - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 99.507355
+      objectReference: {fileID: 0}
+    - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 99.507355
+      objectReference: {fileID: 0}
+    - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1697.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 916822738025646488, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2069.6
       objectReference: {fileID: 0}
     - target: {fileID: 1883426717307597825, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Pivot.x
@@ -5356,9 +5388,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3152150993993452743, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_text
+      value: INFERNAX
+      objectReference: {fileID: 0}
     - target: {fileID: 3392171410535603009, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_text
       value: INFERNAX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.058211986
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.045715943
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.74073
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -53
       objectReference: {fileID: 0}
     - target: {fileID: 5224120099576352405, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Sprite
@@ -5384,15 +5440,38 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7113574845387500242, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7113574845387500242, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8596599642431594312, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
       propertyPath: m_Name
       value: DragonHealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 8648570758668610082, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d4dd0088489b5fd439e9c9adcf6d23f4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+--- !u!114 &4962637685573268758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2373899679057726817, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}
+  m_PrefabInstance: {fileID: 7219021166297086071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084816733d39ec14cac1df98c73df7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6333626239412066021 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3731955775549353618, guid: cb1ad736e00a3074aaa6089335ca6cc6, type: 3}

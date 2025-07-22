@@ -180,10 +180,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthbar: {fileID: 0}
   damage: 10
-  speed: 3.5
+  speed: 5
   verticalTolerance: 30
   attackRange: 10
-  detectionRange: 30
+  detectionRange: 55
   attackCooldown: 0.1
   attackDuration: 1
   colliderHolder: {fileID: 5062820161417725453}

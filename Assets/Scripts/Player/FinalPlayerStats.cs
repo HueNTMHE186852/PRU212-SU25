@@ -12,11 +12,11 @@ public class FinalPlayerStats
         float totalDamageMultiplier = 1f + upgrades.DamageLevel * 0.2f;
         Damage = Mathf.RoundToInt(baseStats.BaseDamage * totalDamageMultiplier);
 
-        MaxMP = Mathf.RoundToInt(baseStats.BaseMaxMP * (1f + upgrades.ManaLevel * 0.2f));
+        MaxMP = Mathf.RoundToInt(baseStats.BaseMaxMP * (1f + upgrades.ManaLevel * 0.15f));
 
         MoveSpeed = baseStats.BaseMoveSpeed + upgrades.MoveSpeedLevel * 0.5f;
 
-        MaxHP = Mathf.RoundToInt(baseStats.BaseHP * (1f + upgrades.HpLevel * 0.2f));
+        MaxHP = Mathf.RoundToInt(baseStats.BaseHP * (1f + upgrades.HpLevel * 0.175f));
     }
 
     

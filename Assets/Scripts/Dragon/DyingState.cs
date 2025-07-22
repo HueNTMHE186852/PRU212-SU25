@@ -10,17 +10,6 @@ public class DyingState : IDragonState
     {
         controller.animator.SetTrigger("Death");
 
-        //// Rơi item
-        //float r = Random.Range(0f, 1f);
-        //if (r < controller.dropItemChance)
-        //{
-        //    GameObject prefab = (r < controller.dropItemChance / 2f)
-        //        ? controller.hpBowlPrefab
-        //        : controller.manaBowlPrefab;
-
-        //    GameObject.Instantiate(prefab, controller.transform.position, Quaternion.identity);
-        //}
-        GameManager.Instance.OnBossDefeated();
         GameObject.Destroy(controller.gameObject, 1.5f);
     }
 

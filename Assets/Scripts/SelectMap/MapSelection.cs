@@ -58,7 +58,7 @@ public class MapSelection : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!isUnlock) return;
-
+        GameProgress.Current.currentLevel = levelIndex; // Cập nhật level hiện tại
         LoadingBridge.SceneToLoad = sceneToLoad;
         LoadingBridge.BackgroundImage = mapPreviewImage;
 
