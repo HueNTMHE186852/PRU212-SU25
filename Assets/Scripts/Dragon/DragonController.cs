@@ -105,8 +105,6 @@ public class DragonController : MonoBehaviour
             yield return null;
         }
     }
-    private float sfxTimer = 0f;
-    private float sfxInterval = 5f;
 
     void Update()
     {
@@ -118,20 +116,6 @@ public class DragonController : MonoBehaviour
             if (healthBar != null)
                 healthBar.gameObject.SetActive(true);
         }
-
-        // Play SFX every 5 seconds
-        sfxTimer += Time.deltaTime;
-        if (sfxTimer >= sfxInterval)
-        {
-            sfxTimer = 0f;
-            PlayDragonGrowlSFX();
-        }
-    }
-
-    private void PlayDragonGrowlSFX()
-    {
-        AudioManager.Instance.PlaySFX("DragonGrowl");
-        Debug.Log("DragonGrowl SFX played");
     }
 
     public void TransitionToState(IDragonState newState)
@@ -187,6 +171,14 @@ public class DragonController : MonoBehaviour
         {
             var shape = incinerationEffect.shape;
             shape.rotation = new Vector3(0f, shouldFaceLeft ? 180f : 0f, 0f);
+        }
+
+        // 👉 Prevent HealthBar from flipping
+        if (healthBar != null)
+        {
+            Vector3 healthBarScale = healthBar.transform.localScale;
+            healthBarScale.x = Mathf.Abs(healthBarScale.x);
+            healthBar.transform.localScale = healthBarScale;
         }
     }
 
