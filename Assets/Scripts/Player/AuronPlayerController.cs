@@ -20,7 +20,7 @@ public class AuronPlayerController : MonoBehaviour
     public LayerMask groundLayer;
     private bool isGrounded = true;
     private bool isAttacking = false;
-    private bool isDefending = false;
+    public bool isDefending = false;
     private int jumpCount = 0;
     public int maxJumpCount = 2; // Allow double jump
     private bool isFalling = false;

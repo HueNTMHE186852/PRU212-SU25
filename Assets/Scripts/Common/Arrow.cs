@@ -53,12 +53,10 @@ public class Arrow : MonoBehaviour
 
             // Gây dame cho các loại boss và enemy
             BossAI bossAI = collision.gameObject.GetComponent<BossAI>();
+            if (bossAI == null)
+                bossAI = collision.gameObject.GetComponentInParent<BossAI>();
             if (bossAI != null)
             {
-                float direction = collision.transform.position.x > transform.position.x ? 1f : -1f;
-                float knockbackForce = 5f;
-                Vector2 knockback = new Vector2(direction * knockbackForce, 0f);
-                bossAI.ApplyKnockback(knockback);
                 bossAI.TakeDamage(damage);
             }
 
