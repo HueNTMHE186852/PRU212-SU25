@@ -425,7 +425,7 @@ MonoBehaviour:
   extendedWallHeight: 6
   attackCollider: {fileID: 3616070518186309242}
   player: {fileID: 0}
-  maxHealth: 700
+  maxHealth: 1000
   healthBar: {fileID: 8853045153548671973}
   player1: {fileID: 0}
   player2: {fileID: 0}
@@ -454,11 +454,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1082876959132069190, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_fontSize
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1082876959132069190, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_fontSizeBase
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2715216113571891058, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -606,15 +606,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8566935664488190750, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 47.3816
+      value: 47.0618
       objectReference: {fileID: 0}
     - target: {fileID: 8566935664488190750, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.9
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 8566935664488190750, guid: c0b5595cf89642e47b53dda090e316c0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -18.3
+      value: -18.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
