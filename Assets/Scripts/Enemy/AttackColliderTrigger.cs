@@ -1,8 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AttackColliderTrigger : MonoBehaviour
 {
-    public int fixedDamage = 30; // 👈 Gây 30 máu mỗi lần va chạm
+    public int fixedDamage = 15; // Mặc định
+
+    private void Start()
+    {
+        // Nếu đang ở Scene tên là "Level4", tăng damage lên
+        if (SceneManager.GetActiveScene().name == "Level4")
+        {
+            fixedDamage = 30; 
+        }
+        // Nếu đang ở Scene tên là "Level4", tăng damage lên
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            fixedDamage = 6;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
