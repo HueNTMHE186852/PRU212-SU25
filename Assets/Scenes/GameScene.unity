@@ -2448,6 +2448,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5ebf07c305184484f8792e2822ff8943, type: 3}
   - id: Upgrade
     clip: {fileID: 8300000, guid: 574e2fb84e17cae41986575138cbb190, type: 3}
+  - id: CoinPickup
+    clip: {fileID: 8300000, guid: 572e201a2434f6648af403a7c7df34c3, type: 3}
+  - id: MPPickup
+    clip: {fileID: 8300000, guid: 4b59eae0d1b73814b938d4f36346d1e1, type: 3}
+  - id: HPPickup
+    clip: {fileID: 8300000, guid: 03918b4ad09e9dd44b1bc49208de282e, type: 3}
 --- !u!4 &462875416
 Transform:
   m_ObjectHideFlags: 0

@@ -33,18 +33,21 @@ public class PotionPickup : MonoBehaviour
         switch (type)
         {
             case PotionType.Health:
+                AudioManager.Instance.PlaySFX("HPPickup");
                 int healthRestore = Mathf.RoundToInt(player.maxHealth * restorePercent);
                 player.currentHealth = Mathf.Min(player.maxHealth, player.currentHealth + healthRestore);
                 player.healthBar.SetHealth((float)player.currentHealth / player.maxHealth);
                 break;
 
             case PotionType.Mana:
+                AudioManager.Instance.PlaySFX("MPPickup");
                 int manaRestore = Mathf.RoundToInt(player.maxMP * restorePercent);
                 player.currentMP = Mathf.Min(player.maxMP, player.currentMP + manaRestore);
                 player.MPBar.SetMP((float)player.currentMP / player.maxMP);
                 break;
 
             case PotionType.Coin:
+                AudioManager.Instance.PlaySFX("CoinPickup");
                 if (player.coinManager != null)
                 {
                     player.coinManager.AddCoinOnCollect();
@@ -63,18 +66,21 @@ public class PotionPickup : MonoBehaviour
         switch (type)
         {
             case PotionType.Health:
+                AudioManager.Instance.PlaySFX("HPPickup");
                 int healthRestore = Mathf.RoundToInt(player.maxHealth * restorePercent);
                 player.currentHealth = Mathf.Min(player.maxHealth, player.currentHealth + healthRestore);
                 player.healthBar.SetHealth((float)player.currentHealth / player.maxHealth);
                 break;
 
             case PotionType.Mana:
+                AudioManager.Instance.PlaySFX("MPPickup");
                 int manaRestore = Mathf.RoundToInt(player.maxMP * restorePercent);
                 player.currentMP = Mathf.Min(player.maxMP, player.currentMP + manaRestore);
                 player.MPBar.SetMP((float)player.currentMP / player.maxMP);
                 break;
 
             case PotionType.Coin:
+                AudioManager.Instance.PlaySFX("CoinPickup");
                 if (player.coinManager != null)
                 {
                     player.coinManager.AddCoinOnCollect();
