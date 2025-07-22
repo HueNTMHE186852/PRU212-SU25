@@ -35,6 +35,7 @@ public class UpgradePlayerManager : MonoBehaviour
     {
         if (ChooseCharacterPanel != null)
         {
+            AudioManager.Instance?.PlaySFX("ButtonClick");
             UpgradePanel.SetActive(false);
             ChooseCharacterPanel.SetActive(true);
         }
@@ -43,6 +44,7 @@ public class UpgradePlayerManager : MonoBehaviour
     {
         if (SharedPlayerStats.GameStats.sharedStats.TryUpgrade(stat))
         {
+            AudioManager.Instance?.PlaySFX("Upgrade");
             UpdateUI();
         }
     }

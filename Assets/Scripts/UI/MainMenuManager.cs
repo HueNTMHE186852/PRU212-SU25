@@ -52,17 +52,23 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenCharacterSelection()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
+
         if (ChooseCharacterPanel != null)
             ChooseCharacterPanel.SetActive(true);
     }
 
     public void CloseCharacterSelection()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
+
         if (UpgradePanel != null)
             UpgradePanel.SetActive(false);
     }
     public void OpenUpgrade()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
+
         if (UpgradePanel != null)
         {
             UpgradePanel.SetActive(true);
@@ -72,12 +78,13 @@ public class MainMenuManager : MonoBehaviour
 
     public void CloseUpgrade()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
         if (UpgradePanel != null)
             UpgradePanel.SetActive(false);
     }
     public void OpenSettings()
     {
-        AudioManager.Instance.PlaySFX("SettingButtonSFX");
+        AudioManager.Instance.PlaySFX("ButtonClick");
 
         if (SettingsPanel != null)
             SettingsPanel.SetActive(true);
@@ -85,6 +92,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void CloseSettings()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
+
         if (SettingsPanel != null)
             SettingsPanel.SetActive(false);
     }
@@ -92,6 +101,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void QuitGame()
     {
+        AudioManager.Instance?.PlaySFX("ButtonClick");
+
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
