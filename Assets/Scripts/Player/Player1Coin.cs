@@ -1,34 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player1Coin : MonoBehaviour
 {
-    [Header("UI Text")]
     public Text totalCoinText;
     public Text sessionCoinText;
-
-    [Header("Map (Selected via PlayerPrefs)")]
-    [HideInInspector]
-    public MapLevel currentLevel;
 
     private int sessionCoin = 0;
 
     void Start()
     {
-        // 🌍 Load map từ PlayerPrefs
-        currentLevel = (MapLevel)PlayerPrefs.GetInt("SelectedMap", 0);
         sessionCoin = 0;
         UpdateCoinUI();
-
-        Debug.Log("🎮 Current Map: " + currentLevel);
+        Debug.Log("🎮 Current Scene: " + SceneManager.GetActiveScene().name);
     }
 
     public void AddCoinOnCollect()
     {
-        int amount = GetCoinAmountByLevel();
+        int amount = GetCoinAmountByScene();
         sessionCoin += amount;
         UpdateCoinUI();
-        Debug.Log($"+{amount} coin (Level: {currentLevel}) - Session total: {sessionCoin}");
+
+        Debug.Log($"+{amount} coin (Scene: {SceneManager.GetActiveScene().name}) - Session total: {sessionCoin}");
+    }
+
+    private int GetCoinAmountByScene()
+    {
+        string scene = SceneManager.GetActiveScene().name;
+
+        switch (scene)
+        {
+            case "Level1": return 15;
+            case "Level2": return 20;
+            case "Level3": return 25;
+            default: return 10;
+        }
     }
 
     public void AddCoin(int coin)
@@ -38,13 +45,11 @@ public class Player1Coin : MonoBehaviour
 
     public void CommitSessionToTotal()
     {
-        int total = SharedPlayerStats.GameStats.sharedStats.Coins;
-        total += sessionCoin;
-        PlayerPrefs.SetInt("TotalCoins", total);
+        AddCoin(sessionCoin);
+        PlayerPrefs.SetInt("TotalCoins", SharedPlayerStats.GameStats.sharedStats.Coins);
         PlayerPrefs.Save();
 
-        Debug.Log($"🎉 Win! Gained {sessionCoin} coin → Total now: {total}");
-
+        Debug.Log($"🎉 Win! Gained {sessionCoin} coin → Total now: {SharedPlayerStats.GameStats.sharedStats.Coins}");
         sessionCoin = 0;
         UpdateCoinUI();
     }
@@ -67,16 +72,9 @@ public class Player1Coin : MonoBehaviour
             sessionCoinText.text = $"{sessionCoin}";
     }
 
-    private int GetCoinAmountByLevel()
+    public int GetSessionCoin()
     {
-        switch (currentLevel)
-        {
-            case MapLevel.Forest: return 15;
-            case MapLevel.Maya: return 20;
-            case MapLevel.Dark: return 25;
-            case MapLevel.Endless: return 30;
-            default: return 10;
-        }
+        return sessionCoin;
     }
 
     public int GetTotalCoin()
@@ -84,28 +82,4 @@ public class Player1Coin : MonoBehaviour
         return SharedPlayerStats.GameStats.sharedStats.Coins;
     }
 
-    public int GetSessionCoin()
-    {
-        return sessionCoin;
-    }
-
-    public enum MapLevel
-    {
-        Forest,
-        Maya,
-        Dark,
-        Endless
-    }
-
-    public static string GetSceneName(MapLevel level)
-    {
-        switch (level)
-        {
-            case MapLevel.Forest: return "ForestMap";
-            case MapLevel.Maya: return "MayaScene";
-            case MapLevel.Dark: return "DarkScene";
-            case MapLevel.Endless: return "1-Endless";
-            default: return "GameScene";
-        }
-    }
 }

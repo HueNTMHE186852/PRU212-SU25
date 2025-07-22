@@ -42,12 +42,12 @@ public class SettingManager : MonoBehaviour
         AudioManager.Instance.SetMusicVolume(value);
     }
 
-
     public void OnSFXVolumeChanged(float value)
     {
         PlayerPrefs.SetFloat("SFXVolume", value);
-        AudioManager.Instance.SetSFXVolume(value); // ✅ Bỏ comment dòng này
+        AudioManager.Instance.SetSFXVolume(value);
     }
+
 
 
     public void OnFullscreenToggle(bool isFullscreen)

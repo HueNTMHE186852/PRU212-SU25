@@ -28,13 +28,16 @@ public class IncineratingState : IDragonState
     private IEnumerator LoopFrame5To6()
     {
         float clipLength = controller.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        float frameTime = clipLength / 12f; // 12 FPS
+        float frameTime = clipLength / 12f;
 
-        yield return new WaitForSeconds(frameTime * 5); // Chờ tới frame 5 (index 0-based)
+        yield return new WaitForSeconds(frameTime * 5);
 
-        float loopDuration = 8f; // thời gian thi triển chiêu
+        float loopDuration = 8f;
         float elapsed = 0f;
 
+        // 🔊 Phát SFX lửa
+        SFXController.Instance?.Play("FireBreath");
+        Debug.Log("Playing FireBreath SFX");
         while (elapsed < loopDuration)
         {
             controller.incinerationEffect?.Play();
@@ -48,4 +51,5 @@ public class IncineratingState : IDragonState
 
         controller.TransitionToState(controller.idleState);
     }
+
 }
