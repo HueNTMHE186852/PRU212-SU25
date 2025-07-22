@@ -27,7 +27,7 @@ public class ForestBoss : MonoBehaviour
     public AudioClip meleeAttackClip;
 
     public AudioClip tornadoClip;
- 
+
 
 
     [Header("Tornado Random Settings")]
@@ -165,7 +165,7 @@ public class ForestBoss : MonoBehaviour
                     yield break;
                 }
             }
-            yield return null; 
+            yield return null;
         }
     }
 
@@ -206,12 +206,17 @@ public class ForestBoss : MonoBehaviour
         if (col != null) col.enabled = false;
         if (GameProgress.Current.currentLevel != 4)
         {
-            if (player != null)
+            if (player1 != null)
             {
-                if (player1 != null)
+                {
                     player1.Win();
+                    player1.coinManager.AddCoin(100);
+                }
                 if (player2 != null)
+                {
                     player2.Win();
+                    player2.coinManager.AddCoin(100);
+                }
                 GameProgress.Current.CompleteLevel(1, GameManager.Instance.PlayTimeSeconds);
             }
         }
@@ -224,7 +229,7 @@ public class ForestBoss : MonoBehaviour
     {
         StartCoroutine(FindPlayerAfterDelay());
         if (currentHealth <= 0) return;
-        
+
 
         cachedHorizontalDistance = Mathf.Abs(transform.position.x - player.position.x);
 
@@ -442,7 +447,7 @@ public class ForestBoss : MonoBehaviour
 
     bool ShouldFlyDash()
     {
-    
+
 
         return isChasing &&
                (Time.time - chaseStartTime) >= chaseDurationBeforeDash &&
@@ -590,7 +595,7 @@ public class ForestBoss : MonoBehaviour
         float centerX = player.position.x;
         float startX = centerX - rainWidth / 2f;
         float ySpawn = transform.position.y + rainHeight;
-   
+
 
         for (int i = 0; i < rainProjectileCount; i++)
         {

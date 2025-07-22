@@ -436,7 +436,10 @@ public class BossAI : MonoBehaviour
             if (player != null)
             {
                 if (player1 != null)
+                {
                     player1.Win();
+                    player1.coinManager.AddCoin(200);
+                }
                 if (player2 != null)
                     player2.Win();
                 GameProgress.Current.CompleteLevel(2, GameManager.Instance.PlayTimeSeconds);
